@@ -18,6 +18,7 @@
 		<module>hscar-shiro</module> <!-- 权限管理模块 -->
 		<module>hscar-admin</module> <!-- 后台管理系统 -->
 		<module>hscar-app</module> <!-- 手机端 -->
+		<module>hscar-business</module>
 	</modules>
 
 	<properties>
