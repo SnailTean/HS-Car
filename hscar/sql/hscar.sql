@@ -603,3 +603,36 @@ CREATE TABLE `tb_user` (
 -- Records of tb_user
 -- ----------------------------
 INSERT INTO `tb_user` VALUES ('1', 'mark', '13612345678', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2017-03-23 22:37:41');
+
+
+
+-- ----------------------------
+-- Table structure for `tb_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `route_detail`;
+CREATE TABLE `route_detail` (
+  `route_id` BIGINT(11) NOT NULL,
+  `departure` VARCHAR(100) NULL COMMENT '出发地',
+  `destination` VARCHAR(100) NULL COMMENT '目的地',
+  `dep_coordinate` VARCHAR(45) NULL COMMENT '目的地坐标',
+  `des_coordinate` VARCHAR(45) NULL COMMENT '出发地坐标',
+  `user_id` BIGINT(20) NULL COMMENT '用户ID',
+  PRIMARY KEY (`route_id`));
+  
+  -- ----------------------------
+-- Table structure for `tb_user`
+-- ----------------------------
+DROP TABLE IF EXISTS `carpooling_orders`;
+  CREATE TABLE `carpooling_orders` (
+  `order_id` BIGINT(11) NOT NULL,
+  `route_id` BIGINT(11) NOT NULL,
+  `order_type` INT NOT NULL COMMENT '1:即时订单\n2:预约订单\n',
+  `price` DOUBLE NOT NULL COMMENT '价格',
+  `reward` DOUBLE NULL COMMENT '奖励',
+  PRIMARY KEY (`order_id`));
+  
+
+
+
+
+
