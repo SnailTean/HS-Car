@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
  */
 @Controller
 @RequestMapping("/sys/constant")
-public class SysConstantController {
+public class AppConstantController {
 	
 	/**
 	 * 获取是或否的枚举列表

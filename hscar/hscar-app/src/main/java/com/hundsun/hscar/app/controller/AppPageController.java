@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @date 2017-05-06
  */
 @Controller
-public class SysPageController {
+public class AppPageController {
 
 	/**
 	 * 手机端-顾客页面
