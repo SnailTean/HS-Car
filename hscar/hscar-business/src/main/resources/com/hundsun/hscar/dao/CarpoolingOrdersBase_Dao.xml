@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hundsun.hscar.dao.CarpoolingOrdersDao">
+
+	<select id="queryObject" resultType="com.hundsun.hscar.entity.CarpoolingOrdersEntity">
+		select * from tb_carpooling_orders
+		<where>
+			<if test="order_id != null">and `order_id` = #{orderId}</if>
+			<if test="routeId != null">and `route_id` = #{routeId}</if>
+			<if test="orderType != null">and `order_type` = #{orderType}</if>
+			<if test="price != null">and `price` = #{price}</if>
+			<if test="reward != null">and `reward` = #{reward}</if>
+		</where>
+	</select>
+
+	<select id="queryList" resultType="com.hundsun.hscar.entity.CarpoolingOrdersEntity">
+		select * from tb_carpooling_orders 
+		<where>
+			<if test="order_id != null">and `order_id` = #{orderId}</if>
+			<if test="routeId != null">and `route_id` = #{routeId}</if>
+			<if test="orderType != null">and `order_type` = #{orderType}</if>
+			<if test="price != null">and `price` = #{price}</if>
+			<if test="reward != null">and `reward` = #{reward}</if>
+		</where>
+		order by order_id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_carpooling_orders 
+		<where>
+			<if test="order_id != null">and `order_id` = #{orderId}</if>
+			<if test="routeId != null">and `route_id` = #{routeId}</if>
+			<if test="orderType != null">and `order_type` = #{orderType}</if>
+			<if test="price != null">and `price` = #{price}</if>
+			<if test="reward != null">and `reward` = #{reward}</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hundsun.hscar.entity.CarpoolingOrdersEntity">
+		<selectKey keyProperty="orderId" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_carpooling_orders
+		(
+			`order_id`, 
+			`route_id`, 
+			`order_type`, 
+			`price`, 
+			`reward`
+		)
+		values
+		(
+			#{orderId}, 
+			#{routeId}, 
+			#{orderType}, 
+			#{price}, 
+			#{reward}
+		)
+	</insert>
+	
+	<insert id="saveBatch" parameterType="java.util.List">
+		<selectKey keyProperty="orderId" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_carpooling_orders
+		(
+			`order_id`, 
+			`route_id`, 
+			`order_type`, 
+			`price`, 
+			`reward`
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.orderId}, 
+			#{item.routeId}, 
+			#{item.orderType}, 
+			#{item.price}, 
+			#{item.reward}
+		)
+		</foreach>
+	</insert>
+	 
+	<update id="update" parameterType="com.hundsun.hscar.entity.CarpoolingOrdersEntity">
+		update tb_carpooling_orders 
+		<set>
+			<if test="routeId != null">`route_id` = #{routeId}, </if>
+			<if test="orderType != null">`order_type` = #{orderType}, </if>
+			<if test="price != null">`price` = #{price}, </if>
+			<if test="reward != null">`reward` = #{reward}</if>
+		</set>
+		where order_id = #{orderId}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_carpooling_orders where order_id = #{orderId}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_carpooling_orders where order_id in 
+		<foreach item="orderId" collection="array" open="(" separator="," close=")">
+			#{orderId}
+		</foreach>
+	</delete>
+
+</mapper>
