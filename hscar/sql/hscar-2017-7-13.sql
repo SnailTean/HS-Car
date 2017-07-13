@@ -604,6 +604,22 @@ CREATE TABLE `tb_user` (
 -- ----------------------------
 INSERT INTO `tb_user` VALUES ('1', 'mark', '13612345678', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2017-03-23 22:37:41');
 
+-- ----------------------------
+-- Table structure for `tb_user_info`
+-- ----------------------------
+DROP TABLE IF EXISTS `tb_user_info`;
+CREATE TABLE `tb_user` (
+  `user_info_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL COMMENT '用户ID',
+  `user_type` varchar(20) NOT NULL COMMENT '用户类型',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`user_info_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户信息';
+
+-- ----------------------------
+-- Records of tb_user
+-- ----------------------------
+
 
 
 -- ----------------------------
@@ -618,7 +634,7 @@ CREATE TABLE `tb_route_detail` (
   `des_coordinate` VARCHAR(45) NULL COMMENT '出发地坐标',
   `user_id` BIGINT(20) NULL COMMENT '用户ID',
   PRIMARY KEY (`route_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='路线详情表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='路线详情';
   
   -- ----------------------------
 -- Table structure for `tb_carpooling_orders`
@@ -631,7 +647,7 @@ DROP TABLE IF EXISTS `tb_carpooling_orders`;
   `price` DOUBLE NOT NULL COMMENT '价格',
   `reward` DOUBLE NULL COMMENT '奖励',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单';
   
 
 
