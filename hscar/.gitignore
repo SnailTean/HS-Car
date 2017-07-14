@@ -2,9 +2,9 @@
 *.iml
 *.eml
 */bin/
+/bin/
 */target/
+/target/
+*.mvn
 *.classpath
 *.settings
-*.mvn
-/bin/
-/bin/
