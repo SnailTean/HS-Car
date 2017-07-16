@@ -14,6 +14,7 @@ import com.hundsun.hscar.service.api.IUserService;
 
 /**
  * 有@LoginUser注解的方法参数，注入当前登录用户
+ * HandlerMethodArgumentResolver主要负责执行handler前参数准备工作
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
@@ -26,17 +27,23 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         this.userService = userService;
     }
 
+    /**
+     * 解析器是否支持参数
+     */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.getParameterType().isAssignableFrom(UserEntity.class) && parameter.hasParameterAnnotation(LoginUser.class);
     }
 
+    /**
+     * 解析参数,填充到参数值
+     */
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer container,
                                   NativeWebRequest request, WebDataBinderFactory factory) throws Exception {
         //获取用户ID
         Object object = request.getAttribute(AuthorizationInterceptor.LOGIN_USER_KEY, RequestAttributes.SCOPE_REQUEST);
-        if(object == null){
+        if(object == null) {
             return null;
         }
 

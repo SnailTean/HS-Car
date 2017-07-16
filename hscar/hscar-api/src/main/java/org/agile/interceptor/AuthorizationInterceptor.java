@@ -16,6 +16,16 @@ import com.hundsun.hscar.service.api.ITokenService;
 
 /**
  * 权限(Token)验证
+ * Spring提供了HandlerInterceptorAdapter这个适配器，继承此类，可以非常方便的实现自己的拦截器。
+ * 他有三个方法：
+ * (1)在preHandle中，可以进行编码、安全控制等处理;
+ * (2)在postHandle中，有机会修改ModelAndView;
+ * (3)在afterCompletion中，可以根据ex是否为null判断是否发生了异常，进行日志记录。
+ * 当preHandle方法返回false时，从当前拦截器往回执行所有拦截器的afterCompletion方法，再退出拦截器链;
+ * 当preHandle方法全为true时，执行下一个拦截器，直到所有拦截器执行完，再运行被拦截的Controller；
+ * 然后进入拦截器链，运行所有拦截器的postHandle方法；
+ * 完后从最后一个拦截器往回执行所有拦截器的afterCompletion方法；
+ * 当有拦截器抛出异常时，会从当前拦截器往回执行所有拦截器的afterCompletion方法。
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
