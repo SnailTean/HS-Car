@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hundsun.hscar.dao.DriverDao">
+
+	<select id="queryObject" resultType="com.hundsun.hscar.entity.DriverEntity">
+		select * from tb_driver
+		<where>
+			<if test="driverId != null">and `driver_id` = #{driverId}</if>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="driverLicenseNumber != null">and `driver_license_number` = #{driverLicenseNumber}</if>
+			<if test="plateNumber != null">and `plate_number` = #{plateNumber}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+	</select>
+
+	<select id="queryList" resultType="com.hundsun.hscar.entity.DriverEntity">
+		select * from tb_driver 
+		<where>
+			<if test="driverId != null">and `driver_id` = #{driverId}</if>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="driverLicenseNumber != null">and `driver_license_number` = #{driverLicenseNumber}</if>
+			<if test="plateNumber != null">and `plate_number` = #{plateNumber}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+		order by driver_id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_driver 
+		<where>
+			<if test="driverId != null">and `driver_id` = #{driverId}</if>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="driverLicenseNumber != null">and `driver_license_number` = #{driverLicenseNumber}</if>
+			<if test="plateNumber != null">and `plate_number` = #{plateNumber}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hundsun.hscar.entity.DriverEntity" useGeneratedKeys="true" keyProperty="driverId">
+		<selectKey keyProperty="driverId" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_driver
+		(
+			`user_id`, 
+			`driver_license_number`, 
+			`plate_number`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		(
+			#{userId}, 
+			#{driverLicenseNumber}, 
+			#{plateNumber}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	
+	<insert id="saveBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="driverId">
+		<selectKey keyProperty="driverId" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_driver
+		(
+			`user_id`, 
+			`driver_license_number`, 
+			`plate_number`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.userId}, 
+			#{item.driverLicenseNumber}, 
+			#{item.plateNumber}, 
+			#{item.createTime}, 
+			#{item.updateTime}
+		)
+		</foreach>
+	</insert>
+	 
+	<update id="update" parameterType="com.hundsun.hscar.entity.DriverEntity">
+		update tb_driver 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="driverLicenseNumber != null">`driver_license_number` = #{driverLicenseNumber}, </if>
+			<if test="plateNumber != null">`plate_number` = #{plateNumber}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where driver_id = #{driverId}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_driver where driver_id = #{driverId}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_driver where driver_id in 
+		<foreach item="driverId" collection="array" open="(" separator="," close=")">
+			#{driverId}
+		</foreach>
+	</delete>
+
+</mapper>

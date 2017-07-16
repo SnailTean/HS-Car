@@ -10,11 +10,13 @@ import java.util.Map;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-16
  */
 public interface ICarpoolingOrdersService {
 	
-	CarpoolingOrdersEntity queryObject(Long orderId);
+	CarpoolingOrdersEntity queryObjectById(Long orderId);
+	
+	CarpoolingOrdersEntity queryObject(CarpoolingOrdersEntity carpoolingOrders);
 	
 	List<CarpoolingOrdersEntity> queryList(Map<String, Object> map);
 	

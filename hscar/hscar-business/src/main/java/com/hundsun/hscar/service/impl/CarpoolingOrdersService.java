@@ -15,7 +15,7 @@ import com.hundsun.hscar.service.api.ICarpoolingOrdersService;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-16
  */
 @Service("carpoolingOrdersService")
 public class CarpoolingOrdersService implements ICarpoolingOrdersService {
@@ -24,8 +24,15 @@ public class CarpoolingOrdersService implements ICarpoolingOrdersService {
 	private CarpoolingOrdersDao carpoolingOrdersDao;
 	
 	@Override
-	public CarpoolingOrdersEntity queryObject(Long orderId){
-		return carpoolingOrdersDao.queryObject(orderId);
+	public CarpoolingOrdersEntity queryObjectById(Long orderId){
+		CarpoolingOrdersEntity carpoolingOrders = new CarpoolingOrdersEntity();
+		carpoolingOrders.setOrderId(orderId);
+		return carpoolingOrdersDao.queryObject(carpoolingOrders);
+	}
+	
+	@Override
+	public CarpoolingOrdersEntity queryObject(CarpoolingOrdersEntity carpoolingOrders){
+		return carpoolingOrdersDao.queryObject(carpoolingOrders);
 	}
 	
 	@Override

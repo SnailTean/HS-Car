@@ -15,7 +15,7 @@ import com.hundsun.hscar.service.api.IRouteDetailService;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-16
  */
 @Service("routeDetailService")
 public class RouteDetailService implements IRouteDetailService {
@@ -24,8 +24,15 @@ public class RouteDetailService implements IRouteDetailService {
 	private RouteDetailDao routeDetailDao;
 	
 	@Override
-	public RouteDetailEntity queryObject(Long routeId){
-		return routeDetailDao.queryObject(routeId);
+	public RouteDetailEntity queryObjectById(Long routeId){
+		RouteDetailEntity routeDetail = new RouteDetailEntity();
+		routeDetail.setRouteId(routeId);
+		return routeDetailDao.queryObject(routeDetail);
+	}
+	
+	@Override
+	public RouteDetailEntity queryObject(RouteDetailEntity routeDetail){
+		return routeDetailDao.queryObject(routeDetail);
 	}
 	
 	@Override

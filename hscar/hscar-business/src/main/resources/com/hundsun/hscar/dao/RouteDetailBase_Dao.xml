@@ -6,7 +6,7 @@
 	<select id="queryObject" resultType="com.hundsun.hscar.entity.RouteDetailEntity">
 		select * from tb_route_detail
 		<where>
-			<if test="route_id != null">and `route_id` = #{routeId}</if>
+			<if test="routeId != null">and `route_id` = #{routeId}</if>
 			<if test="departure != null">and `departure` = #{departure}</if>
 			<if test="destination != null">and `destination` = #{destination}</if>
 			<if test="depCoordinate != null">and `dep_coordinate` = #{depCoordinate}</if>
@@ -18,7 +18,7 @@
 	<select id="queryList" resultType="com.hundsun.hscar.entity.RouteDetailEntity">
 		select * from tb_route_detail 
 		<where>
-			<if test="route_id != null">and `route_id` = #{routeId}</if>
+			<if test="routeId != null">and `route_id` = #{routeId}</if>
 			<if test="departure != null">and `departure` = #{departure}</if>
 			<if test="destination != null">and `destination` = #{destination}</if>
 			<if test="depCoordinate != null">and `dep_coordinate` = #{depCoordinate}</if>
@@ -34,7 +34,7 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from tb_route_detail 
 		<where>
-			<if test="route_id != null">and `route_id` = #{routeId}</if>
+			<if test="routeId != null">and `route_id` = #{routeId}</if>
 			<if test="departure != null">and `departure` = #{departure}</if>
 			<if test="destination != null">and `destination` = #{destination}</if>
 			<if test="depCoordinate != null">and `dep_coordinate` = #{depCoordinate}</if>

@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hundsun.hscar.dao.UserDao">
+
+	<select id="queryObject" resultType="com.hundsun.hscar.entity.UserEntity">
+		select * from tb_user
+		<where>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="username != null">and `username` = #{username}</if>
+			<if test="mobile != null">and `mobile` = #{mobile}</if>
+			<if test="password != null">and `password` = #{password}</if>
+			<if test="realname != null">and `realname` = #{realname}</if>
+			<if test="sex != null">and `sex` = #{sex}</if>
+			<if test="identityCard != null">and `identity_card` = #{identityCard}</if>
+			<if test="mail != null">and `mail` = #{mail}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+	</select>
+
+	<select id="queryList" resultType="com.hundsun.hscar.entity.UserEntity">
+		select * from tb_user 
+		<where>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="username != null">and `username` = #{username}</if>
+			<if test="mobile != null">and `mobile` = #{mobile}</if>
+			<if test="password != null">and `password` = #{password}</if>
+			<if test="realname != null">and `realname` = #{realname}</if>
+			<if test="sex != null">and `sex` = #{sex}</if>
+			<if test="identityCard != null">and `identity_card` = #{identityCard}</if>
+			<if test="mail != null">and `mail` = #{mail}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+		order by user_id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_user 
+		<where>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="username != null">and `username` = #{username}</if>
+			<if test="mobile != null">and `mobile` = #{mobile}</if>
+			<if test="password != null">and `password` = #{password}</if>
+			<if test="realname != null">and `realname` = #{realname}</if>
+			<if test="sex != null">and `sex` = #{sex}</if>
+			<if test="identityCard != null">and `identity_card` = #{identityCard}</if>
+			<if test="mail != null">and `mail` = #{mail}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hundsun.hscar.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
+		<selectKey keyProperty="userId" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_user
+		(
+			`username`, 
+			`mobile`, 
+			`password`, 
+			`realname`, 
+			`sex`, 
+			`identity_card`, 
+			`mail`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		(
+			#{username}, 
+			#{mobile}, 
+			#{password}, 
+			#{realname}, 
+			#{sex}, 
+			#{identityCard}, 
+			#{mail}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	
+	<insert id="saveBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="userId">
+		<selectKey keyProperty="userId" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_user
+		(
+			`username`, 
+			`mobile`, 
+			`password`, 
+			`realname`, 
+			`sex`, 
+			`identity_card`, 
+			`mail`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.username}, 
+			#{item.mobile}, 
+			#{item.password}, 
+			#{item.realname}, 
+			#{item.sex}, 
+			#{item.identityCard}, 
+			#{item.mail}, 
+			#{item.createTime}, 
+			#{item.updateTime}
+		)
+		</foreach>
+	</insert>
+	 
+	<update id="update" parameterType="com.hundsun.hscar.entity.UserEntity">
+		update tb_user 
+		<set>
+			<if test="username != null">`username` = #{username}, </if>
+			<if test="mobile != null">`mobile` = #{mobile}, </if>
+			<if test="password != null">`password` = #{password}, </if>
+			<if test="realname != null">`realname` = #{realname}, </if>
+			<if test="sex != null">`sex` = #{sex}, </if>
+			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
+			<if test="mail != null">`mail` = #{mail}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where user_id = #{userId}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_user where user_id = #{userId}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_user where user_id in 
+		<foreach item="userId" collection="array" open="(" separator="," close=")">
+			#{userId}
+		</foreach>
+	</delete>
+
+</mapper>

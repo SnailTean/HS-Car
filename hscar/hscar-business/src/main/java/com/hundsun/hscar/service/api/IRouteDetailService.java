@@ -10,11 +10,13 @@ import java.util.Map;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-16
  */
 public interface IRouteDetailService {
 	
-	RouteDetailEntity queryObject(Long routeId);
+	RouteDetailEntity queryObjectById(Long routeId);
+	
+	RouteDetailEntity queryObject(RouteDetailEntity routeDetail);
 	
 	List<RouteDetailEntity> queryList(Map<String, Object> map);
 	
