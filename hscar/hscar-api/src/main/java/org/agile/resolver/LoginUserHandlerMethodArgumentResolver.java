@@ -1,15 +1,16 @@
 package org.agile.resolver;
 
 import org.agile.annotation.LoginUser;
-import org.agile.entity.UserEntity;
 import org.agile.interceptor.AuthorizationInterceptor;
-import org.agile.service.api.IUserService;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import com.hundsun.hscar.entity.UserEntity;
+import com.hundsun.hscar.service.api.IUserService;
 
 /**
  * 有@LoginUser注解的方法参数，注入当前登录用户
@@ -40,7 +41,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
         }
 
         //获取用户信息
-        UserEntity user = userService.queryObject((Long)object);
+        UserEntity user = userService.queryObjectById((Long)object);
 
         return user;
     }

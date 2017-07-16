@@ -3,12 +3,12 @@ package org.agile.api;
 import org.agile.annotation.IgnoreAuth;
 import org.agile.common.ResultVo;
 import org.agile.common.validator.Assert;
-import org.agile.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hundsun.hscar.service.impl.UserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;

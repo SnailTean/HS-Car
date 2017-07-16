@@ -3,7 +3,6 @@ package org.agile.api;
 import org.agile.annotation.IgnoreAuth;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
-import org.agile.entity.UserEntity;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hundsun.hscar.entity.UserEntity;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiOperation;

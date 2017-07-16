@@ -20,9 +20,9 @@ import com.wordnik.swagger.annotations.ApiOperation;
  * @email ryansunboy@gmail.com
  * @date 2017-07-12
  */
-@RestController
-@RequestMapping("/api/customer/order")
-@Api("订单接口")
+//@RestController
+//@RequestMapping("/api/customer/order")
+//@Api("订单接口")
 public class ApiRouteOrderController {
 	@Autowired
 	private IOrderService orderService;

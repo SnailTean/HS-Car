@@ -5,13 +5,14 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.agile.annotation.IgnoreAuth;
 import org.agile.common.exception.RRException;
-import org.agile.entity.TokenEntity;
-import org.agile.service.api.ITokenService;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import com.hundsun.hscar.entity.TokenEntity;
+import com.hundsun.hscar.service.api.ITokenService;
 
 /**
  * 权限(Token)验证
