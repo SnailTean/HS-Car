@@ -79,6 +79,11 @@ public class UserService implements IUserService {
 		userDao.deleteBatch(userIds);
 	}
 	
+	/**
+	 * 顾客用户注册
+	 * @param mobile    手机号
+	 * @param password  密码
+	 */
 	@Override
 	public UserEntity register(String mobile, String password){
 		UserEntity user = new UserEntity();
@@ -90,6 +95,12 @@ public class UserService implements IUserService {
 		return user;
 	}
 
+	/**
+	 * 顾客用户登录
+	 * @param mobile    手机号
+	 * @param password  密码
+	 * @return          返回用户ID
+	 */
 	@Override
 	public long login(String mobile, String password) {
 		UserEntity user = queryObjectByMobile(mobile);

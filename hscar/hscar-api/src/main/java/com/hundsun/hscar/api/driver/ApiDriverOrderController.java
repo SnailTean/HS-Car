@@ -25,6 +25,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 @RequestMapping("/api/driver/order")
 @Api(value = "api-driver-order-controller", description = "车主订单接口", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ApiDriverOrderController {
+	
 	@Autowired
 	private IOrderService orderService;
 
@@ -36,4 +37,5 @@ public class ApiDriverOrderController {
 		orderService.sendOrder();
 		return order;
 	}
+	
 }

@@ -83,6 +83,13 @@ public class DriverService implements IDriverService {
 		driverDao.deleteBatch(driverIds);
 	}
 	
+	/**
+	 * 车主用户注册
+	 * @param mobile    			手机号
+	 * @param password  			密码
+	 * @param driverLicenseNumber	驾照号码
+	 * @param plateNumber  			车牌号
+	 */
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void register(String mobile, String password, String driverLicenseNumber, String plateNumber) {
@@ -95,6 +102,12 @@ public class DriverService implements IDriverService {
 		driverDao.save(driver);
 	}
 
+	/**
+	 * 车主用户登录
+	 * @param mobile    手机号
+	 * @param password  密码
+	 * @return          返回用户ID
+	 */
 	@Override
 	public long login(String mobile, String password) {
 		UserEntity user = userService.queryObjectByMobile(mobile);
