@@ -8,7 +8,7 @@ import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,7 +21,7 @@ import com.alibaba.fastjson.JSON;
  * @email phoenix122411@126.com
  * @date 2017-05-06
  */
-@Component
+@RestControllerAdvice
 public class RRExceptionHandler implements HandlerExceptionResolver {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	
