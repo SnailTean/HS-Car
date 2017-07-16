@@ -607,7 +607,8 @@ CREATE TABLE `tb_user` (
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES ('1', 'mark', '13612345678', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2017-03-23 22:37:41');
+INSERT INTO `tb_user` VALUES ('1', '13333333333', '13333333333', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', null, null, null, null, '2017-07-16 17:05:50', null);
+INSERT INTO `tb_user` VALUES ('2', '13325818953', '13325818953', '176774050b9738fb5b2fe6f3e6fe1dd20fead5ef437d727261ffde19cdc60519', null, null, null, null, '2017-07-16 19:45:34', null);
 
 -- ----------------------------
 -- Table structure for `tb_driver`
@@ -624,10 +625,9 @@ CREATE TABLE `tb_driver` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='司机信息';
 
 -- ----------------------------
--- Records of tb_user
+-- Records of tb_driver
 -- ----------------------------
-
-
+INSERT INTO `tb_driver` VALUES ('1', '2', '888888888', '浙A88888', '2017-07-16 19:45:34', null);
 
 -- ----------------------------
 -- Table structure for `tb_route_detail`
