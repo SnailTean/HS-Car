@@ -16,6 +16,8 @@ public interface IUserService {
 	
 	UserEntity queryObjectById(Long userId);
 	
+	UserEntity queryObjectByMobile(String mobile);
+	
 	UserEntity queryObject(UserEntity user);
 	
 	List<UserEntity> queryList(Map<String, Object> map);
@@ -31,8 +33,6 @@ public interface IUserService {
 	void delete(Long userId);
 	
 	void deleteBatch(Long[] userIds);
-	
-	UserEntity queryByMobile(String mobile);
 
 	/**
 	 * 用户登录

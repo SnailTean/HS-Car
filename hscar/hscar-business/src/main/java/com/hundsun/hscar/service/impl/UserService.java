@@ -1,14 +1,14 @@
 package com.hundsun.hscar.service.impl;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import org.agile.common.exception.RRException;
 import org.agile.common.validator.Assert;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import com.hundsun.hscar.dao.UserDao;
 import com.hundsun.hscar.entity.UserEntity;
@@ -31,6 +31,13 @@ public class UserService implements IUserService {
 	public UserEntity queryObjectById(Long userId){
 		UserEntity user = new UserEntity();
 		user.setUserId(userId);
+		return userDao.queryObject(user);
+	}
+	
+	@Override
+	public UserEntity queryObjectByMobile(String mobile) {
+		UserEntity user = new UserEntity();
+		user.setMobile(mobile);
 		return userDao.queryObject(user);
 	}
 	
@@ -81,15 +88,10 @@ public class UserService implements IUserService {
 	public void deleteBatch(Long[] userIds){
 		userDao.deleteBatch(userIds);
 	}
-	
-	@Override
-	public UserEntity queryByMobile(String mobile) {
-		return userDao.queryByMobile(mobile);
-	}
 
 	@Override
 	public long login(String mobile, String password) {
-		UserEntity user = queryByMobile(mobile);
+		UserEntity user = queryObjectByMobile(mobile);
 		Assert.isNull(user, "手机号或密码错误");
 
 		//密码错误

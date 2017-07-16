@@ -12,9 +12,5 @@ import com.hundsun.hscar.entity.TokenEntity;
  * @date 2017-07-16
  */
 public interface TokenDao extends BaseDao<TokenEntity> {
-	
-	TokenEntity queryByUserId(Long userId);
-
-    TokenEntity queryByToken(String token);
     
 }

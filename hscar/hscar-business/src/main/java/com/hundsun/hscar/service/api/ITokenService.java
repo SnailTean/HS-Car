@@ -16,6 +16,8 @@ public interface ITokenService {
 	
 	TokenEntity queryObjectById(Long userId);
 	
+	TokenEntity queryObjectByToken(String token);
+	
 	TokenEntity queryObject(TokenEntity token);
 	
 	List<TokenEntity> queryList(Map<String, Object> map);
@@ -29,10 +31,6 @@ public interface ITokenService {
 	void delete(Long userId);
 	
 	void deleteBatch(Long[] userIds);
-	
-	TokenEntity queryByUserId(Long userId);
-
-	TokenEntity queryByToken(String token);
 	
 	/**
 	 * 生成token

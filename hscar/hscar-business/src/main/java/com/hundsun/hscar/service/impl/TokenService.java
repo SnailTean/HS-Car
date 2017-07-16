@@ -30,14 +30,21 @@ public class TokenService implements ITokenService {
 	
 	@Override
 	public TokenEntity queryObjectById(Long userId){
-		TokenEntity token = new TokenEntity();
-		token.setUserId(userId);
-		return tokenDao.queryObject(token);
+		TokenEntity tokenEntity = new TokenEntity();
+		tokenEntity.setUserId(userId);
+		return tokenDao.queryObject(tokenEntity);
 	}
 	
 	@Override
-	public TokenEntity queryObject(TokenEntity token){
-		return tokenDao.queryObject(token);
+	public TokenEntity queryObjectByToken(String token) {
+		TokenEntity tokenEntity = new TokenEntity();
+		tokenEntity.setToken(token);
+		return tokenDao.queryObject(tokenEntity);
+	}
+	
+	@Override
+	public TokenEntity queryObject(TokenEntity tokenEntity){
+		return tokenDao.queryObject(tokenEntity);
 	}
 	
 	@Override
@@ -51,13 +58,13 @@ public class TokenService implements ITokenService {
 	}
 	
 	@Override
-	public void save(TokenEntity token){
-		tokenDao.save(token);
+	public void save(TokenEntity tokenEntity){
+		tokenDao.save(tokenEntity);
 	}
 	
 	@Override
-	public void update(TokenEntity token){
-		tokenDao.update(token);
+	public void update(TokenEntity tokenEntity){
+		tokenDao.update(tokenEntity);
 	}
 	
 	@Override
@@ -71,19 +78,10 @@ public class TokenService implements ITokenService {
 	}
 	
 	@Override
-	public TokenEntity queryByUserId(Long userId) {
-		return tokenDao.queryByUserId(userId);
-	}
-
-	@Override
-	public TokenEntity queryByToken(String token) {
-		return tokenDao.queryByToken(token);
-	}
-	
-	@Override
 	public Map<String, Object> createToken(long userId) {
 		//生成一个token
 		String token = UUID.randomUUID().toString();
+		
 		//当前时间
 		Date now = new Date();
 
@@ -91,7 +89,7 @@ public class TokenService implements ITokenService {
 		Date expireTime = new Date(now.getTime() + EXPIRE * 1000);
 
 		//判断是否生成过token
-		TokenEntity tokenEntity = queryByUserId(userId);
+		TokenEntity tokenEntity = queryObjectById(userId);
 		if(tokenEntity == null){
 			tokenEntity = new TokenEntity();
 			tokenEntity.setUserId(userId);
