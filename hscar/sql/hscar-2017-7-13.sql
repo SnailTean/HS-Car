@@ -594,10 +594,15 @@ CREATE TABLE `tb_user` (
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `mobile` varchar(20) NOT NULL COMMENT '手机号',
   `password` varchar(64) DEFAULT NULL COMMENT '密码',
+  `realname` varchar(30) DEFAULT NULL COMMENT '姓名',
+  `sex` varchar(10) DEFAULT NULL COMMENT '性别',
+  `identity_card` varchar(30) DEFAULT NULL COMMENT '身份证',
+  `mail` varchar(30) DEFAULT NULL COMMENT '邮箱',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 -- ----------------------------
 -- Records of tb_user
@@ -605,16 +610,18 @@ CREATE TABLE `tb_user` (
 INSERT INTO `tb_user` VALUES ('1', 'mark', '13612345678', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', '2017-03-23 22:37:41');
 
 -- ----------------------------
--- Table structure for `tb_user_info`
+-- Table structure for `tb_driver`
 -- ----------------------------
-DROP TABLE IF EXISTS `tb_user_info`;
-CREATE TABLE `tb_user` (
-  `user_info_id` bigint(20) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `tb_driver`;
+CREATE TABLE `tb_driver` (
+  `driver_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) NOT NULL COMMENT '用户ID',
-  `user_type` varchar(20) NOT NULL COMMENT '用户类型',
+  `driver_license_number` varchar(30) NOT NULL COMMENT '驾照号码',
+  `plate_number` varchar(30) NOT NULL COMMENT '车牌号',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  PRIMARY KEY (`user_info_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户信息';
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`driver_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='司机信息';
 
 -- ----------------------------
 -- Records of tb_user
