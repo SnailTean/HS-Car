@@ -12,42 +12,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
-import com.hundsun.hscar.entity.RouteDetailEntity;
-import com.hundsun.hscar.service.api.IRouteDetailService;
+import com.hundsun.hscar.entity.UserEntity;
+import com.hundsun.hscar.service.api.IUserService;
 import org.agile.common.page.PageUtils;
 import org.agile.common.page.Query;
 import org.agile.common.ResultVo;
 
 
 /**
- * 路线详情表
+ * 用户信息
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
  * @date 2017-07-16
  */
 @Controller
-@RequestMapping("/hundsun/hscar/routeDetail")
-public class RouteDetailController {
+@RequestMapping("/hundsun/hscar/user")
+public class UserController {
 	@Autowired
-	private IRouteDetailService routeDetailService;
+	private IUserService userService;
 	
 	/**
 	 * 列表
 	 */
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("hundsun:hscar:routeDetail:list")
+	@RequiresPermissions("hundsun:hscar:user:list")
 	public ResultVo list(Integer page, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
 		map.put("limit", limit);
 		
 		//查询列表数据
-		List<RouteDetailEntity> routeDetailList = routeDetailService.queryList(map);
-		int total = routeDetailService.queryTotal(map);
+		List<UserEntity> userList = userService.queryList(map);
+		int total = userService.queryTotal(map);
 		
-		PageUtils pageUtil = new PageUtils(routeDetailList, total, limit, page);
+		PageUtils pageUtil = new PageUtils(userList, total, limit, page);
 		
 		return ResultVo.ok().put("page", pageUtil);
 	}
@@ -57,12 +57,12 @@ public class RouteDetailController {
 	 * 信息
 	 */
 	@ResponseBody
-	@RequestMapping("/info/{routeId}")
-	@RequiresPermissions("hundsun:hscar:routeDetail:info")
-	public ResultVo info(@PathVariable("routeId") Long routeId){
-		RouteDetailEntity routeDetail = routeDetailService.queryObjectById(routeId);
+	@RequestMapping("/info/{userId}")
+	@RequiresPermissions("hundsun:hscar:user:info")
+	public ResultVo info(@PathVariable("userId") Long userId){
+		UserEntity user = userService.queryObjectById(userId);
 		
-		return ResultVo.ok().put("routeDetail", routeDetail);
+		return ResultVo.ok().put("user", user);
 	}
 	
 	/**
@@ -70,9 +70,9 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("hundsun:hscar:routeDetail:save")
-	public ResultVo save(@RequestBody RouteDetailEntity routeDetail){
-		routeDetailService.save(routeDetail);
+	@RequiresPermissions("hundsun:hscar:user:save")
+	public ResultVo save(@RequestBody UserEntity user){
+		userService.save(user);
 		
 		return ResultVo.ok();
 	}
@@ -82,9 +82,9 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("hundsun:hscar:routeDetail:update")
-	public ResultVo update(@RequestBody RouteDetailEntity routeDetail){
-		routeDetailService.update(routeDetail);
+	@RequiresPermissions("hundsun:hscar:user:update")
+	public ResultVo update(@RequestBody UserEntity user){
+		userService.update(user);
 		
 		return ResultVo.ok();
 	}
@@ -94,9 +94,9 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delete")
-	@RequiresPermissions("hundsun:hscar:routeDetail:delete")
-	public ResultVo delete(@RequestBody Long[] routeIds){
-		routeDetailService.deleteBatch(routeIds);
+	@RequiresPermissions("hundsun:hscar:user:delete")
+	public ResultVo delete(@RequestBody Long[] userIds){
+		userService.deleteBatch(userIds);
 		
 		return ResultVo.ok();
 	}

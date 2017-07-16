@@ -24,7 +24,7 @@ import org.agile.common.ResultVo;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-16
  */
 @Controller
 @RequestMapping("/hundsun/hscar/carpoolingOrders")
@@ -60,7 +60,7 @@ public class CarpoolingOrdersController {
 	@RequestMapping("/info/{orderId}")
 	@RequiresPermissions("hundsun:hscar:carpoolingOrders:info")
 	public ResultVo info(@PathVariable("orderId") Long orderId){
-		CarpoolingOrdersEntity carpoolingOrders = carpoolingOrdersService.queryObject(orderId);
+		CarpoolingOrdersEntity carpoolingOrders = carpoolingOrdersService.queryObjectById(orderId);
 		
 		return ResultVo.ok().put("carpoolingOrders", carpoolingOrders);
 	}
