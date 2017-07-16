@@ -6,7 +6,7 @@
 	<select id="queryObject" resultType="${package}.entity.${className}Entity">
 		select * from ${tableName}
 		<where>
-			<if test="${pk.columnName} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
+			<if test="${pk.attrname} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
 			<if test="$column.attrname != null">and `$column.columnName` = #{$column.attrname}</if>
@@ -18,7 +18,7 @@
 	<select id="queryList" resultType="${package}.entity.${className}Entity">
 		select * from ${tableName} 
 		<where>
-			<if test="${pk.columnName} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
+			<if test="${pk.attrname} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
 			<if test="$column.attrname != null">and `$column.columnName` = #{$column.attrname}</if>
@@ -34,7 +34,7 @@
  	<select id="queryTotal" resultType="int">
 		select count(*) from ${tableName} 
 		<where>
-			<if test="${pk.columnName} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
+			<if test="${pk.attrname} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
 			<if test="$column.attrname != null">and `$column.columnName` = #{$column.attrname}</if>

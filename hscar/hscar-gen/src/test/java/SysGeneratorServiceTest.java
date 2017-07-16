@@ -25,12 +25,8 @@ public class SysGeneratorServiceTest {
 	String zipPath = "E://hscar-code//code.zip";
 	
 	//表名
-	String[] tableNames = new String[] {"tb_carpooling_orders","tb_route_detail"};
-//	String[] tableNames = new String[] {"pay_account_bank","pay_account_capital_close",
-//			"pay_account_capital_priority","pay_allowance_config","pay_bank_config",
-//			"pay_cash_serial","pay_channel_config","pay_charge_config","pay_collect_capital_close",
-//			"pay_collect_capital_priority","pay_customer_channel_openinfo","pay_file_collect_temp",
-//			"pay_fail_call","pay_nonpreferred_channel_config","pay_system_config","pay_total_collect"};
+//	String[] tableNames = new String[] {"tb_token", "tb_user", "tb_driver"};
+	String[] tableNames = new String[] {"tb_carpooling_orders","tb_route_detail", "tb_token", "tb_user","tb_driver"};
 
 	@Test
 	public void testGeneratorCode() throws IOException {

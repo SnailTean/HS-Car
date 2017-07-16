@@ -60,7 +60,7 @@ public class ${className}Controller {
 	@RequestMapping("/info/{${pk.attrname}}")
 	@RequiresPermissions("${shiroPermissionsPrefix}:info")
 	public ResultVo info(@PathVariable("${pk.attrname}") ${pk.attrType} ${pk.attrname}){
-		${className}Entity ${classname} = ${classname}Service.queryObject(${pk.attrname});
+		${className}Entity ${classname} = ${classname}Service.queryObjectById(${pk.attrname});
 		
 		return ResultVo.ok().put("${classname}", ${classname});
 	}

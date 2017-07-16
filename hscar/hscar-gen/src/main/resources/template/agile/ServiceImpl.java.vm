@@ -24,8 +24,15 @@ public class ${className}Service implements I${className}Service {
 	private ${className}Dao ${classname}Dao;
 	
 	@Override
-	public ${className}Entity queryObject(${pk.attrType} ${pk.attrname}){
-		return ${classname}Dao.queryObject(${pk.attrname});
+	public ${className}Entity queryObjectById(${pk.attrType} ${pk.attrname}){
+		${className}Entity ${classname} = new ${className}Entity();
+		${classname}.set${pk.attrName}(${pk.attrname});
+		return ${classname}Dao.queryObject(${classname});
+	}
+	
+	@Override
+	public ${className}Entity queryObject(${className}Entity ${classname}){
+		return ${classname}Dao.queryObject(${classname});
 	}
 	
 	@Override
