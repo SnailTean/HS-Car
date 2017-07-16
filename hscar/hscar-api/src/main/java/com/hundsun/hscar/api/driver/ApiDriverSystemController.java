@@ -5,6 +5,7 @@ import java.util.Map;
 import org.agile.annotation.IgnoreAuth;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
+import org.agile.common.exception.RRException;
 import org.agile.common.validator.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hundsun.hscar.entity.DriverEntity;
 import com.hundsun.hscar.entity.UserEntity;
+import com.hundsun.hscar.service.api.IDriverService;
 import com.hundsun.hscar.service.api.ITokenService;
 import com.hundsun.hscar.service.api.IUserService;
 import com.wordnik.swagger.annotations.Api;
@@ -35,7 +38,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
 public class ApiDriverSystemController {
 	
 	@Autowired
-    private IUserService userService;
+    private IDriverService driverService;
 	
     @Autowired
     private ITokenService tokenService;
@@ -48,13 +51,17 @@ public class ApiDriverSystemController {
     @ApiOperation(value = "车主注册", notes = "用于注册车主类用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
     	@ApiImplicitParam(paramType = "query", dataType="string", name = "mobile", value = "手机号", required = true),
-    	@ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true)
+    	@ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true),
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "driverLicenseNumber", value = "驾照号码", required = true),
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "plateNumber", value = "车牌号", required = true)
     })
-    public ResultVo register(String mobile, String password) {
+    public ResultVo register(String mobile, String password, String driverLicenseNumber, String plateNumber) {
         Assert.isBlank(mobile, "手机号不能为空");
         Assert.isBlank(password, "密码不能为空");
+        Assert.isBlank(driverLicenseNumber, "驾照号码");
+        Assert.isBlank(plateNumber, "车牌号");
 
-        userService.save(mobile, password);
+        driverService.register(mobile, password, driverLicenseNumber, plateNumber);
 
         return ResultVo.ok();
     }
@@ -74,8 +81,8 @@ public class ApiDriverSystemController {
         Assert.isBlank(password, "密码不能为空");
 
         //用户登录
-        long userId = userService.login(mobile, password);
-
+        long userId = driverService.login(mobile, password);
+        
         //生成token
         Map<String, Object> map = tokenService.createToken(userId);
 
@@ -85,13 +92,27 @@ public class ApiDriverSystemController {
     /**
      * 获取用户信息
      */
-//    @ResponseBody
-//    @RequestMapping(value = "userInfo")
-    @GetMapping("userInfo")
+    @ResponseBody
+    @RequestMapping(value = "userInfo")
 	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
     @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
     public ResultVo userInfo(@LoginUser UserEntity user) {
         return ResultVo.ok().put("user", user);
+    }
+    
+    /**
+     * 获取车主信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "driverInfo")
+	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
+    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
+    public ResultVo driverInfo(@LoginUser UserEntity user) {
+    	if(user==null || user.getUserId()==null) {
+    		return ResultVo.ok().put("driver", null);
+    	}
+    	DriverEntity driverEntity = driverService.queryObjectByUserId(user.getUserId());
+        return ResultVo.ok().put("driver", driverEntity);
     }
     
     /**

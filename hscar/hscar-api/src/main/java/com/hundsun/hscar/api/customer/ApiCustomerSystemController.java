@@ -54,7 +54,7 @@ public class ApiCustomerSystemController {
         Assert.isBlank(mobile, "手机号不能为空");
         Assert.isBlank(password, "密码不能为空");
 
-        userService.save(mobile, password);
+        userService.register(mobile, password);
 
         return ResultVo.ok();
     }
@@ -85,9 +85,8 @@ public class ApiCustomerSystemController {
     /**
      * 获取用户信息
      */
-//    @ResponseBody
-//    @RequestMapping(value = "userInfo")
-    @GetMapping("userInfo")
+    @ResponseBody
+    @RequestMapping(value = "userInfo")
 	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
     @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
     public ResultVo userInfo(@LoginUser UserEntity user) {

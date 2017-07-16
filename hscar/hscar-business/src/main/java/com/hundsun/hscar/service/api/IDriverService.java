@@ -1,9 +1,9 @@
 package com.hundsun.hscar.service.api;
 
-import com.hundsun.hscar.entity.DriverEntity;
-
 import java.util.List;
 import java.util.Map;
+
+import com.hundsun.hscar.entity.DriverEntity;
 
 /**
  * 司机信息
@@ -15,6 +15,8 @@ import java.util.Map;
 public interface IDriverService {
 	
 	DriverEntity queryObjectById(Long driverId);
+	
+	DriverEntity queryObjectByUserId(Long userId);
 	
 	DriverEntity queryObject(DriverEntity driver);
 	
@@ -29,4 +31,21 @@ public interface IDriverService {
 	void delete(Long driverId);
 	
 	void deleteBatch(Long[] driverIds);
+	
+	/**
+	 * 车主用户注册
+	 * @param mobile    			手机号
+	 * @param password  			密码
+	 * @param driverLicenseNumber	驾照号码
+	 * @param plateNumber  			车牌号
+	 */
+	void register(String mobile, String password, String driverLicenseNumber, String plateNumber);
+
+	/**
+	 * 车主用户登录
+	 * @param mobile    手机号
+	 * @param password  密码
+	 * @return          返回用户ID
+	 */
+	long login(String mobile, String password);
 }

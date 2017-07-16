@@ -21,7 +21,6 @@ import com.hundsun.hscar.service.api.ITokenService;
  * @email phoenix122411@126.com
  * @date 2017-05-06
  */
-//@Component
 public class CustomerAuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private ITokenService tokenService;

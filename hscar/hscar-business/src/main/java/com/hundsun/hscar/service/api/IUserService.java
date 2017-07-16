@@ -1,9 +1,9 @@
 package com.hundsun.hscar.service.api;
 
-import com.hundsun.hscar.entity.UserEntity;
-
 import java.util.List;
 import java.util.Map;
+
+import com.hundsun.hscar.entity.UserEntity;
 
 /**
  * 用户信息
@@ -26,16 +26,21 @@ public interface IUserService {
 	
 	void save(UserEntity user);
 	
-	void save(String mobile, String password);
-	
 	void update(UserEntity user);
 	
 	void delete(Long userId);
 	
 	void deleteBatch(Long[] userIds);
+	
+	/**
+	 * 顾客用户注册
+	 * @param mobile    手机号
+	 * @param password  密码
+	 */
+	UserEntity register(String mobile, String password);
 
 	/**
-	 * 用户登录
+	 * 顾客用户登录
 	 * @param mobile    手机号
 	 * @param password  密码
 	 * @return          返回用户ID

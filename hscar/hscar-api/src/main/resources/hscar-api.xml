@@ -54,7 +54,7 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/api/driver/**" />
-			<bean class="org.agile.interceptor.AuthorizationInterceptor" />
+			<bean class="org.agile.interceptor.DriverAuthorizationInterceptor" />
 			<!-- <ref bean="authorizationInterceptor" /> -->
 		</mvc:interceptor>
 	</mvc:interceptors>

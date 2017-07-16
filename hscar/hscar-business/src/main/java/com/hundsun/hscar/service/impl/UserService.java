@@ -64,16 +64,6 @@ public class UserService implements IUserService {
 	}
 	
 	@Override
-	public void save(String mobile, String password){
-		UserEntity user = new UserEntity();
-		user.setMobile(mobile);
-		user.setUsername(mobile);
-		user.setPassword(DigestUtils.sha256Hex(password));
-		user.setCreateTime(new Date());
-		userDao.save(user);
-	}
-	
-	@Override
 	public void update(UserEntity user){
 		user.setUpdateTime(new Date());
 		userDao.update(user);
@@ -87,6 +77,17 @@ public class UserService implements IUserService {
 	@Override
 	public void deleteBatch(Long[] userIds){
 		userDao.deleteBatch(userIds);
+	}
+	
+	@Override
+	public UserEntity register(String mobile, String password){
+		UserEntity user = new UserEntity();
+		user.setMobile(mobile);
+		user.setUsername(mobile);
+		user.setPassword(DigestUtils.sha256Hex(password));
+		user.setCreateTime(new Date());
+		userDao.save(user);
+		return user;
 	}
 
 	@Override

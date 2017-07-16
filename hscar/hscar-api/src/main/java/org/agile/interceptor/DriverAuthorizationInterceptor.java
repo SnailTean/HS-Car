@@ -7,24 +7,27 @@ import org.agile.annotation.IgnoreAuth;
 import org.agile.common.exception.RRException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.hundsun.hscar.entity.DriverEntity;
 import com.hundsun.hscar.entity.TokenEntity;
+import com.hundsun.hscar.service.api.IDriverService;
 import com.hundsun.hscar.service.api.ITokenService;
 
 /**
- * 权限(Token)验证
+ * 车主权限(Token)验证
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
  * @date 2017-05-06
  */
-@Component
-public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
+public class DriverAuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private ITokenService tokenService;
+    
+    @Autowired
+    private IDriverService driverService;
 
     public static final String LOGIN_USER_KEY = "LOGIN_USER_KEY";
 
@@ -59,6 +62,12 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
         TokenEntity tokenEntity = tokenService.queryObjectByToken(token);
         if(tokenEntity == null || tokenEntity.getExpireTime().getTime() < System.currentTimeMillis()) {
             throw new RRException("token失效，请重新登录");
+        }
+        
+        //查询是否存在车主记录
+        DriverEntity driverEntity = driverService.queryObjectByUserId(tokenEntity.getUserId());
+        if(driverEntity == null) {
+            throw new RRException("不存在车主记录，请注册");
         }
 
         //设置userId到request里，后续根据userId，获取用户信息
