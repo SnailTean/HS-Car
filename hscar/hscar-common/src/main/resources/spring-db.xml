@@ -109,7 +109,7 @@
     <!-- Mybatis配置 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<!-- basePackage指定要扫描的包，在此包之下的映射器都会被搜索到。可指定多个包，包与包之间用逗号或分号分隔。 -->
-		<property name="basePackage" value="org.agile.dao,com.hundsun.hscar.customer.dao,com.hundsun.hscar.driver.dao" />
+		<property name="basePackage" value="org.agile.dao,com.hundsun.hscar.dao" />
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
 	</bean>
 	
@@ -119,8 +119,7 @@
 		<property name="mapperLocations">
 			<array>
 				<value>classpath*:org/agile/dao/*Dao.xml</value>
-				<value>classpath*:com/hundsun/hscar/customer/dao/*Dao.xml</value>
-				<value>classpath*:com/hundsun/hscar/driver/dao/*Dao.xml</value>
+				<value>classpath*:com/hundsun/hscar/dao/*Dao.xml</value>
 			</array>
 		</property>
 	</bean>
