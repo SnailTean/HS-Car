@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-	<context:component-scan base-package="org.agile.api" use-default-filters="false">
+	<context:component-scan base-package="org.agile,com.hundsun.hscar.api" use-default-filters="false">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
 	</context:component-scan>
@@ -48,8 +48,14 @@
 
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/api/**" />
-			<ref bean="authorizationInterceptor" />
+			<mvc:mapping path="/api/customer/**" />
+			<bean class="org.agile.interceptor.CustomerAuthorizationInterceptor" />
+			<!-- <ref bean="authorizationInterceptor" /> -->
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/api/driver/**" />
+			<bean class="org.agile.interceptor.AuthorizationInterceptor" />
+			<!-- <ref bean="authorizationInterceptor" /> -->
 		</mvc:interceptor>
 	</mvc:interceptors>
 

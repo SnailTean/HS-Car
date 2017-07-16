@@ -1,6 +1,7 @@
 package com.hundsun.hscar.api.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,16 +15,17 @@ import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
- * 行程订单
+ * 顾客订单
  * 
  * @author Ryan
  * @email ryansunboy@gmail.com
  * @date 2017-07-12
  */
-//@RestController
-//@RequestMapping("/api/customer/order")
-//@Api("订单接口")
-public class ApiRouteOrderController {
+@RestController
+@RequestMapping("/api/customer/order")
+@Api(value = "api-customer-order-controller", description = "顾客订单接口", produces = MediaType.APPLICATION_JSON_VALUE)
+public class ApiCustomerOrderController {
+	
 	@Autowired
 	private IOrderService orderService;
 
@@ -35,4 +37,5 @@ public class ApiRouteOrderController {
 		orderService.sendOrder();
 		return order;
 	}
+	
 }

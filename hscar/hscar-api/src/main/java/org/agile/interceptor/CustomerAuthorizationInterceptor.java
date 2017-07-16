@@ -15,14 +15,14 @@ import com.hundsun.hscar.entity.TokenEntity;
 import com.hundsun.hscar.service.api.ITokenService;
 
 /**
- * 权限(Token)验证
+ * 顾客权限(Token)验证
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
  * @date 2017-05-06
  */
 //@Component
-public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
+public class CustomerAuthorizationInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     private ITokenService tokenService;
 
