@@ -601,14 +601,15 @@ CREATE TABLE `tb_user` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`),
-  UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户信息';
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `mobile` (`mobile`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息';
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES ('1', '13333333333', '13333333333', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', null, null, null, null, '2017-07-16 17:05:50', null);
-INSERT INTO `tb_user` VALUES ('2', '13325818953', '13325818953', '176774050b9738fb5b2fe6f3e6fe1dd20fead5ef437d727261ffde19cdc60519', null, null, null, null, '2017-07-16 19:45:34', null);
+INSERT INTO `tb_user` VALUES ('1', '13333333333', '13333333333', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', null, null, null, null, '2017-07-17 10:26:57', null);
+INSERT INTO `tb_user` VALUES ('2', '13325818953', '13325818953', '176774050b9738fb5b2fe6f3e6fe1dd20fead5ef437d727261ffde19cdc60519', null, null, null, null, '2017-07-17 10:29:18', null);
 
 -- ----------------------------
 -- Table structure for `tb_driver`
@@ -621,13 +622,15 @@ CREATE TABLE `tb_driver` (
   `plate_number` varchar(30) NOT NULL COMMENT '车牌号',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`driver_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='司机信息';
+  PRIMARY KEY (`driver_id`),
+  UNIQUE KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司机信息';
 
 -- ----------------------------
 -- Records of tb_driver
 -- ----------------------------
-INSERT INTO `tb_driver` VALUES ('1', '2', '888888888', '浙A88888', '2017-07-16 19:45:34', null);
+INSERT INTO `tb_driver` VALUES ('1', '1', '33333333', '浙A33333', '2017-07-17 10:26:56', null);
+INSERT INTO `tb_driver` VALUES ('2', '2', '88888888', '浙A88888', '2017-07-17 10:41:46', null);
 
 -- ----------------------------
 -- Table structure for `tb_route_detail`

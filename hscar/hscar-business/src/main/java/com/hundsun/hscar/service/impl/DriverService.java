@@ -93,12 +93,20 @@ public class DriverService implements IDriverService {
 	@Override
 	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
 	public void register(String mobile, String password, String driverLicenseNumber, String plateNumber) {
-		UserEntity user = userService.register(mobile, password);
 		DriverEntity driver = new DriverEntity();
-		driver.setUserId(user.getUserId());
 		driver.setDriverLicenseNumber(driverLicenseNumber);
 		driver.setPlateNumber(plateNumber);
 		driver.setCreateTime(new Date());
+		
+		UserEntity user = userService.queryObjectByMobile(mobile);
+		if(user == null) { // 未注册过顾客用户
+			user = userService.register(mobile, password);
+			driver.setUserId(user.getUserId());
+		} else { // 已注册过顾客用户(注册车主时要验证手机号和密码与顾客用户一致)
+			Long userId = userService.login(mobile, password);
+			driver.setUserId(userId);
+		}
+		
 		driverDao.save(driver);
 	}
 
