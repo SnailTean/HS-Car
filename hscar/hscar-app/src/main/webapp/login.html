@@ -3,25 +3,29 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>恒生拼车app</title>
-	<!-- Tell the browser to be responsive to screen width -->
 	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	
+	<title>恒生拼车app</title>
+	
 	<link rel="stylesheet" href="statics/libs/bootstrap-3.3.7/bootstrap.min.css">
 	<link rel="stylesheet" href="statics/css/font-awesome.min.css">
 	<link rel="stylesheet" href="statics/css/AdminLTE.min.css">
-	<!-- AdminLTE Skins. Choose a skin from the css/skins
-	     folder instead of downloading all of them to reduce the load. -->
+	
+	<!-- AdminLTE Skins. Choose a skin from the css/skins folder instead of downloading all of them to reduce the load. -->
 	<link rel="stylesheet" href="statics/css/all-skins.min.css">
 	<link rel="stylesheet" href="statics/css/main.css">
-	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+	
+	<!-- 饿了么基于Vue的组件库Element UI。官网地址为http://element.eleme.io/ -->
+	<link rel="stylesheet" href="statics/plugins/element-ui-1.3.3/element-ui.css" />
+
 	<!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	<![endif]-->
 </head>
+
 <body class="hold-transition login-page">
-<div class="login-box" id="rrapp" v-cloak>
+<div class="login-box" id="hs_car_app" v-cloak>
   	<div class="login-logo">
     	<b>恒生拼车app</b>
   	</div>
@@ -48,10 +52,12 @@
         	&nbsp;&nbsp;&nbsp;&nbsp;
         	<a href="javascript:;" @click="refreshCode">点击刷新</a>
       	</div>
-      	
       	<div class="row">
         	<div class="col-xs-8">
-          		<div class="checkbox icheck"></div>
+          		<el-radio-group v-model="user_type_radio">
+					<el-radio-button label="乘客"></el-radio-button>
+					<el-radio-button label="司机"></el-radio-button>
+				</el-radio-group>
         	</div>
         	<div class="col-xs-4">
           		<button type="button" class="btn btn-primary btn-block btn-flat" @click="login">登录</button>
@@ -63,13 +69,16 @@
 <script src="statics/libs/jquery.min.js"></script>
 <script src="statics/plugins/jqgrid/jquery.jqGrid.min.js"></script>
 <script src="statics/libs/vue-2.3.3/vue.min.js"></script>
+<!-- 饿了么基于Vue的组件库Element UI。官网地址为http://element.eleme.io/ -->
+<script src="statics/plugins/element-ui-1.3.3/element-ui.js"></script>
 <script src="statics/libs/bootstrap-3.3.7/bootstrap.min.js"></script>
 <script src="statics/libs/app.js"></script>
 <script src="js/common.js"></script>
 <script type="text/javascript">
 	var vm = new Vue({
-		el:'#rrapp',
+		el:'#hs_car_app',
 		data:{
+			user_type_radio: '乘客',
 			mobile: '',
 			password: '',
 			captcha: '',
@@ -96,7 +105,11 @@
 				    success: function(result) {
 						if(result.code == 0) { // 登录成功
 							localStorage.setItem("token", result.token);
-							parent.location.href ='index.html';
+							if(vm.user_type_radio == "乘客") {
+								parent.location.href ='customer_index.html';
+							} else if(vm.user_type_radio == "司机") {
+								parent.location.href ='index.html';
+							}
 						} else {
 							vm.error = true;
 							vm.errorMsg = result.msg;
