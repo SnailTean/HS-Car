@@ -18,7 +18,7 @@ var baseURL = "/hscar-app/";
 
 //登录token
 var token = localStorage.getItem("token");
-if(token == 'null'){
+if(token == 'null') {
     parent.location.href = baseURL + 'login.html';
 }
 
@@ -31,23 +31,14 @@ $.ajaxSetup({
     },
     complete: function(xhr) {
         //token过期，则跳转到登录页面
-        if(xhr.responseJSON.code == 401){
+        if(xhr.responseJSON.code == 401) {
             parent.location.href = baseURL + 'login.html';
         }
     }
 });
 
-//权限判断
-function hasPermission(permission) {
-    if (window.parent.permissions.indexOf(permission) > -1) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
 //重写alert
-window.alert = function(msg, callback){
+window.alert = function(msg, callback) {
 	parent.layer.alert(msg, function(index){
 		parent.layer.close(index);
 		if(typeof(callback) === "function"){
@@ -57,7 +48,7 @@ window.alert = function(msg, callback){
 }
 
 //重写confirm式样框
-window.confirm = function(msg, callback){
+window.confirm = function(msg, callback) {
 	parent.layer.confirm(msg, {btn: ['确定','取消']},
 	function(){//确定事件
 		if(typeof(callback) === "function"){
