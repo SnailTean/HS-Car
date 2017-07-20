@@ -34,7 +34,7 @@
 			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
 				<span class="icon icon-menu"></span>
 			</a>
-			<h1 class="title">司机</h1>
+			<h1 class="title">司机{{user.username}}</h1>
 		</header>
 	  	
 	  	<!-- 百度地图 -->
@@ -82,20 +82,14 @@
 			password: ''
 		},
 		methods: {
-			close: function () {
-				alert("close");
-	        },
-			test: function () {
-				alert('测试成功', function() {
-					
+			getUser: function(userId) {
+				$.get(baseURL + "api/customer/system/userInfo", function(r){
+					vm.user = r.user;
 				});
-	        },
-	        logout: function () {
-				//删除本地token
-	            localStorage.removeItem("token");
-	            //跳转到登录页面
-	            location.href = 'login.html';
-	        }
+			},
+		},
+		created: function() {
+			this.getUser();
 		}
 	});
 </script>
