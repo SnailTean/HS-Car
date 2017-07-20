@@ -26,7 +26,7 @@
 			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
 				<span class="icon icon-menu"></span>
 			</a>
-			<h1 class="title">乘客</h1>
+			<h1 class="title">乘客{{user.username}}</h1>
 		</header>
 	  	
 	  	<!-- 百度地图 -->
@@ -71,9 +71,17 @@
 	var vm = new Vue({
 		el:'#hs_car_app',
 		data:{
-			password: ''
+			user: {}
 		},
 		methods: {
+			getUser: function(userId) {
+				$.get(baseURL + "api/customer/system/userInfo", function(r){
+					vm.user = r.user;
+				});
+			},
+		},
+		created: function() {
+			this.getUser();
 		}
 	});
 </script>

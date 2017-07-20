@@ -106,7 +106,7 @@
 						if(result.code == 0) { // 登录成功
 							localStorage.setItem("token", result.token);
 							if(vm.user_type_radio == "乘客") {
-								parent.location.href ='customer_index.html';
+								parent.location.href ='hscar/app/customer/customer_index.html';
 							} else if(vm.user_type_radio == "司机") {
 								parent.location.href ='driver_index.html';
 							}

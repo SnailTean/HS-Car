@@ -13,5 +13,5 @@ $("#settings_logout").click(function(){
     localStorage.removeItem("token");
 	
     //跳转到登录页面
-    location.href = 'login.html';
+    location.href = baseURL + 'login.html';
 });
