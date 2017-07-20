@@ -1,8 +1,3 @@
-//jqGrid的配置信息
-$.jgrid.defaults.width = 1000;
-$.jgrid.defaults.responsive = true;
-$.jgrid.defaults.styleUI = 'Bootstrap';
-
 //工具集合Tools
 window.T = {};
 
@@ -18,7 +13,7 @@ var url = function(name) {
 T.p = url;
 
 //请求前缀
-//var baseURL = "http://demo.open.renren.io/hscar-admin/";
+//var baseURL = "http://demo.open.renren.io/hscar-app/";
 var baseURL = "/hscar-app/";
 
 //登录token
@@ -38,15 +33,6 @@ $.ajaxSetup({
         //token过期，则跳转到登录页面
         if(xhr.responseJSON.code == 401){
             parent.location.href = baseURL + 'login.html';
-        }
-    }
-});
-
-//jqgrid全局配置
-$.extend($.jgrid.defaults, {
-    ajaxGridOptions : {
-        headers: {
-            "token": token
         }
     }
 });
@@ -78,55 +64,4 @@ window.confirm = function(msg, callback){
 			callback("ok");
 		}
 	});
-}
-
-//选择一条记录
-function getSelectedRow() {
-    var grid = $("#jqGrid");
-    
-    var rowKey = grid.getGridParam("selrow");
-    if(!rowKey){
-    	alert("请选择一条记录");
-    	return ;
-    }
-    
-    var selectedIDs = grid.getGridParam("selarrrow");
-    if(selectedIDs.length > 1){
-    	alert("只能选择一条记录");
-    	return ;
-    }
-    
-    return selectedIDs[0];
-}
-
-//选择多条记录
-function getSelectedRows() {
-    var grid = $("#jqGrid");
-    
-    var rowKey = grid.getGridParam("selrow");
-    if(!rowKey){
-    	alert("请选择一条记录");
-    	return ;
-    }
-    
-    return grid.getGridParam("selarrrow");
-}
-
-//选择一条记录，得到整行信息
-function getSelectedRowData() {
-	var grid = $("#jqGrid");
-	
-    var rowKey = grid.getGridParam("selrow");
-    if(!rowKey){
-    	alert("请选择一条记录");
-    	return ;
-    }
-    
-    var selectedIDs = grid.getGridParam("selarrrow");
-    if(selectedIDs.length > 1){
-    	alert("只能选择一条记录");
-    	return ;
-    }
-	
-    return grid.jqGrid("getRowData", selectedIDs[0]);
 }

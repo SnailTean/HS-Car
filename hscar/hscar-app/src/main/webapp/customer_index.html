@@ -9,22 +9,30 @@
 	
 	<title>乘客</title>
 	
-	<!-- 饿了么基于Vue的组件库Element UI。官网地址为http://element.eleme.io/ -->
-<!-- 	<link rel="stylesheet" href="statics/plugins/element-ui-1.3.3/element-ui.css" /> -->
+	<!-- JQuery -->
+	<script src="statics/libs/jquery.min.js"></script>
 	
-	<!-- 阿里巴巴手机H5组件库SUI Mobile。官网地址为http://m.sui.taobao.org/ -->
-	<link rel="shortcut icon" href="http://m.sui.taobao.org/favicon.ico">
-	<link rel="stylesheet" href="https://g.alicdn.com/msui/sm/0.6.2/css/sm.min.css">
-	<link rel="stylesheet" href="https://g.alicdn.com/msui/sm/0.6.2/css/??sm.min.css,sm-extend.min.css">
-
 	<!-- Vue 2.x -->
 	<script src="statics/libs/vue-2.3.3/vue.min.js"></script>
+	
+	<!-- 饿了么基于Vue的组件库Element UI。官网地址为http://element.eleme.io/ -->
+	<!-- <link rel="stylesheet" href="statics/plugins/element-ui-1.3.3/element-ui.css" /> -->
+	<!-- <script src="statics/plugins/element-ui-1.3.3/element-ui.js"></script> -->
+	
+	<!-- 轻量级手机UI库Light7。官网地址为http://www.light7.cn/ -->
+	<link rel="stylesheet" href="statics/plugins/light7/css/light7.min.css">
+	<link rel="stylesheet" href="statics/plugins/light7/css/light7-swiper.min.css">
+	<script type='text/javascript' src='statics/plugins/light7/js/light7.min.js' charset='utf-8'></script>
+	<script type='text/javascript' src='statics/plugins/light7/js/light7-swiper.min.js' charset='utf-8'></script>
 	
 	<!-- 百度地图 -->
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OihY4z4wvuoxt8LjUNKTqf05"></script>
 	<style type="text/css">
 		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 	</style>
+	
+	<!-- 全局js -->
+	<script src="js/common.js"></script>
 </head>
 
 <body>
@@ -126,6 +134,7 @@
 	</div>
 </div>
 
+<!-- Vue -->
 <script type="text/javascript">
 	var vm = new Vue({
 		el:'#hs_car_app',
@@ -143,15 +152,8 @@
 		}
 	});
 </script>
-<!-- 饿了么基于Vue的组件库Element UI。官网地址为http://element.eleme.io/ -->
-<!-- <script src="statics/plugins/element-ui-1.3.3/element-ui.js"></script> -->
-<!-- 阿里巴巴手机H5组件库SUI Mobile。官网地址为http://m.sui.taobao.org/ -->
-<script type='text/javascript' src='https://g.alicdn.com/sj/lib/zepto/zepto.min.js' charset='utf-8'></script>
-<script type='text/javascript' src='https://g.alicdn.com/msui/sm/0.6.2/js/sm.min.js' charset='utf-8'></script>
-<script type='text/javascript' src='https://g.alicdn.com/msui/sm/0.6.2/js/sm-extend.min.js' charset='utf-8'></script>
+<!-- Light7 -->
 <script>
-	$.init();
-	
 	$("#logout").click(function(){ 
 		vm.logout();
 	}); 
