@@ -7,7 +7,7 @@
 	<meta name="apple-mobile-web-app-capable" content="yes">
 	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	
-	<title>乘客</title>
+	<title>司机</title>
 	
 	<!-- JQuery -->
 	<script src="statics/libs/jquery.min.js" type="text/javascript"></script>
@@ -32,6 +32,13 @@
 	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OihY4z4wvuoxt8LjUNKTqf05"></script>
 	<style type="text/css">
 		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+	</style>
+	
+	<style>
+		.card-header {
+			height: 10rem;
+			overflow: hidden;
+		}
 	</style>
 	
 	<!-- 全局js -->
@@ -62,16 +69,16 @@
 	  	</a>
   	</nav>
   	
-  	<!-- 首页page -->
+	<!-- 首页page -->
   	<div id="page-home" class="page page-home page-current page-inited">
-		
+			
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
 			<a class="icon icon-settings pull-left open-panel"></a> 
 			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
 				<span class="icon icon-menu"></span>
 			</a>
-			<h1 class="title">乘客</h1>
+			<h1 class="title">司机</h1>
 		</header>
 	  	
 	  	<!-- 百度地图 -->
@@ -102,8 +109,8 @@
 				</div>
 			</div>
 		</div>
-	</div>
-	
+  	</div>
+
   	<!-- 其他的单个page内联页（如果有） -->
 	<div class="page">...</div>
 
@@ -136,6 +143,7 @@
 			</div>
 		</div>
 	</div>
+	
 </div>
 
 
@@ -145,7 +153,6 @@
 	var vm = new Vue({
 		el:'#hs_car_app',
 		data:{
-			user_type_radio: '乘客',
 			password: ''
 		},
 		methods: {
@@ -208,6 +215,6 @@
 	var myCity = new BMap.LocalCity();
 	myCity.get(myFun);
 </script>
-
+	
 </body>
 </html>
