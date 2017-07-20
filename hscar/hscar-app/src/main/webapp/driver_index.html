@@ -34,15 +34,16 @@
 		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 	</style>
 	
+	<!-- 全局js -->
+	<script src="js/common.js"></script>
+	
+	<!-- 自定义样式 -->
 	<style>
 		.card-header {
 			height: 10rem;
 			overflow: hidden;
 		}
 	</style>
-	
-	<!-- 全局js -->
-	<script src="js/common.js"></script>
 </head>
 
 <body>
@@ -71,7 +72,7 @@
   	
 	<!-- 首页page -->
   	<div id="page-home" class="page page-home page-current page-inited">
-			
+
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
 			<a class="icon icon-settings pull-left open-panel"></a> 
@@ -109,7 +110,7 @@
 				</div>
 			</div>
 		</div>
-  	</div>
+	</div>
 
   	<!-- 其他的单个page内联页（如果有） -->
 	<div class="page">...</div>
@@ -215,6 +216,6 @@
 	var myCity = new BMap.LocalCity();
 	myCity.get(myFun);
 </script>
-	
+
 </body>
 </html>

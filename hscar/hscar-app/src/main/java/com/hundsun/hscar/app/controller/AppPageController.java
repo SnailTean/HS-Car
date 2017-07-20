@@ -15,6 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AppPageController {
 
 	/**
+	 * 共用页面(如header.html)
+	 */
+	@RequestMapping("hscar/app/{url}.html")
+	public String header_include(@PathVariable("url") String url) {
+		return "hscar/app/" + url + ".html";
+	}
+	
+	/**
 	 * 手机端-顾客页面
 	 */
 	@RequestMapping("hscar/app/customer/{url}.html")
