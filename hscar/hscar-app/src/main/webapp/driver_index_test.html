@@ -79,22 +79,21 @@
 		</header>
 	  	
 	  	<!-- 这里是页面内容区 -->
-	  	<div class="content infinite-scroll" data-distance="100">
-		    <div class="list-block">
-		        <ul class="list-container">
-		        </ul>
-		    </div>
-		    <!-- preloader -->
-		    <div class="infinite-scroll-preloader">
-		        <div class="preloader"></div>
-		    </div>
+		<div class="content pull-to-refresh-content" data-ptr-distance="55">
+			<div class="pull-to-refresh-layer">
+				<div class="preloader"></div>
+				<div class="pull-to-refresh-arrow"></div>
+			</div>
+			<div class="card">
+				<div class="card-header">card</div>
+				<div class="card-content">
+					<div class="card-content-inner">Hello there! I am a card;</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
-  	<!-- 其他的单个page内联页（如果有） -->
-	<div class="page">...</div>
-
-	<!-- popup、panel等放在这里 -->
+	<!-- 关于 -->
 	<div class="popup popup-about">
 		<div class="content-block">
 			<h2 class="text-center">恒生拼车App</h2>
@@ -102,9 +101,9 @@
 			<p><a class="button close-popup">确定</a></p>
 		</div>
 	</div>
-	<div class="panel-overlay"></div>
 	
-	<!-- 左侧菜单栏 -->
+	<!-- 设置菜单栏 -->
+	<div class="panel-overlay"></div>
 	<div class="panel panel-left panel-reveal theme-dark">
 		<div class="content-block">
 			<p>设置</p>
@@ -156,41 +155,21 @@
 
 <!-- Light7 -->
 <script type="text/javascript">
-	var loading = false;
-	var maxItems = 100;
-	var itemsPerLoad = 20;
+	$(document).on('refresh', '.pull-to-refresh-content',function(e) {
+		setTimeout(function() {
+			var cardHTML = '<div class="card">' +
+	                       		'<div class="card-header">New Card</div>' +
+	                          	'<div class="card-content">' +
+	                            	'<div class="card-content-inner">' +
+	                                	'Hello! I am the new card!'+(Math.random()*1000000)+
+	                            	'</div>' +
+	                          	'</div>' +
+	                       '</div>';
 
-	function addItems(number, lastIndex) {
-        var html = '';
-        for (var i = lastIndex + 1; i <= lastIndex + number; i++) {
-            html += '<li class="item-content"><div class="item-inner"><div class="item-title">Item ' + i + '</div></div></li>';
-        }
-        $('.list-container').append(html);
-    }
-	addItems(itemsPerLoad, 0);
-	
-	var lastIndex = 20;
-
-	$(document).on('infinite', '.infinite-scroll',function() {
-	
-	    // 如果正在加载，则退出
-	    if (loading) return;
-	
-	    // 设置flag
-	    loading = true;
-	
-	    setTimeout(function() {
-	        loading = false;
-	
-	        if (lastIndex >= maxItems) {
-	            $.detachInfiniteScroll($('.infinite-scroll'));
-	            $('.infinite-scroll-preloader').remove();
-	            return;
-	        }
-	
-	        addItems(itemsPerLoad, lastIndex);
-	        lastIndex = $('.list-container li').length;
-	    }, 1000);
+			$(e.target).find('.card').replaceWith(cardHTML);
+			
+			$.pullToRefreshDone('.pull-to-refresh-content');
+		}, 2000);
 	});
 </script>
 

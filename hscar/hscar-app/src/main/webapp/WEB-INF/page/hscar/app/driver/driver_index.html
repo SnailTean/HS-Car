@@ -3,20 +3,6 @@
 <head>
 <title>司机</title>
 #parse("hscar/app/header.html")
-
-<!-- 百度地图 -->
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OihY4z4wvuoxt8LjUNKTqf05"></script>
-<style type="text/css">
-	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
-</style>
-
-<!-- 自定义样式 -->
-<style>
-	.card-header {
-		height: 10rem;
-		overflow: hidden;
-	}
-</style>
 </head>
 <body>
 <!-- vue作用域 -->
@@ -26,7 +12,7 @@
   	#parse("hscar/app/driver/driver_toolbar.html")
   	
 	<!-- 司机首页：主体内容 -->
-  	<div id="page-home" class="page page-home page-current page-inited">
+  	<div id="page-driver-home" class="page page-home page-current page-inited">
 			
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
@@ -37,35 +23,67 @@
 			<h1 class="title">司机{{user.username}}</h1>
 		</header>
 	  	
-	  	<!-- 百度地图 -->
-	  	<div id="allmap"></div>
-	  	
 	  	<!-- 这里是页面内容区 -->
-	  	<div class="content native-scroll">
-			<div class="page-index">
-				<div class="content">
-					<div class="content-block">
-						<div class="list-block">
-							<ul>
-								<li><div class="item-content"><div class="item-inner">
-									<div class="item-title label">出发地</div>
-									<div class="item-input">
-										<input type="text" placeholder="选择出发地" id='origin_picker' readonly />
-									</div>
-								</div></div></li>
-								<li><div class="item-content"><div class="item-inner">
-									<div class="item-title label">目的地</div>
-									<div class="item-input">
-										<input type="text" placeholder="选择目的地" id='destination_picker' readonly />
-									</div>
-								</div></div></li>
-							</ul>
+		<div class="content">
+			<div class="content-block-title">待接订单</div>
+			<div class="list-block media-list">
+				<ul>
+					<li><a href="#" class="item-link item-content">
+						<div class="item-media">
+							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
 						</div>
-					</div>
-				</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">出发地：凤起东路118号</div>
+								<div class="item-after">￥50</div>
+							</div>
+							<div class="item-subtitle">目的地：星光大道二期</div>
+							<div class="item-text">2个人，学生打扮</div>
+						</div>
+					</a></li>
+					<li><a href="#" class="item-link item-content">
+						<div class="item-media">
+							<img src="${rc.contextPath}/statics/images/2.gif" width="80">
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">出发地：天城路18号</div>
+								<div class="item-after">￥20</div>
+							</div>
+							<div class="item-subtitle">目的地：火车东站</div>
+							<div class="item-text">1个人，有2个行李箱</div>
+						</div>
+					</a></li>
+					<li><a href="#" class="item-link item-content">
+						<div class="item-media">
+							<img src="${rc.contextPath}/statics/images/3.gif" width="80">
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">出发地：西湖文化广场</div>
+								<div class="item-after">￥120</div>
+							</div>
+							<div class="item-subtitle">目的地：萧山机场</div>
+							<div class="item-text">3个人，行李有点多</div>
+						</div>
+					</a></li>
+					<li><a href="#" class="item-link item-content">
+						<div class="item-media">
+							<img src="${rc.contextPath}/statics/images/4.gif" width="80">
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">出发地：文一西路</div>
+								<div class="item-after">￥30</div>
+							</div>
+							<div class="item-subtitle">目的地：浙大紫金港校区</div>
+							<div class="item-text">1个人，学生打扮，背黑色书包</div>
+						</div>
+					</a></li>
+				</ul>
 			</div>
 		</div>
-  	</div>
+	</div>
 
   	<!-- 关于 -->
 	#parse("hscar/app/about.html")
@@ -99,45 +117,8 @@
 
 <!-- Light7 -->
 <script type="text/javascript">
-	$("#origin_picker").picker({
-		toolbarTemplate: '<header class="bar bar-nav">\
-					  		  <button class="button button-link pull-left">按钮</button>\
-					  		  <button class="button button-link pull-right close-picker">确定</button>\
-					  		  <h1 class="title">出发地</h1>\
-					  	  </header>',
-	  	cols: [{
-	      	textAlign: 'center',
-	      	values: ['地址1', '地址2', '地址3', '地址4', '地址5', '地址6']
-	    }]
-	});
-	
-	$("#destination_picker").picker({
-		toolbarTemplate: '<header class="bar bar-nav">\
-					  		  <button class="button button-link pull-left">按钮</button>\
-					  		  <button class="button button-link pull-right close-picker">确定</button>\
-					  		  <h1 class="title">目的地</h1>\
-					  	  </header>',
-	  	cols: [{
-	      	textAlign: 'center',
-	      	values: ['地址11', '地址22', '地址33', '地址44', '地址55', '地址66']
-	    }]
-	});
+
 </script>
 
-<!-- 百度地图 -->
-<script type="text/javascript">
-	var map = new BMap.Map("allmap");
-	var point = new BMap.Point(116.331398,39.897445);
-	map.centerAndZoom(point,12);
-
-	function myFun(result){
-		var cityName = result.name;
-		map.setCenter(cityName);
-		console.log("当前定位城市:"+cityName);
-	}
-	var myCity = new BMap.LocalCity();
-	myCity.get(myFun);
-</script>
-	
 </body>
 </html>
