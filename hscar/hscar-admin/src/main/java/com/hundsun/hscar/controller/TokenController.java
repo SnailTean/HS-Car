@@ -24,10 +24,10 @@ import org.agile.common.ResultVo;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-16
+ * @date 2017-07-26
  */
 @Controller
-@RequestMapping("/hundsun/hscar/token")
+@RequestMapping("/hscar/token")
 public class TokenController {
 	@Autowired
 	private ITokenService tokenService;
@@ -37,7 +37,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("hundsun:hscar:token:list")
+	@RequiresPermissions("hscar:token:list")
 	public ResultVo list(Integer page, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
@@ -58,7 +58,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{userId}")
-	@RequiresPermissions("hundsun:hscar:token:info")
+	@RequiresPermissions("hscar:token:info")
 	public ResultVo info(@PathVariable("userId") Long userId){
 		TokenEntity token = tokenService.queryObjectById(userId);
 		
@@ -70,7 +70,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("hundsun:hscar:token:save")
+	@RequiresPermissions("hscar:token:save")
 	public ResultVo save(@RequestBody TokenEntity token){
 		tokenService.save(token);
 		
@@ -82,7 +82,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("hundsun:hscar:token:update")
+	@RequiresPermissions("hscar:token:update")
 	public ResultVo update(@RequestBody TokenEntity token){
 		tokenService.update(token);
 		
@@ -94,7 +94,7 @@ public class TokenController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delete")
-	@RequiresPermissions("hundsun:hscar:token:delete")
+	@RequiresPermissions("hscar:token:delete")
 	public ResultVo delete(@RequestBody Long[] userIds){
 		tokenService.deleteBatch(userIds);
 		

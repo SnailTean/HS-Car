@@ -105,17 +105,17 @@ public class AgileGenUtils {
 		String packagePath = config.getString("package");
 		String[] packageArr = packagePath.split("\\.");
 		String controllerName = "";
-		for (int i=1; i<packageArr.length; i++) {
+		for (int i = 2; i < packageArr.length; i++) {
 			controllerName += "/" + packageArr[i];
 		}
 		controllerName += "/" + tableEntity.getClassname();
 		String shiroPermissionsPrefix = "";
-		for (int i=1; i<packageArr.length; i++) {
+		for (int i = 2; i < packageArr.length; i++) {
 			shiroPermissionsPrefix += packageArr[i] + ":";
 		}
 		shiroPermissionsPrefix += tableEntity.getClassname();
 		String pagePath = "";
-		for (int i=1; i<packageArr.length; i++) {
+		for (int i = 2; i < packageArr.length; i++) {
 			pagePath += "/" + packageArr[i];
 		}
 		Map<String, Object> map = new HashMap<>();

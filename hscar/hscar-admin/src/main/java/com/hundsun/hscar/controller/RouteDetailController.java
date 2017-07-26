@@ -20,14 +20,14 @@ import org.agile.common.ResultVo;
 
 
 /**
- * 路线详情表
+ * 路线详情
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-16
+ * @date 2017-07-26
  */
 @Controller
-@RequestMapping("/hundsun/hscar/routeDetail")
+@RequestMapping("/hscar/routeDetail")
 public class RouteDetailController {
 	@Autowired
 	private IRouteDetailService routeDetailService;
@@ -37,7 +37,7 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("hundsun:hscar:routeDetail:list")
+	@RequiresPermissions("hscar:routeDetail:list")
 	public ResultVo list(Integer page, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
@@ -58,7 +58,7 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{routeId}")
-	@RequiresPermissions("hundsun:hscar:routeDetail:info")
+	@RequiresPermissions("hscar:routeDetail:info")
 	public ResultVo info(@PathVariable("routeId") Long routeId){
 		RouteDetailEntity routeDetail = routeDetailService.queryObjectById(routeId);
 		
@@ -70,7 +70,7 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("hundsun:hscar:routeDetail:save")
+	@RequiresPermissions("hscar:routeDetail:save")
 	public ResultVo save(@RequestBody RouteDetailEntity routeDetail){
 		routeDetailService.save(routeDetail);
 		
@@ -82,7 +82,7 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("hundsun:hscar:routeDetail:update")
+	@RequiresPermissions("hscar:routeDetail:update")
 	public ResultVo update(@RequestBody RouteDetailEntity routeDetail){
 		routeDetailService.update(routeDetail);
 		
@@ -94,7 +94,7 @@ public class RouteDetailController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delete")
-	@RequiresPermissions("hundsun:hscar:routeDetail:delete")
+	@RequiresPermissions("hscar:routeDetail:delete")
 	public ResultVo delete(@RequestBody Long[] routeIds){
 		routeDetailService.deleteBatch(routeIds);
 		

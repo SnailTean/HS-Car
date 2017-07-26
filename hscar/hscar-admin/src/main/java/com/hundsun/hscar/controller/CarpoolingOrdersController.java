@@ -20,14 +20,14 @@ import org.agile.common.ResultVo;
 
 
 /**
- * 订单表
+ * 订单
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-16
+ * @date 2017-07-26
  */
 @Controller
-@RequestMapping("/hundsun/hscar/carpoolingOrders")
+@RequestMapping("/hscar/carpoolingOrders")
 public class CarpoolingOrdersController {
 	@Autowired
 	private ICarpoolingOrdersService carpoolingOrdersService;
@@ -37,7 +37,7 @@ public class CarpoolingOrdersController {
 	 */
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("hundsun:hscar:carpoolingOrders:list")
+	@RequiresPermissions("hscar:carpoolingOrders:list")
 	public ResultVo list(Integer page, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
@@ -58,7 +58,7 @@ public class CarpoolingOrdersController {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{orderId}")
-	@RequiresPermissions("hundsun:hscar:carpoolingOrders:info")
+	@RequiresPermissions("hscar:carpoolingOrders:info")
 	public ResultVo info(@PathVariable("orderId") Long orderId){
 		CarpoolingOrdersEntity carpoolingOrders = carpoolingOrdersService.queryObjectById(orderId);
 		
@@ -70,7 +70,7 @@ public class CarpoolingOrdersController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("hundsun:hscar:carpoolingOrders:save")
+	@RequiresPermissions("hscar:carpoolingOrders:save")
 	public ResultVo save(@RequestBody CarpoolingOrdersEntity carpoolingOrders){
 		carpoolingOrdersService.save(carpoolingOrders);
 		
@@ -82,7 +82,7 @@ public class CarpoolingOrdersController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("hundsun:hscar:carpoolingOrders:update")
+	@RequiresPermissions("hscar:carpoolingOrders:update")
 	public ResultVo update(@RequestBody CarpoolingOrdersEntity carpoolingOrders){
 		carpoolingOrdersService.update(carpoolingOrders);
 		
@@ -94,7 +94,7 @@ public class CarpoolingOrdersController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delete")
-	@RequiresPermissions("hundsun:hscar:carpoolingOrders:delete")
+	@RequiresPermissions("hscar:carpoolingOrders:delete")
 	public ResultVo delete(@RequestBody Long[] orderIds){
 		carpoolingOrdersService.deleteBatch(orderIds);
 		

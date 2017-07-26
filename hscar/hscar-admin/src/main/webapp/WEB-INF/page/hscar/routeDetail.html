@@ -1,22 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>路线详情表</title>
+<title>路线详情</title>
 #parse("sys/header.html")
 </head>
 <body>
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
-			#if($shiro.hasPermission("hundsun:hscar:routeDetail:save"))
-			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			#end
-			#if($shiro.hasPermission("hundsun:hscar:routeDetail:update"))
-			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			#end
-			#if($shiro.hasPermission("hundsun:hscar:routeDetail:delete"))
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			#end
+			<a v-if="hasPermission('hscar:routeDetail:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('hscar:routeDetail:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a v-if="hasPermission('hscar:routeDetail:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
@@ -64,6 +58,6 @@
 	</div>
 </div>
 
-<script src="${rc.contextPath}/js/hundsun/hscar/routeDetail.js?_${date.systemTime}"></script>
+<script src="${rc.contextPath}/js/hscar/routeDetail.js?_${date.systemTime}"></script>
 </body>
 </html>

@@ -24,10 +24,10 @@ import org.agile.common.ResultVo;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-16
+ * @date 2017-07-26
  */
 @Controller
-@RequestMapping("/hundsun/hscar/driver")
+@RequestMapping("/hscar/driver")
 public class DriverController {
 	@Autowired
 	private IDriverService driverService;
@@ -37,7 +37,7 @@ public class DriverController {
 	 */
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("hundsun:hscar:driver:list")
+	@RequiresPermissions("hscar:driver:list")
 	public ResultVo list(Integer page, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
@@ -58,7 +58,7 @@ public class DriverController {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{driverId}")
-	@RequiresPermissions("hundsun:hscar:driver:info")
+	@RequiresPermissions("hscar:driver:info")
 	public ResultVo info(@PathVariable("driverId") Long driverId){
 		DriverEntity driver = driverService.queryObjectById(driverId);
 		
@@ -70,7 +70,7 @@ public class DriverController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("hundsun:hscar:driver:save")
+	@RequiresPermissions("hscar:driver:save")
 	public ResultVo save(@RequestBody DriverEntity driver){
 		driverService.save(driver);
 		
@@ -82,7 +82,7 @@ public class DriverController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("hundsun:hscar:driver:update")
+	@RequiresPermissions("hscar:driver:update")
 	public ResultVo update(@RequestBody DriverEntity driver){
 		driverService.update(driver);
 		
@@ -94,7 +94,7 @@ public class DriverController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delete")
-	@RequiresPermissions("hundsun:hscar:driver:delete")
+	@RequiresPermissions("hscar:driver:delete")
 	public ResultVo delete(@RequestBody Long[] driverIds){
 		driverService.deleteBatch(driverIds);
 		
