@@ -34,7 +34,7 @@ public class ApiDriverOrderController {
 	@ApiImplicitParam(name = "order", value = "订单详细实体order", required = true, dataType = "OrderVo")
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public OrderVo postOrder(@RequestBody OrderVo order) {
-		orderService.sendOrder();
+		//orderService.sendOrder();
 		return order;
 	}
 	

@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hundsun.hscar.dto.OrderDto;
+import com.hundsun.hscar.entity.RouteDetailEntity;
 import com.hundsun.hscar.service.api.IOrderService;
 import com.hundsun.hscar.vo.OrderVo;
+import com.hundsun.hscar.vo.RouteDetailVo;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -34,7 +37,18 @@ public class ApiCustomerOrderController {
 	@ApiImplicitParam(name = "order", value = "订单详细实体order", required = true, dataType = "OrderVo")
 	@RequestMapping(value = "", method = RequestMethod.POST)
 	public OrderVo postOrder(@RequestBody OrderVo order) {
-		orderService.sendOrder();
+		RouteDetailVo routeDetailVo  = order.getRouteDetail();
+		RouteDetailEntity routeEntity = new RouteDetailEntity();
+		routeEntity.setDeparture(routeDetailVo.getDeparture());
+		routeEntity.setDepCoordinate(routeDetailVo.getDep_coordinate());
+		routeEntity.setDesCoordinate(routeDetailVo.getDes_coordinate());
+		routeEntity.setDestination(routeDetailVo.getDestination());
+		//routeEntity.setUserId(userId);
+		OrderDto orderDto=new OrderDto();
+		orderDto.setRouteDetail(routeEntity);
+		orderDto.setOrderType(order.getOrderType());
+		orderDto.setTime(order.getTime());
+		orderService.sendOrder(orderDto);
 		return order;
 	}
 	
