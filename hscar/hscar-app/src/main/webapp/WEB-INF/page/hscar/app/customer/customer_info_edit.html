@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>乘客</title>
+#parse("hscar/app/header.html")
+</head>
+<body>
+<!-- vue作用域 -->
+<div id="hs_car_app">
+	
+	<!-- 乘客首页：主体内容 -->
+  	<div id="page-customer-home" class="page page-home page-current page-inited">
+
+		<!-- 标题栏 -->
+		<header class="bar bar-nav">
+		  	<a class="button button-link button-nav pull-left back" href="javascript:history.back();">
+		    	<span class="icon icon-left"></span>返回
+		  	</a>
+		  	<h1 class="title">个人信息编辑</h1>
+		</header>
+	  	
+	  	<!-- 这里是页面内容区 -->
+	  	<div class="content">
+			<div class="list-block">
+			  	<ul>
+				  	<li>
+				    	<div class="item-content">
+				      		<div class="item-media"><i class="icon icon-form-name"></i></div>
+				      		<div class="item-inner">
+				        		<div class="item-title label">姓名</div>
+				        		<div class="item-input">
+				          			<input type="text" placeholder="请输入姓名">
+				        		</div>
+				      		</div>
+				    	</div>
+					</li>
+				  	<li>
+				    	<div class="item-content">
+					      	<div class="item-media"><i class="icon icon-form-email"></i></div>
+					      	<div class="item-inner">
+					        	<div class="item-title label">邮箱</div>
+					        	<div class="item-input">
+					          		<input type="email" placeholder="请输入邮箱">
+					        	</div>
+					      	</div>
+				    	</div>
+				  	</li>
+				  	<li>
+				    	<div class="item-content">
+					    	<div class="item-media"><i class="icon icon-form-password"></i></div>
+					      	<div class="item-inner">
+					        	<div class="item-title label">密码</div>
+					        	<div class="item-input">
+					          		<input type="password" placeholder="请输入密码">
+					        	</div>
+					      	</div>
+				    	</div>
+				  	</li>
+				  	<li>
+				    	<div class="item-content">
+				      		<div class="item-media"><i class="icon icon-form-gender"></i></div>
+				      		<div class="item-inner">
+				        		<div class="item-title label">性别</div>
+				        		<div class="item-input">
+					          		<select>
+					            		<option>男</option>
+					            		<option>女</option>
+					          		</select>
+					        	</div>
+				      		</div>
+				    	</div>
+				  	</li>
+				  	<li>
+				    	<div class="item-content">
+				      		<div class="item-media"><i class="icon icon-form-calendar"></i></div>
+				      		<div class="item-inner">
+				        		<div class="item-title label">生日</div>
+				        		<div class="item-input">
+				          			<input type="date" placeholder="请选择生日">
+				        		</div>
+				      		</div>
+				    	</div>
+				  	</li>
+				    <li>
+				      	<div class="item-content">
+				        	<div class="item-media"><i class="icon icon-form-toggle"></i></div>
+				        	<div class="item-inner">
+				          		<div class="item-title label">Switch</div>
+				          		<div class="item-input">
+				            		<label class="label-switch">
+				              			<input type="checkbox">
+				              			<div class="checkbox"></div>
+				            		</label>
+				          		</div>
+				        	</div>
+				      	</div>
+				    </li>
+				    <li class="align-top">
+				      	<div class="item-content">
+				        	<div class="item-media"><i class="icon icon-form-comment"></i></div>
+				        	<div class="item-inner">
+				          		<div class="item-title label">备注</div>
+				         	 	<div class="item-input">
+				            		<textarea></textarea>
+				          		</div>
+				        	</div>
+				      	</div>
+				    </li>
+			  	</ul>
+			</div>
+			<div class="content-block">
+			  	<div class="row">
+			    	<div class="col-50"><a onclick="javascript:history.back();" class="button button-big button-fill button-danger">取消</a></div>
+			    	<div class="col-50"><a @click="save" class="button button-big button-fill button-success">保存</a></div>
+			  	</div>
+			</div>
+  		</div>
+	</div>
+</div>
+
+<!-- Vue -->
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#hs_car_app',
+		data:{
+			user: {}
+		},
+		methods: {
+			getUser: function(userId) {
+				$.get(baseURL + "api/customer/system/userInfo", function(r){
+					vm.user = r.user;
+				});
+			},
+			save: function(userId) {
+				alert("保存成功!", function() {});
+			}
+		},
+		created: function() {
+			this.getUser();
+		}
+	});
+</script>
+
+<!-- 设置菜单栏 -->
+<script src="${rc.contextPath}/js/hscar/app/settings.js" type="text/javascript"></script>
+
+<!-- Light7 -->
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>
