@@ -58,12 +58,13 @@ public class ApiDriverSystemController {
     public ResultVo register(String mobile, String password, String driverLicenseNumber, String plateNumber) {
         Assert.isBlank(mobile, "手机号不能为空");
         Assert.isBlank(password, "密码不能为空");
-        Assert.isBlank(driverLicenseNumber, "驾照号码");
-        Assert.isBlank(plateNumber, "车牌号");
+        Assert.isBlank(driverLicenseNumber, "驾照号码不能为空");
+        Assert.isBlank(plateNumber, "车牌号不能为空");
 
         driverService.register(mobile, password, driverLicenseNumber, plateNumber);
 
-        return ResultVo.ok();
+		return login(mobile, password);
+//		return ResultVo.ok();
     }
     
     /**

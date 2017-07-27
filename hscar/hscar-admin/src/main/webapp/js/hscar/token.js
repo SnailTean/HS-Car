@@ -1,13 +1,12 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'carpoolingOrders/list',
+        url: baseURL + 'token/list',
         datatype: "json",
         colModel: [			
-			{ label: 'orderId', name: 'orderId', width: 50, key: true },
-			{ label: '', name: 'routeId', width: 80 }, 			
-			{ label: '1:即时订单、2:预约订单', name: 'orderType', width: 80 }, 			
-			{ label: '价格', name: 'price', width: 80 }, 			
-			{ label: '奖励', name: 'reward', width: 80 }			
+			{ label: 'userId', name: 'userId', width: 50, key: true },
+			{ label: 'token', name: 'token', width: 80 }, 			
+			{ label: '过期时间', name: 'expireTime', width: 80 }, 			
+			{ label: '更新时间', name: 'updateTime', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -41,7 +40,7 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		carpoolingOrders: {}
+		token: {}
 	},
 	methods: {
 		query: function () {
@@ -50,25 +49,25 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.carpoolingOrders = {};
+			vm.token = {};
 		},
 		update: function (event) {
-			var orderId = getSelectedRow();
-			if(orderId == null){
+			var userId = getSelectedRow();
+			if(userId == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "修改";
             
-            vm.getInfo(orderId);
+            vm.getInfo(userId);
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.carpoolingOrders.orderId == null ? "carpoolingOrders/save" : "carpoolingOrders/update";
+			var url = vm.token.userId == null ? "token/save" : "token/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
 			    contentType: "application/json",
-			    data: JSON.stringify(vm.carpoolingOrders),
+			    data: JSON.stringify(vm.token),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -81,17 +80,17 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var orderIds = getSelectedRows();
-			if(orderIds == null){
+			var userIds = getSelectedRows();
+			if(userIds == null){
 				return ;
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "carpoolingOrders/delete",
+				    url: baseURL + "token/delete",
 				    contentType: "application/json",
-				    data: JSON.stringify(orderIds),
+				    data: JSON.stringify(userIds),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -104,9 +103,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(orderId){
-			$.get("carpoolingOrders/info/"+orderId, function(r){
-                vm.carpoolingOrders = r.carpoolingOrders;
+		getInfo: function(userId){
+			$.get("token/info/"+userId, function(r){
+                vm.token = r.token;
             });
 		},
 		reload: function (event) {

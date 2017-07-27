@@ -31,7 +31,7 @@
   	</div>
 
   	<div class="login-box-body">
-		<p class="login-box-msg">管理员登录</p>
+		<p class="login-box-msg">乘客注册</p>
       	<div v-if="error" class="alert alert-danger alert-dismissible">
         	<h4 style="margin-bottom: 0px;"><i class="fa fa-exclamation-triangle"></i> {{errorMsg}}</h4>
       	</div>
@@ -44,24 +44,16 @@
         	<span class="glyphicon glyphicon-lock form-control-feedback"></span>
       	</div>
       	<div class="form-group has-feedback">
-        	<input type="text" class="form-control" v-model="captcha" @keyup.enter="login" placeholder="验证码">
-        	<span class="glyphicon glyphicon-warning-sign form-control-feedback"></span>
-      	</div>
-      	<div class="form-group has-feedback">
-        	<img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode">
-        	&nbsp;&nbsp;&nbsp;&nbsp;
-        	<a href="javascript:;" @click="refreshCode">点击刷新</a>
+        	<input type="password" class="form-control" v-model="confirmPassword" placeholder="确认密码">
+        	<span class="glyphicon glyphicon-lock form-control-feedback"></span>
       	</div>
       	<div class="row">
-        	<div class="col-xs-6">
-          		<el-radio-group v-model="user_type_radio">
-					<el-radio-button label="乘客"></el-radio-button>
-					<el-radio-button label="司机"></el-radio-button>
-				</el-radio-group>
+      		<div class="col-xs-2"></div>
+      		<div class="col-xs-4">
+      			<a class="btn btn-primary" href="login.html"><i class="fa"></i>返回</a>
         	</div>
-        	<div class="col-xs-6">
-          		<el-button @click="register">注册</el-button>
-          		<el-button @click="login">登录</el-button>
+        	<div class="col-xs-4">
+        		<a class="btn btn-primary" @click="register"><i class="fa"></i>注册</a>
         	</div>
       	</div>
   	</div>
@@ -82,10 +74,9 @@
 			user_type_radio: '乘客',
 			mobile: '',
 			password: '',
-			captcha: '',
+			confirmPassword: '',
 			error: false,
-			errorMsg: '',
-			src: 'captcha.jpg'
+			errorMsg: ''
 		},
 		beforeCreate: function(){
 			if(self != top){
@@ -93,40 +84,20 @@
 			}
 		},
 		methods: {
-			refreshCode: function() {
-				this.src = "captcha.jpg?t=" + $.now();
-			},
 			register: function (event) {
-				if(vm.user_type_radio == "乘客") {
-					parent.location.href ='customer_register.html';
-				} else if(vm.user_type_radio == "司机") {
-					parent.location.href ='driver_register.html';
-				}
-			},
-			login: function (event) {
-				var login_url;
-				var index_url;
-				if(vm.user_type_radio == "乘客") {
-					login_url = baseURL + "/api/customer/system/login";
-					index_url ='hscar/app/customer/customer_index.html';
-				} else if(vm.user_type_radio == "司机") {
-					login_url = baseURL + "/api/driver/system/login";
-					index_url ='hscar/app/driver/driver_index.html';
-				}
-				var data = "mobile="+vm.mobile+"&password="+vm.password+"&captcha="+vm.captcha;
+				var data = "mobile="+vm.mobile+"&password="+vm.password;
 				$.ajax({
 					type: "POST",
-					url: login_url,
+					url: baseURL + "/api/customer/system/register",
 				    data: data,
 				    dataType: "json",
 				    success: function(result) {
-						if(result.code == 0) { // 登录成功
+						if(result.code == 0) { // 注册成功，并登陆乘客首页
 							localStorage.setItem("token", result.token);
-							parent.location.href = index_url;
+							parent.location.href ='hscar/app/customer/customer_index.html';
 						} else {
 							vm.error = true;
 							vm.errorMsg = result.msg;
-							vm.refreshCode();
 						}
 					}
 				});

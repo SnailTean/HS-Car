@@ -24,10 +24,10 @@ import org.agile.common.ResultVo;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-16
+ * @date 2017-07-26
  */
 @Controller
-@RequestMapping("/hundsun/hscar/user")
+@RequestMapping("/hscar/user")
 public class UserController {
 	@Autowired
 	private IUserService userService;
@@ -37,7 +37,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/list")
-	@RequiresPermissions("hundsun:hscar:user:list")
+	@RequiresPermissions("hscar:user:list")
 	public ResultVo list(Integer page, Integer limit){
 		Map<String, Object> map = new HashMap<>();
 		map.put("offset", (page - 1) * limit);
@@ -58,7 +58,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/info/{userId}")
-	@RequiresPermissions("hundsun:hscar:user:info")
+	@RequiresPermissions("hscar:user:info")
 	public ResultVo info(@PathVariable("userId") Long userId){
 		UserEntity user = userService.queryObjectById(userId);
 		
@@ -70,7 +70,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	@RequiresPermissions("hundsun:hscar:user:save")
+	@RequiresPermissions("hscar:user:save")
 	public ResultVo save(@RequestBody UserEntity user){
 		userService.save(user);
 		
@@ -82,7 +82,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/update")
-	@RequiresPermissions("hundsun:hscar:user:update")
+	@RequiresPermissions("hscar:user:update")
 	public ResultVo update(@RequestBody UserEntity user){
 		userService.update(user);
 		
@@ -94,7 +94,7 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping("/delete")
-	@RequiresPermissions("hundsun:hscar:user:delete")
+	@RequiresPermissions("hscar:user:delete")
 	public ResultVo delete(@RequestBody Long[] userIds){
 		userService.deleteBatch(userIds);
 		

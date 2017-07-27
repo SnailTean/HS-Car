@@ -3,25 +3,15 @@
 <head>
 <title>${comments}</title>
 #set($header='#parse("sys/header.html")')
-#set($save='#if($shiro.hasPermission("'+${shiroPermissionsPrefix}+':save"))')
-#set($update='#if($shiro.hasPermission("'+${shiroPermissionsPrefix}+':update"))')
-#set($delete='#if($shiro.hasPermission("'+${shiroPermissionsPrefix}+':delete"))')
-#set($end='#end')
 $header
 </head>
 <body>
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
-			$save
-			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			$end
-			$update
-			<a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			$end
-			$delete
-			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
-			$end
+			<a v-if="hasPermission('${shiroPermissionsPrefix}:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('${shiroPermissionsPrefix}:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a v-if="hasPermission('${shiroPermissionsPrefix}:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>

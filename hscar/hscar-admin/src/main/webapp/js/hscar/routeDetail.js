@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: 'routeDetail/list',
+        url: baseURL + 'routeDetail/list',
         datatype: "json",
         colModel: [			
 			{ label: 'routeId', name: 'routeId', width: 50, key: true },
@@ -67,7 +67,7 @@ var vm = new Vue({
 			var url = vm.routeDetail.routeId == null ? "routeDetail/save" : "routeDetail/update";
 			$.ajax({
 				type: "POST",
-			    url: url,
+			    url: baseURL + url,
 			    contentType: "application/json",
 			    data: JSON.stringify(vm.routeDetail),
 			    success: function(r){
@@ -90,7 +90,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "routeDetail/delete",
+				    url: baseURL + "routeDetail/delete",
 				    contentType: "application/json",
 				    data: JSON.stringify(routeIds),
 				    success: function(r){

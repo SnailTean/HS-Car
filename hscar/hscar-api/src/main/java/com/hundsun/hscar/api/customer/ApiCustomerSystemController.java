@@ -55,8 +55,9 @@ public class ApiCustomerSystemController {
         Assert.isBlank(password, "密码不能为空");
 
         userService.register(mobile, password);
-
-        return ResultVo.ok();
+        
+		return login(mobile, password);
+//		return ResultVo.ok();
     }
     
     /**
