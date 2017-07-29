@@ -9,7 +9,7 @@ import com.hundsun.hscar.entity.RouteDetailEntity;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-29
  */
 public interface RouteDetailDao extends BaseDao<RouteDetailEntity> {
 	

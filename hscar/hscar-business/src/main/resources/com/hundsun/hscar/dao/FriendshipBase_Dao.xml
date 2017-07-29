@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hundsun.hscar.dao.FriendshipDao">
+
+	<select id="queryObject" resultType="com.hundsun.hscar.entity.FriendshipEntity">
+		select * from tb_friendship
+		<where>
+			<if test="id != null">and `id` = #{id}</if>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="friendId != null">and `friend_id` = #{friendId}</if>
+			<if test="group != null">and `group` = #{group}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+	</select>
+
+	<select id="queryList" resultType="com.hundsun.hscar.entity.FriendshipEntity">
+		select * from tb_friendship 
+		<where>
+			<if test="id != null">and `id` = #{id}</if>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="friendId != null">and `friend_id` = #{friendId}</if>
+			<if test="group != null">and `group` = #{group}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+		order by id desc
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from tb_friendship 
+		<where>
+			<if test="id != null">and `id` = #{id}</if>
+			<if test="userId != null">and `user_id` = #{userId}</if>
+			<if test="friendId != null">and `friend_id` = #{friendId}</if>
+			<if test="group != null">and `group` = #{group}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="com.hundsun.hscar.entity.FriendshipEntity" useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="id" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_friendship
+		(
+			`user_id`, 
+			`friend_id`, 
+			`group`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		(
+			#{userId}, 
+			#{friendId}, 
+			#{group}, 
+			#{createTime}, 
+			#{updateTime}
+		)
+	</insert>
+	
+	<insert id="saveBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="id">
+		<selectKey keyProperty="id" resultType="Long" order="AFTER">
+			select last_insert_id()
+		</selectKey>
+		insert into tb_friendship
+		(
+			`user_id`, 
+			`friend_id`, 
+			`group`, 
+			`create_time`, 
+			`update_time`
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+			#{item.userId}, 
+			#{item.friendId}, 
+			#{item.group}, 
+			#{item.createTime}, 
+			#{item.updateTime}
+		)
+		</foreach>
+	</insert>
+	 
+	<update id="update" parameterType="com.hundsun.hscar.entity.FriendshipEntity">
+		update tb_friendship 
+		<set>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="friendId != null">`friend_id` = #{friendId}, </if>
+			<if test="group != null">`group` = #{group}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from tb_friendship where id = #{id}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from tb_friendship where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

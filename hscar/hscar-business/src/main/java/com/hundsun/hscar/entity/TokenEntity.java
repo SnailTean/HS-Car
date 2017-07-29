@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-16
+ * @date 2017-07-29
  */
 public class TokenEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

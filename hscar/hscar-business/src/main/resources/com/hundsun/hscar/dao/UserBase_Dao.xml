@@ -10,10 +10,16 @@
 			<if test="username != null">and `username` = #{username}</if>
 			<if test="mobile != null">and `mobile` = #{mobile}</if>
 			<if test="password != null">and `password` = #{password}</if>
-			<if test="realname != null">and `realname` = #{realname}</if>
+			<if test="nickName != null">and `nick_name` = #{nickName}</if>
+			<if test="age != null">and `age` = #{age}</if>
 			<if test="sex != null">and `sex` = #{sex}</if>
 			<if test="identityCard != null">and `identity_card` = #{identityCard}</if>
 			<if test="mail != null">and `mail` = #{mail}</if>
+			<if test="occupation != null">and `occupation` = #{occupation}</if>
+			<if test="trade != null">and `trade` = #{trade}</if>
+			<if test="company != null">and `company` = #{company}</if>
+			<if test="signature != null">and `signature` = #{signature}</if>
+			<if test="avatar != null">and `avatar` = #{avatar}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -26,10 +32,16 @@
 			<if test="username != null">and `username` = #{username}</if>
 			<if test="mobile != null">and `mobile` = #{mobile}</if>
 			<if test="password != null">and `password` = #{password}</if>
-			<if test="realname != null">and `realname` = #{realname}</if>
+			<if test="nickName != null">and `nick_name` = #{nickName}</if>
+			<if test="age != null">and `age` = #{age}</if>
 			<if test="sex != null">and `sex` = #{sex}</if>
 			<if test="identityCard != null">and `identity_card` = #{identityCard}</if>
 			<if test="mail != null">and `mail` = #{mail}</if>
+			<if test="occupation != null">and `occupation` = #{occupation}</if>
+			<if test="trade != null">and `trade` = #{trade}</if>
+			<if test="company != null">and `company` = #{company}</if>
+			<if test="signature != null">and `signature` = #{signature}</if>
+			<if test="avatar != null">and `avatar` = #{avatar}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -46,10 +58,16 @@
 			<if test="username != null">and `username` = #{username}</if>
 			<if test="mobile != null">and `mobile` = #{mobile}</if>
 			<if test="password != null">and `password` = #{password}</if>
-			<if test="realname != null">and `realname` = #{realname}</if>
+			<if test="nickName != null">and `nick_name` = #{nickName}</if>
+			<if test="age != null">and `age` = #{age}</if>
 			<if test="sex != null">and `sex` = #{sex}</if>
 			<if test="identityCard != null">and `identity_card` = #{identityCard}</if>
 			<if test="mail != null">and `mail` = #{mail}</if>
+			<if test="occupation != null">and `occupation` = #{occupation}</if>
+			<if test="trade != null">and `trade` = #{trade}</if>
+			<if test="company != null">and `company` = #{company}</if>
+			<if test="signature != null">and `signature` = #{signature}</if>
+			<if test="avatar != null">and `avatar` = #{avatar}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -64,10 +82,16 @@
 			`username`, 
 			`mobile`, 
 			`password`, 
-			`realname`, 
+			`nick_name`, 
+			`age`, 
 			`sex`, 
 			`identity_card`, 
 			`mail`, 
+			`occupation`, 
+			`trade`, 
+			`company`, 
+			`signature`, 
+			`avatar`, 
 			`create_time`, 
 			`update_time`
 		)
@@ -76,10 +100,16 @@
 			#{username}, 
 			#{mobile}, 
 			#{password}, 
-			#{realname}, 
+			#{nickName}, 
+			#{age}, 
 			#{sex}, 
 			#{identityCard}, 
 			#{mail}, 
+			#{occupation}, 
+			#{trade}, 
+			#{company}, 
+			#{signature}, 
+			#{avatar}, 
 			#{createTime}, 
 			#{updateTime}
 		)
@@ -94,10 +124,16 @@
 			`username`, 
 			`mobile`, 
 			`password`, 
-			`realname`, 
+			`nick_name`, 
+			`age`, 
 			`sex`, 
 			`identity_card`, 
 			`mail`, 
+			`occupation`, 
+			`trade`, 
+			`company`, 
+			`signature`, 
+			`avatar`, 
 			`create_time`, 
 			`update_time`
 		)
@@ -107,10 +143,16 @@
 			#{item.username}, 
 			#{item.mobile}, 
 			#{item.password}, 
-			#{item.realname}, 
+			#{item.nickName}, 
+			#{item.age}, 
 			#{item.sex}, 
 			#{item.identityCard}, 
 			#{item.mail}, 
+			#{item.occupation}, 
+			#{item.trade}, 
+			#{item.company}, 
+			#{item.signature}, 
+			#{item.avatar}, 
 			#{item.createTime}, 
 			#{item.updateTime}
 		)
@@ -123,10 +165,16 @@
 			<if test="username != null">`username` = #{username}, </if>
 			<if test="mobile != null">`mobile` = #{mobile}, </if>
 			<if test="password != null">`password` = #{password}, </if>
-			<if test="realname != null">`realname` = #{realname}, </if>
+			<if test="nickName != null">`nick_name` = #{nickName}, </if>
+			<if test="age != null">`age` = #{age}, </if>
 			<if test="sex != null">`sex` = #{sex}, </if>
 			<if test="identityCard != null">`identity_card` = #{identityCard}, </if>
 			<if test="mail != null">`mail` = #{mail}, </if>
+			<if test="occupation != null">`occupation` = #{occupation}, </if>
+			<if test="trade != null">`trade` = #{trade}, </if>
+			<if test="company != null">`company` = #{company}, </if>
+			<if test="signature != null">`signature` = #{signature}, </if>
+			<if test="avatar != null">`avatar` = #{avatar}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 		</set>

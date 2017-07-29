@@ -594,22 +594,28 @@ CREATE TABLE `tb_user` (
   `username` varchar(50) NOT NULL COMMENT '用户名',
   `mobile` varchar(20) NOT NULL COMMENT '手机号',
   `password` varchar(64) DEFAULT NULL COMMENT '密码',
-  `realname` varchar(30) DEFAULT NULL COMMENT '姓名',
+  `nick_name` varchar(45) DEFAULT NULL COMMENT '昵称',
+  `age` int(11) DEFAULT NULL COMMENT '年龄',
   `sex` varchar(10) DEFAULT NULL COMMENT '性别',
   `identity_card` varchar(30) DEFAULT NULL COMMENT '身份证',
   `mail` varchar(30) DEFAULT NULL COMMENT '邮箱',
+  `occupation` varchar(30) DEFAULT NULL COMMENT '职业',
+  `trade` varchar(30) DEFAULT NULL COMMENT '行业',
+  `company` varchar(50) DEFAULT NULL COMMENT '公司',
+  `signature` varchar(50) DEFAULT NULL COMMENT '各项签名',
+  `avatar` varchar(100) DEFAULT NULL COMMENT '头像',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `mobile` (`mobile`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
 
 -- ----------------------------
 -- Records of tb_user
 -- ----------------------------
-INSERT INTO `tb_user` VALUES ('1', '13333333333', '13333333333', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', null, null, null, null, '2017-07-17 10:26:57', null);
-INSERT INTO `tb_user` VALUES ('2', '13325818953', '13325818953', '176774050b9738fb5b2fe6f3e6fe1dd20fead5ef437d727261ffde19cdc60519', null, null, null, null, '2017-07-17 10:29:18', null);
+INSERT INTO `tb_user` VALUES ('1', '13333333333', '13333333333', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918', null, null, null, null, null, null, null, null, null, null, '2017-07-29 23:38:00', null);
+INSERT INTO `tb_user` VALUES ('2', '13325818953', '13325818953', '176774050b9738fb5b2fe6f3e6fe1dd20fead5ef437d727261ffde19cdc60519', null, null, null, null, null, null, null, null, null, null, '2017-07-29 23:55:18', null);
 
 -- ----------------------------
 -- Table structure for `tb_driver`
@@ -624,7 +630,7 @@ CREATE TABLE `tb_driver` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`driver_id`),
   UNIQUE KEY `user_id` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司机信息';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司机信息表';
 
 -- ----------------------------
 -- Records of tb_driver
@@ -643,8 +649,10 @@ CREATE TABLE `tb_route_detail` (
   `dep_coordinate` VARCHAR(45) NULL COMMENT '目的地坐标',
   `des_coordinate` VARCHAR(45) NULL COMMENT '出发地坐标',
   `user_id` BIGINT(20) NULL COMMENT '用户ID',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`route_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='路线详情';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='路线详情表';
   
   -- ----------------------------
 -- Table structure for `tb_carpooling_orders`
@@ -656,25 +664,10 @@ DROP TABLE IF EXISTS `tb_carpooling_orders`;
   `order_type` INT NOT NULL COMMENT '1:即时订单、2:预约订单',
   `price` DOUBLE NOT NULL COMMENT '价格',
   `reward` DOUBLE NULL COMMENT '奖励',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`order_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单';
-
-
-DROP TABLE IF EXISTS `tb_user_detail`;
-CREATE TABLE `tb_user_detail` (
-  `user_detail_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `nick_name` varchar(45) DEFAULT NULL COMMENT '昵称',
-  `age` int(11) DEFAULT NULL COMMENT '年龄',
-  `gender` int(11) DEFAULT NULL COMMENT '性别1:男，2:女',
-  `occupation` varchar(45) DEFAULT NULL COMMENT '职业',
-  `trade` varchar(45) DEFAULT NULL COMMENT '行业',
-  `company` varchar(45) DEFAULT NULL COMMENT '公司',
-  `signature` varchar(45) DEFAULT NULL COMMENT '各项签名',
-  `avatar` varchar(45) DEFAULT NULL COMMENT '头像',
-  `create_time` datetime DEFAULT NULL,
-  PRIMARY KEY (`user_detail_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
 
 DROP TABLE IF EXISTS `tb_friendship`;
 CREATE TABLE `tb_friendship` (
@@ -682,9 +675,10 @@ CREATE TABLE `tb_friendship` (
   `user_id` int(11) DEFAULT NULL,
   `friend_id` int(11) DEFAULT NULL,
   `group` int(1) DEFAULT NULL COMMENT '朋友分组字段 1.好友2.拼友3.司机',
-  `create_time` datetime DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='好友表';
 
 DROP TABLE IF EXISTS `tb_driver_evaluate`;
 CREATE TABLE `tb_driver_evaluate` (
@@ -692,13 +686,7 @@ CREATE TABLE `tb_driver_evaluate` (
   `stars` int(11) DEFAULT NULL COMMENT '评星',
   `driver_id` int(11) DEFAULT NULL,
   `content` varchar(45) DEFAULT NULL COMMENT '评价内容',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
-  
-
-
-
-
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司机评价表';

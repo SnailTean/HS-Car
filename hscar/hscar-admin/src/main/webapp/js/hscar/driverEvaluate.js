@@ -1,11 +1,13 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + '/hscar/token/list',
+        url: baseURL + '/hscar/driverEvaluate/list',
         datatype: "json",
         colModel: [			
-			{ label: 'userId', name: 'userId', width: 50, key: true },
-			{ label: 'token', name: 'token', width: 80 }, 			
-			{ label: '过期时间', name: 'expireTime', width: 80 }, 			
+			{ label: 'id', name: 'id', width: 50, key: true },
+			{ label: '评星', name: 'stars', width: 80 }, 			
+			{ label: '', name: 'driverId', width: 80 }, 			
+			{ label: '评价内容', name: 'content', width: 80 }, 			
+			{ label: '创建时间', name: 'createTime', width: 80 }, 			
 			{ label: '更新时间', name: 'updateTime', width: 80 }			
         ],
 		viewrecords: true,
@@ -40,7 +42,7 @@ var vm = new Vue({
 	data:{
 		showList: true,
 		title: null,
-		token: {}
+		driverEvaluate: {}
 	},
 	methods: {
 		query: function () {
@@ -49,25 +51,25 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.token = {};
+			vm.driverEvaluate = {};
 		},
 		update: function (event) {
-			var userId = getSelectedRow();
-			if(userId == null){
+			var id = getSelectedRow();
+			if(id == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "修改";
             
-            vm.getInfo(userId);
+            vm.getInfo(id);
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.token.userId == null ? "/hscar/token/save" : "/hscar/token/update";
+			var url = vm.driverEvaluate.id == null ? "/hscar/driverEvaluate/save" : "/hscar/driverEvaluate/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
 			    contentType: "application/json",
-			    data: JSON.stringify(vm.token),
+			    data: JSON.stringify(vm.driverEvaluate),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -80,17 +82,17 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var userIds = getSelectedRows();
-			if(userIds == null){
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "/hscar/token/delete",
+				    url: baseURL + "/hscar/driverEvaluate/delete",
 				    contentType: "application/json",
-				    data: JSON.stringify(userIds),
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -103,9 +105,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(userId){
-			$.get("token/info/"+userId, function(r){
-                vm.token = r.token;
+		getInfo: function(id){
+			$.get("driverEvaluate/info/"+id, function(r){
+                vm.driverEvaluate = r.driverEvaluate;
             });
 		},
 		reload: function (event) {

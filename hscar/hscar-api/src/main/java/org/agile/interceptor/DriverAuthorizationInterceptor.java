@@ -68,7 +68,7 @@ public class DriverAuthorizationInterceptor extends HandlerInterceptorAdapter {
         //查询是否存在车主记录
         DriverEntity driverEntity = driverService.queryObjectByUserId(tokenEntity.getUserId());
         if(driverEntity == null) {
-            throw new RRException("不存在车主记录，请注册");
+            throw new RRException("不存在车主记录，请注册", HttpStatus.UNAUTHORIZED.value());
         }
 
         //设置userId到request里，后续根据userId，获取用户信息

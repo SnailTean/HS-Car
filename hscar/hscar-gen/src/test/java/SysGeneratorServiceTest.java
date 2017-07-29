@@ -26,7 +26,15 @@ public class SysGeneratorServiceTest {
 	
 	//表名
 //	String[] tableNames = new String[] {"tb_token", "tb_user", "tb_driver"};
-	String[] tableNames = new String[] {"tb_carpooling_orders","tb_route_detail", "tb_token", "tb_user","tb_driver"};
+	String[] tableNames = new String[] {
+		"tb_token",
+		"tb_user",
+		"tb_driver",
+		"tb_route_detail",
+		"tb_carpooling_orders",
+		"tb_friendship",
+		"tb_driver_evaluate"
+	};
 
 	@Test
 	public void testGeneratorCode() throws IOException {

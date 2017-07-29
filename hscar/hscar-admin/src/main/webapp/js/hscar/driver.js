@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'driver/list',
+        url: baseURL + '/hscar/driver/list',
         datatype: "json",
         colModel: [			
 			{ label: 'driverId', name: 'driverId', width: 50, key: true },
@@ -64,7 +64,7 @@ var vm = new Vue({
             vm.getInfo(driverId);
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.driver.driverId == null ? "driver/save" : "driver/update";
+			var url = vm.driver.driverId == null ? "/hscar/driver/save" : "/hscar/driver/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
@@ -90,7 +90,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "driver/delete",
+				    url: baseURL + "/hscar/driver/delete",
 				    contentType: "application/json",
 				    data: JSON.stringify(driverIds),
 				    success: function(r){

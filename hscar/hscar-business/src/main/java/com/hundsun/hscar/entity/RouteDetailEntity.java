@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-29
  */
 public class RouteDetailEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +27,10 @@ public class RouteDetailEntity implements Serializable {
 	private String desCoordinate; // 出发地坐标
 	
 	private Long userId; // 用户ID
+	
+	private Date createTime; // 创建时间
+	
+	private Date updateTime; // 更新时间
 
 
 
@@ -106,5 +110,31 @@ public class RouteDetailEntity implements Serializable {
 	 */
 	public Long getUserId() {
 		return userId;
+	}
+
+	/**
+	 * 设置：创建时间
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	/**
+	 * 获取：创建时间
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * 设置：更新时间
+	 */
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+	/**
+	 * 获取：更新时间
+	 */
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 }

@@ -1,16 +1,22 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + 'user/list',
+        url: baseURL + '/hscar/user/list',
         datatype: "json",
         colModel: [			
 			{ label: 'userId', name: 'userId', width: 50, key: true },
 			{ label: '用户名', name: 'username', width: 80 }, 			
 			{ label: '手机号', name: 'mobile', width: 80 }, 			
 			{ label: '密码', name: 'password', width: 80 }, 			
-			{ label: '姓名', name: 'realname', width: 80 }, 			
+			{ label: '昵称', name: 'nickName', width: 80 }, 			
+			{ label: '年龄', name: 'age', width: 80 }, 			
 			{ label: '性别', name: 'sex', width: 80 }, 			
 			{ label: '身份证', name: 'identityCard', width: 80 }, 			
 			{ label: '邮箱', name: 'mail', width: 80 }, 			
+			{ label: '职业', name: 'occupation', width: 80 }, 			
+			{ label: '行业', name: 'trade', width: 80 }, 			
+			{ label: '公司', name: 'company', width: 80 }, 			
+			{ label: '各项签名', name: 'signature', width: 80 }, 			
+			{ label: '头像', name: 'avatar', width: 80 }, 			
 			{ label: '创建时间', name: 'createTime', width: 80 }, 			
 			{ label: '更新时间', name: 'updateTime', width: 80 }			
         ],
@@ -68,7 +74,7 @@ var vm = new Vue({
             vm.getInfo(userId);
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.user.userId == null ? "user/save" : "user/update";
+			var url = vm.user.userId == null ? "/hscar/user/save" : "/hscar/user/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
@@ -94,7 +100,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "user/delete",
+				    url: baseURL + "/hscar/user/delete",
 				    contentType: "application/json",
 				    data: JSON.stringify(userIds),
 				    success: function(r){

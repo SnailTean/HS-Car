@@ -2,15 +2,15 @@ package com.hundsun.hscar.dao;
 
 import org.agile.dao.BaseDao;
 
-import com.hundsun.hscar.entity.CarpoolingOrdersEntity;
+import com.hundsun.hscar.entity.DriverEvaluateEntity;
 
 /**
- * 订单表
+ * 司机评价表
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
  * @date 2017-07-29
  */
-public interface CarpoolingOrdersDao extends BaseDao<CarpoolingOrdersEntity> {
+public interface DriverEvaluateDao extends BaseDao<DriverEvaluateEntity> {
 	
 }

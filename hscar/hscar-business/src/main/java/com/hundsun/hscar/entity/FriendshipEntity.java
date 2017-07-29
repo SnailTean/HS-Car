@@ -7,22 +7,22 @@ import java.util.Date;
 
 
 /**
- * 司机信息表
+ * 好友表
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
  * @date 2017-07-29
  */
-public class DriverEntity implements Serializable {
+public class FriendshipEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long driverId; // 
+	private Integer id; // 
 	
-	private Long userId; // 用户ID
+	private Integer userId; // 
 	
-	private String driverLicenseNumber; // 驾照号码
+	private Integer friendId; // 
 	
-	private String plateNumber; // 车牌号
+	private Integer group; // 朋友分组字段 1.好友2.拼友3.司机
 	
 	private Date createTime; // 创建时间
 	
@@ -33,53 +33,53 @@ public class DriverEntity implements Serializable {
 	/**
 	 * 设置：
 	 */
-	public void setDriverId(Long driverId) {
-		this.driverId = driverId;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 	/**
 	 * 获取：
 	 */
-	public Long getDriverId() {
-		return driverId;
+	public Integer getId() {
+		return id;
 	}
 
 	/**
-	 * 设置：用户ID
+	 * 设置：
 	 */
-	public void setUserId(Long userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	/**
-	 * 获取：用户ID
+	 * 获取：
 	 */
-	public Long getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
 
 	/**
-	 * 设置：驾照号码
+	 * 设置：
 	 */
-	public void setDriverLicenseNumber(String driverLicenseNumber) {
-		this.driverLicenseNumber = driverLicenseNumber;
+	public void setFriendId(Integer friendId) {
+		this.friendId = friendId;
 	}
 	/**
-	 * 获取：驾照号码
+	 * 获取：
 	 */
-	public String getDriverLicenseNumber() {
-		return driverLicenseNumber;
+	public Integer getFriendId() {
+		return friendId;
 	}
 
 	/**
-	 * 设置：车牌号
+	 * 设置：朋友分组字段 1.好友2.拼友3.司机
 	 */
-	public void setPlateNumber(String plateNumber) {
-		this.plateNumber = plateNumber;
+	public void setGroup(Integer group) {
+		this.group = group;
 	}
 	/**
-	 * 获取：车牌号
+	 * 获取：朋友分组字段 1.好友2.拼友3.司机
 	 */
-	public String getPlateNumber() {
-		return plateNumber;
+	public Integer getGroup() {
+		return group;
 	}
 
 	/**

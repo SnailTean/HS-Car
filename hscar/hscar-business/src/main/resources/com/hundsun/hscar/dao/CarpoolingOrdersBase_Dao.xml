@@ -11,6 +11,8 @@
 			<if test="orderType != null">and `order_type` = #{orderType}</if>
 			<if test="price != null">and `price` = #{price}</if>
 			<if test="reward != null">and `reward` = #{reward}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
 	</select>
 
@@ -22,6 +24,8 @@
 			<if test="orderType != null">and `order_type` = #{orderType}</if>
 			<if test="price != null">and `price` = #{price}</if>
 			<if test="reward != null">and `reward` = #{reward}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
 		order by order_id desc
 		<if test="offset != null and limit != null">
@@ -37,51 +41,57 @@
 			<if test="orderType != null">and `order_type` = #{orderType}</if>
 			<if test="price != null">and `price` = #{price}</if>
 			<if test="reward != null">and `reward` = #{reward}</if>
+			<if test="createTime != null">and `create_time` = #{createTime}</if>
+			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
 	</select>
 	 
-	<insert id="save" parameterType="com.hundsun.hscar.entity.CarpoolingOrdersEntity">
+	<insert id="save" parameterType="com.hundsun.hscar.entity.CarpoolingOrdersEntity" useGeneratedKeys="true" keyProperty="orderId">
 		<selectKey keyProperty="orderId" resultType="Long" order="AFTER">
 			select last_insert_id()
 		</selectKey>
 		insert into tb_carpooling_orders
 		(
-			`order_id`, 
 			`route_id`, 
 			`order_type`, 
 			`price`, 
-			`reward`
+			`reward`, 
+			`create_time`, 
+			`update_time`
 		)
 		values
 		(
-			#{orderId}, 
 			#{routeId}, 
 			#{orderType}, 
 			#{price}, 
-			#{reward}
+			#{reward}, 
+			#{createTime}, 
+			#{updateTime}
 		)
 	</insert>
 	
-	<insert id="saveBatch" parameterType="java.util.List">
+	<insert id="saveBatch" parameterType="java.util.List" useGeneratedKeys="true" keyProperty="orderId">
 		<selectKey keyProperty="orderId" resultType="Long" order="AFTER">
 			select last_insert_id()
 		</selectKey>
 		insert into tb_carpooling_orders
 		(
-			`order_id`, 
 			`route_id`, 
 			`order_type`, 
 			`price`, 
-			`reward`
+			`reward`, 
+			`create_time`, 
+			`update_time`
 		)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
 		(
-			#{item.orderId}, 
 			#{item.routeId}, 
 			#{item.orderType}, 
 			#{item.price}, 
-			#{item.reward}
+			#{item.reward}, 
+			#{item.createTime}, 
+			#{item.updateTime}
 		)
 		</foreach>
 	</insert>
@@ -92,7 +102,9 @@
 			<if test="routeId != null">`route_id` = #{routeId}, </if>
 			<if test="orderType != null">`order_type` = #{orderType}, </if>
 			<if test="price != null">`price` = #{price}, </if>
-			<if test="reward != null">`reward` = #{reward}</if>
+			<if test="reward != null">`reward` = #{reward}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 		</set>
 		where order_id = #{orderId}
 	</update>

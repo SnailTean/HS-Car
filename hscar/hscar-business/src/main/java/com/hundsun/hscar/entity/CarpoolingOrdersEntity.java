@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  * @author zhangmm
  * @email phoenix122411@126.com
- * @date 2017-07-13
+ * @date 2017-07-29
  */
 public class CarpoolingOrdersEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +25,10 @@ public class CarpoolingOrdersEntity implements Serializable {
 	private Double price; // 价格
 	
 	private Double reward; // 奖励
+	
+	private Date createTime; // 创建时间
+	
+	private Date updateTime; // 更新时间
 
 
 
@@ -91,5 +95,31 @@ public class CarpoolingOrdersEntity implements Serializable {
 	 */
 	public Double getReward() {
 		return reward;
+	}
+
+	/**
+	 * 设置：创建时间
+	 */
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+	/**
+	 * 获取：创建时间
+	 */
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	/**
+	 * 设置：更新时间
+	 */
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
+	}
+	/**
+	 * 获取：更新时间
+	 */
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 }
