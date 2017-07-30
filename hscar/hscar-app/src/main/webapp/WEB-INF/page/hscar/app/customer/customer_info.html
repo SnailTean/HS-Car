@@ -31,9 +31,31 @@
 				    	<div class="item-content">
 				      		<div class="item-media"><i class="icon icon-form-name"></i></div>
 				      		<div class="item-inner">
-				        		<div class="item-title label">姓名</div>
+				        		<div class="item-title label">昵称</div>
 				        		<div class="item-input">
 				          			张铭明
+				        		</div>
+				      		</div>
+				    	</div>
+					</li>
+					<li>
+				    	<div class="item-content">
+				      		<div class="item-media"><i class="icon icon-form-name"></i></div>
+				      		<div class="item-inner">
+				        		<div class="item-title label">身份证</div>
+				        		<div class="item-input">
+				          			330302199007122411
+				        		</div>
+				      		</div>
+				    	</div>
+					</li>
+					<li>
+				    	<div class="item-content">
+				      		<div class="item-media"><i class="icon icon-form-tel"></i></div>
+				      		<div class="item-inner">
+				        		<div class="item-title label">手机号</div>
+				        		<div class="item-input">
+				          			13325818953
 				        		</div>
 				      		</div>
 				    	</div>
@@ -51,13 +73,13 @@
 				  	</li>
 				  	<li>
 				    	<div class="item-content">
-					    	<div class="item-media"><i class="icon icon-form-password"></i></div>
-					      	<div class="item-inner">
-					        	<div class="item-title label">密码</div>
-					        	<div class="item-input">
-					          		zmm
-					        	</div>
-					      	</div>
+				      		<div class="item-media"><i class="icon icon-form-calendar"></i></div>
+				      		<div class="item-inner">
+				        		<div class="item-title label">年龄</div>
+				        		<div class="item-input">
+				          			28
+				        		</div>
+				      		</div>
 				    	</div>
 				  	</li>
 				  	<li>
@@ -71,45 +93,43 @@
 				      		</div>
 				    	</div>
 				  	</li>
-				  	<li>
-				    	<div class="item-content">
-				      		<div class="item-media"><i class="icon icon-form-calendar"></i></div>
-				      		<div class="item-inner">
-				        		<div class="item-title label">生日</div>
-				        		<div class="item-input">
-				          			2017/7/27
-				        		</div>
-				      		</div>
-				    	</div>
-				  	</li>
 				    <li>
 				      	<div class="item-content">
-				        	<div class="item-media"><i class="icon icon-form-toggle"></i></div>
+				        	<div class="item-media"><i class="icon icon-form-settings"></i></div>
 				        	<div class="item-inner">
-				          		<div class="item-title label">Switch</div>
+				          		<div class="item-title label">职业</div>
 				          		<div class="item-input">
-				            		<label class="label-switch">
-				              			<input type="checkbox">
-				              			<div class="checkbox"></div>
-				            		</label>
+				            		程序员
 				          		</div>
 				        	</div>
 				      	</div>
 				    </li>
 				    <li>
 				      	<div class="item-content">
-				        	<div class="item-media"><i class="icon icon-form-comment"></i></div>
+				        	<div class="item-media"><i class="icon icon-form-settings"></i></div>
 				        	<div class="item-inner">
-				          		<div class="item-title label">备注</div>
-				         	 	<div class="item-input">
-				            		我是好人
+				          		<div class="item-title label">行业</div>
+				          		<div class="item-input">
+				            		金融
+				          		</div>
+				        	</div>
+				      	</div>
+				    </li>
+				    <li>
+				      	<div class="item-content">
+				        	<div class="item-media"><i class="icon icon-form-settings"></i></div>
+				        	<div class="item-inner">
+				          		<div class="item-title label">公司</div>
+				          		<div class="item-input">
+				            		恒生电子
 				          		</div>
 				        	</div>
 				      	</div>
 				    </li>
 			  	</ul>
 			</div>
-			<p><a @click="edit" class="button button-big button-round button-fill">编辑</a></p>
+			<p><a @click="info_edit" class="button button-big button-round button-fill">编辑</a></p>
+			<p><a @click="password_modify" class="button button-big button-round button-fill">修改密码</a></p>
   		</div>
 	</div>
 
@@ -133,8 +153,11 @@
 					vm.user = r.user;
 				});
 			},
-			edit: function (event) {
+			info_edit: function (event) {
 				parent.location.href ='customer_info_edit.html';
+			},
+			password_modify: function (event) {
+				parent.location.href ='customer_password_modify.html';
 			}
 		},
 		created: function() {
