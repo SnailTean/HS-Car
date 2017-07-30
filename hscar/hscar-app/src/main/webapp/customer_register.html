@@ -85,22 +85,27 @@
 		},
 		methods: {
 			register: function (event) {
-				var data = "mobile="+vm.mobile+"&password="+vm.password;
-				$.ajax({
-					type: "POST",
-					url: baseURL + "/api/customer/system/register",
-				    data: data,
-				    dataType: "json",
-				    success: function(result) {
-						if(result.code == 0) { // 注册成功，并登陆乘客首页
-							localStorage.setItem("token", result.token);
-							parent.location.href ='hscar/app/customer/customer_index.html';
-						} else {
-							vm.error = true;
-							vm.errorMsg = result.msg;
+				if(vm.password != vm.confirmPassword) {
+					vm.error = true;
+					vm.errorMsg = "密码输入不一致!";
+				} else {
+					var data = "mobile="+vm.mobile+"&password="+vm.password;
+					$.ajax({
+						type: "POST",
+						url: baseURL + "/api/customer/system/register",
+					    data: data,
+					    dataType: "json",
+					    success: function(result) {
+							if(result.code == 0) { // 注册成功，并登陆乘客首页
+								localStorage.setItem("token", result.token);
+								parent.location.href ='hscar/app/customer/customer_index.html';
+							} else {
+								vm.error = true;
+								vm.errorMsg = result.msg;
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 		}
 	});

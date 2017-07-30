@@ -2,6 +2,8 @@ package com.hundsun.hscar.api.customer;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.agile.annotation.IgnoreAuth;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.code.kaptcha.Constants;
 import com.hundsun.hscar.entity.UserEntity;
 import com.hundsun.hscar.service.api.ITokenService;
 import com.hundsun.hscar.service.api.IUserService;
@@ -23,7 +26,7 @@ import com.wordnik.swagger.annotations.ApiImplicitParams;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
- * 顾客端系统接口
+ * 乘客端系统接口
  *
  * @author zhangmm
  * @email phoenix122411@126.com
@@ -31,7 +34,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/api/customer/system")
-@Api(value = "api-customer-system-controller", description = "顾客端系统接口", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "api-customer-system-controller", description = "乘客端系统接口", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ApiCustomerSystemController {
 	
 	@Autowired
@@ -45,7 +48,7 @@ public class ApiCustomerSystemController {
      */
     @IgnoreAuth
     @PostMapping("register")
-    @ApiOperation(value = "顾客注册", notes = "用于注册顾客类用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "乘客注册", notes = "用于注册乘客类用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
     	@ApiImplicitParam(paramType = "query", dataType="string", name = "mobile", value = "手机号", required = true),
     	@ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true)
@@ -65,7 +68,7 @@ public class ApiCustomerSystemController {
      */
     @IgnoreAuth
     @PostMapping("login")
-    @ApiOperation(value = "顾客登录", notes = "用于顾客用户登录", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "乘客登录", notes = "用于乘客用户登录", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
         @ApiImplicitParam(paramType = "query", dataType="string", name = "mobile", value = "手机号", required = true),
         @ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true)
@@ -81,6 +84,26 @@ public class ApiCustomerSystemController {
         Map<String, Object> map = tokenService.createToken(userId);
 
         return ResultVo.ok(map);
+    }
+    
+    /**
+     * 带验证码登录
+     */
+    @IgnoreAuth
+    @PostMapping("login_with_captcha")
+    @ApiOperation(value = "乘客带验证码登录", notes = "用于乘客用户带验证码登录", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParams({
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "mobile", value = "手机号", required = true),
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true),
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "captcha", value = "验证码", required = true)
+    })
+    public ResultVo login_with_captcha(String mobile, String password, String captcha, HttpServletRequest request) {
+    	String kaptcha = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		if(!captcha.equalsIgnoreCase(kaptcha)){
+			return ResultVo.error("验证码不正确");
+		}
+
+        return login(mobile, password);
     }
 
     /**

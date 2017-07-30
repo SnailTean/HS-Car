@@ -2,10 +2,11 @@ package com.hundsun.hscar.api.driver;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.agile.annotation.IgnoreAuth;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
-import org.agile.common.exception.RRException;
 import org.agile.common.validator.Assert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -15,18 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.code.kaptcha.Constants;
 import com.hundsun.hscar.entity.DriverEntity;
 import com.hundsun.hscar.entity.UserEntity;
 import com.hundsun.hscar.service.api.IDriverService;
 import com.hundsun.hscar.service.api.ITokenService;
-import com.hundsun.hscar.service.api.IUserService;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
 import com.wordnik.swagger.annotations.ApiOperation;
 
 /**
- * 车主端系统接口
+ * 司机端系统接口
  *
  * @author zhangmm
  * @email phoenix122411@126.com
@@ -34,7 +35,7 @@ import com.wordnik.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/api/driver/system")
-@Api(value = "api-driver-system-controller", description = "车主端系统接口", produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "api-driver-system-controller", description = "司机端系统接口", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ApiDriverSystemController {
 	
 	@Autowired
@@ -48,7 +49,7 @@ public class ApiDriverSystemController {
      */
     @IgnoreAuth
     @PostMapping("register")
-    @ApiOperation(value = "车主注册", notes = "用于注册车主类用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "司机注册", notes = "用于注册司机类用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
     	@ApiImplicitParam(paramType = "query", dataType="string", name = "mobile", value = "手机号", required = true),
     	@ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true),
@@ -72,7 +73,7 @@ public class ApiDriverSystemController {
      */
     @IgnoreAuth
     @PostMapping("login")
-    @ApiOperation(value = "车主登录", notes = "用于车主用户登录", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "司机登录", notes = "用于司机用户登录", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
         @ApiImplicitParam(paramType = "query", dataType="string", name = "mobile", value = "手机号", required = true),
         @ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true)
@@ -89,6 +90,26 @@ public class ApiDriverSystemController {
 
         return ResultVo.ok(map);
     }
+    
+    /**
+     * 带验证码登录
+     */
+    @IgnoreAuth
+    @PostMapping("login_with_captcha")
+    @ApiOperation(value = "司机带验证码登录", notes = "用于司机用户带验证码登录", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParams({
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "mobile", value = "手机号", required = true),
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "password", value = "密码", required = true),
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "captcha", value = "验证码", required = true)
+    })
+    public ResultVo login_with_captcha(String mobile, String password, String captcha, HttpServletRequest request) {
+    	String kaptcha = (String) request.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
+		if(!captcha.equalsIgnoreCase(kaptcha)){
+			return ResultVo.error("验证码不正确");
+		}
+
+        return login(mobile, password);
+    }
 
     /**
      * 获取用户信息
@@ -102,7 +123,7 @@ public class ApiDriverSystemController {
     }
     
     /**
-     * 获取车主信息
+     * 获取司机信息
      */
     @ResponseBody
     @RequestMapping(value = "driverInfo")
