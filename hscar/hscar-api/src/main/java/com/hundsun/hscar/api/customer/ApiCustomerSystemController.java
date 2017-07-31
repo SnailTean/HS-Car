@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.code.kaptcha.Constants;
 import com.hundsun.hscar.entity.UserEntity;
+import com.hundsun.hscar.service.api.IDriverService;
 import com.hundsun.hscar.service.api.ITokenService;
 import com.hundsun.hscar.service.api.IUserService;
 import com.wordnik.swagger.annotations.Api;
@@ -40,11 +41,14 @@ public class ApiCustomerSystemController {
 	@Autowired
     private IUserService userService;
 	
+	@Autowired
+    private IDriverService driverService;
+	
     @Autowired
     private ITokenService tokenService;
 	
 	/**
-     * 注册
+     * 乘客注册
      */
     @IgnoreAuth
     @PostMapping("register")
@@ -64,7 +68,7 @@ public class ApiCustomerSystemController {
     }
     
     /**
-     * 登录
+     * 乘客登录
      */
     @IgnoreAuth
     @PostMapping("login")
@@ -87,7 +91,7 @@ public class ApiCustomerSystemController {
     }
     
     /**
-     * 带验证码登录
+     * 乘客带验证码登录
      */
     @IgnoreAuth
     @PostMapping("login_with_captcha")
@@ -115,6 +119,23 @@ public class ApiCustomerSystemController {
     @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
     public ResultVo userInfo(@LoginUser UserEntity user) {
         return ResultVo.ok().put("user", user);
+    }
+    
+    /**
+     * 乘客端注册司机用户
+     */
+    @PostMapping(value = "register_driver_by_customer")
+    @ApiOperation(value = "乘客端注册司机用户", notes = "通过乘客用户，注册司机用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiImplicitParams({
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "driverLicenseNumber", value = "驾照号码", required = true),
+        @ApiImplicitParam(paramType = "query", dataType="string", name = "plateNumber", value = "车牌号", required = true)
+    })
+    public ResultVo register_driver_by_customer(@LoginUser UserEntity user, String driverLicenseNumber, String plateNumber) {
+    	Assert.isNull(user, "用户不能为空");
+        Assert.isBlank(driverLicenseNumber, "驾照号码不能为空");
+        Assert.isBlank(plateNumber, "车牌号不能为空");
+        driverService.register(user.getUserId(), driverLicenseNumber, plateNumber);
+        return ResultVo.ok("注册司机成功!");
     }
     
     /**

@@ -84,7 +84,7 @@ public class DriverService implements IDriverService {
 	}
 	
 	/**
-	 * 车主用户注册
+	 * 司机用户注册
 	 * @param mobile    			手机号
 	 * @param password  			密码
 	 * @param driverLicenseNumber	驾照号码
@@ -102,16 +102,32 @@ public class DriverService implements IDriverService {
 		if(user == null) { // 未注册过顾客用户
 			user = userService.register(mobile, password);
 			driver.setUserId(user.getUserId());
-		} else { // 已注册过顾客用户(注册车主时要验证手机号和密码与顾客用户一致)
+		} else { // 已注册过顾客用户(注册司机时要验证手机号和密码与顾客用户一致)
 			Long userId = userService.login(mobile, password);
 			driver.setUserId(userId);
 		}
 		
 		driverDao.save(driver);
 	}
+	
+	/**
+	 * 司机用户注册
+	 * @param userId    			用户Id
+	 * @param driverLicenseNumber	驾照号码
+	 * @param plateNumber  			车牌号
+	 */
+	@Override
+	public void register(Long userId, String driverLicenseNumber, String plateNumber) {
+		DriverEntity driver = new DriverEntity();
+		driver.setDriverLicenseNumber(driverLicenseNumber);
+		driver.setPlateNumber(plateNumber);
+		driver.setUserId(userId);
+		driver.setCreateTime(new Date());
+		driverDao.save(driver);
+	}
 
 	/**
-	 * 车主用户登录
+	 * 司机用户登录
 	 * @param mobile    手机号
 	 * @param password  密码
 	 * @return          返回用户ID
@@ -126,10 +142,10 @@ public class DriverService implements IDriverService {
 			throw new RRException("手机号或密码错误");
 		}
 		
-		//查询是否存在车主记录
+		//查询是否存在司机记录
         DriverEntity driverEntity = this.queryObjectByUserId(user.getUserId());
         if(driverEntity == null) {
-            throw new RRException("不存在车主记录，请注册");
+            throw new RRException("不存在司机记录，请注册");
         }
 
 		return user.getUserId();

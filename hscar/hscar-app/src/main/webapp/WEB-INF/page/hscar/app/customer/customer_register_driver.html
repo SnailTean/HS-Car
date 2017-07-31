@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>乘客</title>
+#parse("hscar/app/header.html")
+</head>
+<body>
+<!-- vue作用域 -->
+<div id="hs_car_app">
+	
+	<!-- 工具栏 -->
+  	#parse("hscar/app/customer/customer_toolbar.html")
+  	
+	<!-- 乘客首页：主体内容 -->
+  	<div id="page-customer-home" class="page page-home page-current page-inited">
+
+		<!-- 标题栏 -->
+		<header class="bar bar-nav">
+			<a class="icon icon-settings pull-left open-panel"></a> 
+			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
+				<span class="icon icon-menu"></span>
+			</a>
+			<h1 class="title">成为车主</h1>
+		</header>
+	  	
+	  	<!-- 这里是页面内容区 -->
+	  	<div class="content">
+			<div class="list-block">
+			  	<div class="list-block">
+				  	<ul>
+					  	<li>
+					    	<div class="item-content">
+						    	<div class="item-media"><i class="icon icon-form-settings"></i></div>
+						      	<div class="item-inner">
+						        	<div class="item-title label">驾照号码</div>
+						        	<div class="item-input">
+						          		<input type="text" v-model="driverLicenseNumber" placeholder="请输入驾照号码">
+						        	</div>
+						      	</div>
+					    	</div>
+					  	</li>
+					  	<li>
+					    	<div class="item-content">
+						    	<div class="item-media"><i class="icon icon-form-settings"></i></div>
+						      	<div class="item-inner">
+						        	<div class="item-title label">车牌号</div>
+						        	<div class="item-input">
+						          		<input type="text" v-model="plateNumber" placeholder="请输入车牌号">
+						        	</div>
+						      	</div>
+					    	</div>
+					  	</li>
+				  	</ul>
+				</div>
+				<p><a @click="register" class="button button-big button-round button-fill">司机注册</a></p>
+			</div>
+  		</div>
+	</div>
+
+	<!-- 关于 -->
+	#parse("hscar/app/about.html")
+	
+	<!-- 设置菜单栏 -->
+	#parse("hscar/app/settings.html")
+</div>
+
+<!-- Vue -->
+<script type="text/javascript">
+	var vm = new Vue({
+		el:'#hs_car_app',
+		data:{
+			driverLicenseNumber: '',
+			plateNumber: '',
+			user: {}
+		},
+		methods: {
+			getUser: function(userId) {
+				$.get(baseURL + "api/customer/system/userInfo", function(r){
+					vm.user = r.user;
+				});
+			},
+			register: function (event) {
+				var data = "driverLicenseNumber="+vm.driverLicenseNumber+"&plateNumber="+vm.plateNumber;
+				$.ajax({
+					type: "POST",
+					url: baseURL + "/api/customer/system/register_driver_by_customer",
+				    data: data,
+				    dataType: "json",
+				    success: function(result) {
+						if(result.code == 0) { // 注册成功，并登陆司机首页
+							parent.location.href = '../driver/driver_index.html';
+						}
+					}
+				});
+			}
+		},
+		created: function() {
+			this.getUser();
+		}
+	});
+</script>
+
+<!-- 设置菜单栏 -->
+<script src="${rc.contextPath}/js/hscar/app/settings.js" type="text/javascript"></script>
+
+<!-- Light7 -->
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>

@@ -80,7 +80,7 @@ public class UserService implements IUserService {
 	}
 	
 	/**
-	 * 顾客用户注册
+	 * 乘客用户注册
 	 * @param mobile    手机号
 	 * @param password  密码
 	 */
@@ -96,7 +96,7 @@ public class UserService implements IUserService {
 	}
 
 	/**
-	 * 顾客用户登录
+	 * 乘客用户登录
 	 * @param mobile    手机号
 	 * @param password  密码
 	 * @return          返回用户ID

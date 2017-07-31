@@ -18,9 +18,6 @@ var baseURL = "/hscar-app/";
 
 //登录token
 var token = localStorage.getItem("token");
-if(token == 'null') {
-    parent.location.href = baseURL + 'login.html';
-}
 
 //jquery全局配置
 $.ajaxSetup({
@@ -31,8 +28,10 @@ $.ajaxSetup({
     },
     complete: function(xhr) {
         //token过期，则跳转到登录页面
-        if(xhr.responseJSON.code == 401) {
+        if(xhr.responseJSON.code == 401) { // Token失效或者为空
             parent.location.href = baseURL + 'login.html';
+        } else if(xhr.responseJSON.code == 1000) { // 只注册了乘客用户，未注册司机用户
+            parent.location.href = baseURL + 'hscar/app/customer/customer_register_driver.html';
         }
     }
 });

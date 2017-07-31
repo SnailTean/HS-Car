@@ -40,6 +40,14 @@ public interface IDriverService {
 	 * @param plateNumber  			车牌号
 	 */
 	void register(String mobile, String password, String driverLicenseNumber, String plateNumber);
+	
+	/**
+	 * 司机用户注册
+	 * @param userId    			用户Id
+	 * @param driverLicenseNumber	驾照号码
+	 * @param plateNumber  			车牌号
+	 */
+	public void register(Long userId, String driverLicenseNumber, String plateNumber);
 
 	/**
 	 * 车主用户登录

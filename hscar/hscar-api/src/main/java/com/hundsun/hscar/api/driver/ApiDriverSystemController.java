@@ -45,7 +45,7 @@ public class ApiDriverSystemController {
     private ITokenService tokenService;
 	
 	/**
-     * 注册
+     * 司机注册
      */
     @IgnoreAuth
     @PostMapping("register")
@@ -69,7 +69,7 @@ public class ApiDriverSystemController {
     }
     
     /**
-     * 登录
+     * 司机登录
      */
     @IgnoreAuth
     @PostMapping("login")
@@ -92,7 +92,7 @@ public class ApiDriverSystemController {
     }
     
     /**
-     * 带验证码登录
+     * 司机带验证码登录
      */
     @IgnoreAuth
     @PostMapping("login_with_captcha")
