@@ -61,6 +61,7 @@
 	        	/favicon.ico=anon
 	        	/captcha.jpg=anon
 	        	/sys/login=anon
+	        	/druid/**=anon
 	        	/api/**=anon
 	        	/=anon
 	        	/**=oauth2
