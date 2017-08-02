@@ -117,7 +117,7 @@ public class ApiDriverSystemController {
     @ResponseBody
     @RequestMapping(value = "userInfo")
 	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
-    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
+    @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
     public ResultVo userInfo(@LoginUser UserEntity user) {
         return ResultVo.ok().put("user", user);
     }
@@ -128,7 +128,7 @@ public class ApiDriverSystemController {
     @ResponseBody
     @RequestMapping(value = "driverInfo")
 	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
-    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
+    @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
     public ResultVo driverInfo(@LoginUser UserEntity user) {
     	if(user==null || user.getUserId()==null) {
     		return ResultVo.ok().put("driver", null);
