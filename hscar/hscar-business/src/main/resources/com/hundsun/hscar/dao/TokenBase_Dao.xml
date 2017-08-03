@@ -7,7 +7,7 @@
 		select * from tb_token
 		<where>
 			<if test="userId != null">and `user_id` = #{userId}</if>
-			<if test="token != null">and `token` = #{token}</if>
+			<if test="token != null and token != ''">and `token` = #{token}</if>
 			<if test="expireTime != null">and `expire_time` = #{expireTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -17,7 +17,7 @@
 		select * from tb_token 
 		<where>
 			<if test="userId != null">and `user_id` = #{userId}</if>
-			<if test="token != null">and `token` = #{token}</if>
+			<if test="token != null and token != ''">and `token` = #{token}</if>
 			<if test="expireTime != null">and `expire_time` = #{expireTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -31,7 +31,7 @@
 		select count(*) from tb_token 
 		<where>
 			<if test="userId != null">and `user_id` = #{userId}</if>
-			<if test="token != null">and `token` = #{token}</if>
+			<if test="token != null and token != ''">and `token` = #{token}</if>
 			<if test="expireTime != null">and `expire_time` = #{expireTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -82,7 +82,7 @@
 	<update id="update" parameterType="com.hundsun.hscar.entity.TokenEntity">
 		update tb_token 
 		<set>
-			<if test="token != null">`token` = #{token}, </if>
+			<if test="token != null and token != ''">`token` = #{token}, </if>
 			<if test="expireTime != null">`expire_time` = #{expireTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 		</set>

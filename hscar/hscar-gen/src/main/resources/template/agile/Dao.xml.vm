@@ -9,7 +9,11 @@
 			<if test="${pk.attrname} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
+#if($column.attrType == 'String')
+			<if test="$column.attrname != null and $column.attrname != ''">and `$column.columnName` = #{$column.attrname}</if>
+#else
 			<if test="$column.attrname != null">and `$column.columnName` = #{$column.attrname}</if>
+#end
 #end
 #end
 		</where>
@@ -21,7 +25,11 @@
 			<if test="${pk.attrname} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
+#if($column.attrType == 'String')
+			<if test="$column.attrname != null and $column.attrname != ''">and `$column.columnName` = #{$column.attrname}</if>
+#else
 			<if test="$column.attrname != null">and `$column.columnName` = #{$column.attrname}</if>
+#end
 #end
 #end
 		</where>
@@ -37,7 +45,11 @@
 			<if test="${pk.attrname} != null">and `${pk.columnName}` = #{${pk.attrname}}</if>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
+#if($column.attrType == 'String')
+			<if test="$column.attrname != null and $column.attrname != ''">and `$column.columnName` = #{$column.attrname}</if>
+#else
 			<if test="$column.attrname != null">and `$column.columnName` = #{$column.attrname}</if>
+#end
 #end
 #end
 		</where>
@@ -98,7 +110,11 @@
 		<set>
 #foreach($column in $columns)
 #if($column.columnName != $pk.columnName)
+#if($column.attrType == 'String')
+			<if test="$column.attrname != null and $column.attrname != ''">`$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()), #end</if>
+#else
 			<if test="$column.attrname != null">`$column.columnName` = #{$column.attrname}#if($velocityCount != $columns.size()), #end</if>
+#end
 #end
 #end
 		</set>

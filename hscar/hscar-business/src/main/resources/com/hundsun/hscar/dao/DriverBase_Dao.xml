@@ -8,8 +8,8 @@
 		<where>
 			<if test="driverId != null">and `driver_id` = #{driverId}</if>
 			<if test="userId != null">and `user_id` = #{userId}</if>
-			<if test="driverLicenseNumber != null">and `driver_license_number` = #{driverLicenseNumber}</if>
-			<if test="plateNumber != null">and `plate_number` = #{plateNumber}</if>
+			<if test="driverLicenseNumber != null and driverLicenseNumber != ''">and `driver_license_number` = #{driverLicenseNumber}</if>
+			<if test="plateNumber != null and plateNumber != ''">and `plate_number` = #{plateNumber}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -20,8 +20,8 @@
 		<where>
 			<if test="driverId != null">and `driver_id` = #{driverId}</if>
 			<if test="userId != null">and `user_id` = #{userId}</if>
-			<if test="driverLicenseNumber != null">and `driver_license_number` = #{driverLicenseNumber}</if>
-			<if test="plateNumber != null">and `plate_number` = #{plateNumber}</if>
+			<if test="driverLicenseNumber != null and driverLicenseNumber != ''">and `driver_license_number` = #{driverLicenseNumber}</if>
+			<if test="plateNumber != null and plateNumber != ''">and `plate_number` = #{plateNumber}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -36,8 +36,8 @@
 		<where>
 			<if test="driverId != null">and `driver_id` = #{driverId}</if>
 			<if test="userId != null">and `user_id` = #{userId}</if>
-			<if test="driverLicenseNumber != null">and `driver_license_number` = #{driverLicenseNumber}</if>
-			<if test="plateNumber != null">and `plate_number` = #{plateNumber}</if>
+			<if test="driverLicenseNumber != null and driverLicenseNumber != ''">and `driver_license_number` = #{driverLicenseNumber}</if>
+			<if test="plateNumber != null and plateNumber != ''">and `plate_number` = #{plateNumber}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 		</where>
@@ -93,8 +93,8 @@
 		update tb_driver 
 		<set>
 			<if test="userId != null">`user_id` = #{userId}, </if>
-			<if test="driverLicenseNumber != null">`driver_license_number` = #{driverLicenseNumber}, </if>
-			<if test="plateNumber != null">`plate_number` = #{plateNumber}, </if>
+			<if test="driverLicenseNumber != null and driverLicenseNumber != ''">`driver_license_number` = #{driverLicenseNumber}, </if>
+			<if test="plateNumber != null and plateNumber != ''">`plate_number` = #{plateNumber}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}</if>
 		</set>

@@ -8,10 +8,12 @@ import org.agile.annotation.IgnoreAuth;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
 import org.agile.common.validator.Assert;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -109,24 +111,14 @@ public class ApiCustomerSystemController {
 
         return login(mobile, password);
     }
-
-    /**
-     * 获取用户信息
-     */
-    @ResponseBody
-    @RequestMapping(value = "userInfo")
-	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
-    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
-    public ResultVo userInfo(@LoginUser UserEntity user) {
-        return ResultVo.ok().put("user", user);
-    }
     
     /**
      * 乘客端注册司机用户
      */
-    @PostMapping(value = "register_driver_by_customer")
+    @PostMapping("register_driver_by_customer")
     @ApiOperation(value = "乘客端注册司机用户", notes = "通过乘客用户，注册司机用户", httpMethod = "POST", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiImplicitParams({
+    	@ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true),
         @ApiImplicitParam(paramType = "query", dataType="string", name = "driverLicenseNumber", value = "驾照号码", required = true),
         @ApiImplicitParam(paramType = "query", dataType="string", name = "plateNumber", value = "车牌号", required = true)
     })
@@ -137,6 +129,29 @@ public class ApiCustomerSystemController {
         driverService.register(user.getUserId(), driverLicenseNumber, plateNumber);
         return ResultVo.ok("注册司机成功!");
     }
+
+    /**
+     * 获取用户信息
+     */
+    @ResponseBody
+    @RequestMapping(value = "userInfo")
+	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
+    @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
+    public ResultVo userInfo(@LoginUser UserEntity user) {
+        return ResultVo.ok().put("user", user);
+    }
+    
+    /**
+	 * 更新乘客用户信息
+	 */
+	@ResponseBody
+	@RequestMapping(value = "updateUser")
+	@ApiOperation(value = "更新乘客用户信息", notes = "更新乘客用户信息")
+	@ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
+	public ResultVo updateUser(@RequestBody UserEntity user){
+		userService.update(user);
+		return ResultVo.ok();
+	}
     
     /**
      * 忽略Token验证测试
