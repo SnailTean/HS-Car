@@ -444,6 +444,7 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
@@ -451,6 +452,23 @@
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.11.v20150529</version>
+				<configuration>
+					<webAppConfig>
+						<contextPath>/</contextPath>
+					</webAppConfig>
+					<httpConnector>
+						<port>8080</port>
+					</httpConnector>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<useProvidedScope>true</useProvidedScope>
+				</configuration>
+			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
@@ -458,7 +476,7 @@
 				<configuration>
 					<path>/</path>
 					<charset>UTF-8</charset>
-					<port>80</port>
+					<port>8080</port>
 					<uriEncoding>UTF-8</uriEncoding>
 				</configuration>
 			</plugin>
