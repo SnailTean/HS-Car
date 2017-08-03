@@ -44,6 +44,33 @@
     
 	<build>
 		<finalName>hscar-admin</finalName>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.2.11.v20150529</version>
+				<configuration>
+					<webAppConfig>
+						<contextPath>/hscar-admin</contextPath>
+					</webAppConfig>
+					<httpConnector>
+						<port>8082</port>
+					</httpConnector>
+					<scanIntervalSeconds>5</scanIntervalSeconds>
+					<useProvidedScope>true</useProvidedScope>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<path>/hscar-admin</path>
+					<charset>UTF-8</charset>
+					<port>8082</port>
+					<uriEncoding>UTF-8</uriEncoding>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
-	
 </project>
