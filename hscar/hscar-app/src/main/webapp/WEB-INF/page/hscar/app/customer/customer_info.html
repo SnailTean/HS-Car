@@ -24,7 +24,7 @@
 		</header>
 	  	
 	  	<!-- 这里是页面内容区 -->
-	  	<div class="content">
+	  	<div class="content" style="top:0.5rem;">
 			<div class="list-block">
 			  	<ul>
 				  	<li>
@@ -128,8 +128,14 @@
 				    </li>
 			  	</ul>
 			</div>
-			<p><a @click="info_edit" class="button button-big button-round button-fill">编辑</a></p>
-			<p><a @click="password_modify" class="button button-big button-round button-fill">修改密码</a></p>
+			<div class="content-block">
+		    	<p class="buttons-row">
+		    		<a @click="info_edit" class="button button-big button-round active">编辑</a>
+		    		<a @click="password_modify" class="button button-big button-round">修改密码</a>
+		    	</p>
+<!-- 		    	<p><a @click="info_edit" class="button button-big button-round button-fill">编辑</a></p> -->
+<!-- 				<p><a @click="password_modify" class="button button-big button-round button-fill">修改密码</a></p> -->
+		    </div>
   		</div>
 	</div>
 

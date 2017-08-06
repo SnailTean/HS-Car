@@ -7,8 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.agile.annotation.IgnoreAuth;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
+import org.agile.common.exception.RRException;
 import org.agile.common.validator.Assert;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -148,7 +149,30 @@ public class ApiCustomerSystemController {
 	@RequestMapping(value = "updateUser")
 	@ApiOperation(value = "更新乘客用户信息", notes = "更新乘客用户信息")
 	@ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
-	public ResultVo updateUser(@RequestBody UserEntity user){
+	public ResultVo updateUser(@RequestBody UserEntity user) {
+		userService.update(user);
+		return ResultVo.ok();
+	}
+	
+	/**
+	 * 修改用户密码
+	 */
+	@ResponseBody
+	@RequestMapping(value = "updatePassword")
+	@ApiOperation(value = "修改用户密码", notes = "修改用户密码")
+	@ApiImplicitParams({
+		@ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true),
+		@ApiImplicitParam(paramType = "query", dataType="string", name = "oldPassword", value = "旧密码", required = true),
+    	@ApiImplicitParam(paramType = "query", dataType="string", name = "newPassword", value = "新密码", required = true)
+    })
+	public ResultVo updatePassword(@LoginUser UserEntity user,String oldPassword, String newPassword) {
+		Assert.isNull(user, "用户不能为空!");
+		Assert.isNull(oldPassword, "旧密码不能为空!");
+		Assert.isNull(newPassword, "新密码不能为空!");
+		if(!user.getPassword().equals(DigestUtils.sha256Hex(oldPassword))) {
+			throw new RRException("旧密码校验不通过!");
+		}
+		user.setPassword(DigestUtils.sha256Hex(newPassword));
 		userService.update(user);
 		return ResultVo.ok();
 	}
