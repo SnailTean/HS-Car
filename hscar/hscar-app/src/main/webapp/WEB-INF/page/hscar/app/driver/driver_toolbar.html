@@ -1,14 +1,17 @@
 <!-- 工具栏 -->
 <nav class="bar bar-tab">
-  	<a class="tab-item external active" href="driver_index.html">
+  	<a class="tab-item external #if($current_page == 'driver_home')active#end"
+  		href="driver_index.html">
 	  	<span class="icon icon-home"></span>
 	  	<span class="tab-label">首页</span>
   	</a>
-  	<a class="tab-item external" href="driver_info.html">
+  	<a class="tab-item external #if($current_page == 'driver_me')active#end"
+  		href="driver_info.html">
 	  	<span class="icon icon-me"></span>
 	  	<span class="tab-label">我</span>
   	</a>
-  	<a class="tab-item external" href="#">
+  	<a class="tab-item external #if($current_page == 'driver_order')active#end"
+  		href="#">
 	  	<span class="icon icon-star"></span>
 	  	<span class="tab-label">订单</span>
   	</a>
