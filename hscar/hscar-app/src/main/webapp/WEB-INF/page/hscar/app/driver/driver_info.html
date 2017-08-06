@@ -25,7 +25,32 @@
 		</header>
 	  	
 	  	<!-- 这里是页面内容区 -->
-	  	<div class="content" style="top:0.5rem;">
+	  	<div class="content">
+			<div class="list-block media-list person-card">
+				<ul>
+					<li>
+						<div href="#" class="item-content">
+							<div class="item-media"><img src="${rc.contextPath}/statics/images/1.gif" width="80"></div>
+							<div class="item-inner">
+								<div class="item-text" style="top: 0.5rem;">
+									<strong>我的积分：</strong> 
+									<a>100</a>
+								</div>
+								<div class="item-text" style="top: 0.5rem;">
+									<strong>评分：</strong>
+									<el-rate
+								  		v-model="rate"
+								  		disabled
+								  		show-text
+								  		text-color="#ff9900"
+								  		text-template="{value}">
+									</el-rate>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
 			<div class="list-block">
 			  	<ul>
 				  	<li>
@@ -174,6 +199,7 @@
 	var vm = new Vue({
 		el:'#hs_car_app',
 		data:{
+			rate: 3.5,
 			user: {},
 			driver: {}
 		},
