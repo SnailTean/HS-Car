@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.hundsun.hscar.entity.DriverEntity;
+import com.hundsun.hscar.entity.UserEntity;
 
 /**
  * 司机信息
@@ -47,7 +48,7 @@ public interface IDriverService {
 	 * @param driverLicenseNumber	驾照号码
 	 * @param plateNumber  			车牌号
 	 */
-	public void register(Long userId, String driverLicenseNumber, String plateNumber);
+	void register(Long userId, String driverLicenseNumber, String plateNumber);
 
 	/**
 	 * 车主用户登录
@@ -56,4 +57,11 @@ public interface IDriverService {
 	 * @return          返回用户ID
 	 */
 	long login(String mobile, String password);
+	
+	/**
+	 * 修改司机用户信息
+	 * @param user    用户信息
+	 * @param driver  司机信息
+	 */
+	void updateDriverUser(UserEntity user, DriverEntity driver);
 }

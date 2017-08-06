@@ -150,4 +150,16 @@ public class DriverService implements IDriverService {
 
 		return user.getUserId();
 	}
+	
+	/**
+	 * 修改司机用户信息
+	 * @param user    用户信息
+	 * @param driver  司机信息
+	 */
+	@Override
+	@Transactional(propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
+	public void updateDriverUser(UserEntity user, DriverEntity driver){
+		userService.update(user);
+		driverDao.update(driver);
+	}
 }
