@@ -114,29 +114,18 @@ public class ApiDriverSystemController {
     }
 
     /**
-     * 获取用户信息
+     * 获取司机用户信息
      */
     @ResponseBody
-    @RequestMapping(value = "userInfo")
-	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
+    @RequestMapping(value = "driverUserInfo")
+	@ApiOperation(value = "获取司机用户信息", notes = "根据Token获取司机用户信息")
     @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
-    public ResultVo userInfo(@LoginUser UserEntity user) {
-        return ResultVo.ok().put("user", user);
-    }
-    
-    /**
-     * 获取司机信息
-     */
-    @ResponseBody
-    @RequestMapping(value = "driverInfo")
-	@ApiOperation(value = "获取司机信息", notes = "根据Token获取司机信息")
-    @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
-    public ResultVo driverInfo(@LoginUser UserEntity user) {
+    public ResultVo driverUserInfo(@LoginUser UserEntity user) {
     	if(user==null || user.getUserId()==null) {
-    		return ResultVo.ok().put("driver", null);
+    		return ResultVo.ok().put("user", user).put("driver", null);
     	}
     	DriverEntity driverEntity = driverService.queryObjectByUserId(user.getUserId());
-        return ResultVo.ok().put("driver", driverEntity);
+        return ResultVo.ok().put("user", user).put("driver", driverEntity);
     }
     
     /**

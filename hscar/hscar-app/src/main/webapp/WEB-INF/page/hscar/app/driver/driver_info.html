@@ -11,8 +11,8 @@
 	<!-- 工具栏 -->
   	#parse("hscar/app/driver/driver_toolbar.html")
   	
-	<!-- 司机首页：主体内容 -->
-  	<div id="page-driver-home" class="page page-home page-current page-inited">
+	<!-- 司机个人信息：主体内容 -->
+  	<div id="page-driver-me" class="page page-me page-current page-inited">
 
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
@@ -177,13 +177,9 @@
 			driver: {}
 		},
 		methods: {
-			getUser: function(userId) {
-				$.get(baseURL + "api/driver/system/userInfo", function(r){
+			getDriverUser: function(userId) {
+				$.get(baseURL + "api/driver/system/driverUserInfo", function(r){
 					vm.user = r.user;
-				});
-			},
-			getDriver: function(userId) {
-				$.get(baseURL + "api/driver/system/driverInfo", function(r){
 					vm.driver = r.driver;
 				});
 			},
@@ -195,8 +191,7 @@
 			}
 		},
 		created: function() {
-			this.getUser(); // 初始加载用户信息
-			this.getDriver(); // 初始加载司机信息
+			this.getDriverUser(); // 初始加载司机用户信息
 		}
 	});
 </script>

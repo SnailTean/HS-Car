@@ -159,13 +159,9 @@
 			}
 		},
 		methods: {
-			getUser: function(userId) {
-				$.get(baseURL + "api/driver/system/userInfo", function(r){
+			getDriverUser: function(userId) {
+				$.get(baseURL + "api/driver/system/driverUserInfo", function(r){
 					vm.driverUserVo.user = r.user;
-				});
-			},
-			getDriver: function(userId) {
-				$.get(baseURL + "api/driver/system/driverInfo", function(r){
 					vm.driverUserVo.driver = r.driver;
 				});
 			},
@@ -188,8 +184,7 @@
 			}
 		},
 		created: function() {
-			this.getUser(); // 初始加载用户信息
-			this.getDriver(); // 初始加载司机信息
+			this.getDriverUser(); // 初始加载司机用户信息
 		}
 	});
 </script>
