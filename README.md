@@ -90,5 +90,5 @@ hscar
 执行【jetty:run】或【tomcat7:run】指令，或者用jetty或tomcat热部署插件启动，访问http://localhost:8082/hscar-admin/
 - 恒生拼车接口系统（用于接口调试和文档查看）：  
 执行【jetty:run】或【tomcat7:run】指令，或者用jetty或tomcat热部署插件启动，访问http://localhost:8081/hscar-api/
-- 恒生拼车APP（手机端）：  
+- 恒生拼车手机端APP（测试账号密码：13333333333/admin）：  
 执行【jetty:run】或【tomcat7:run】指令，或者用jetty或tomcat热部署插件启动，访问http://localhost:8080/hscar-app/
