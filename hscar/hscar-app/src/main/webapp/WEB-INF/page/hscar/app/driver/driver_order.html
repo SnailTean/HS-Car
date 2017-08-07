@@ -18,9 +18,9 @@
 
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
-			<a class="icon icon-settings pull-left open-panel"></a> <a
-				class="button button-link button-nav pull-right open-popup"
-				data-popup=".popup-about"> <span class="icon icon-menu"></span>
+			<a class="icon icon-settings pull-left open-panel"></a> 
+			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about"> 
+				<span class="icon icon-menu"></span>
 			</a>
 			<h1 class="title">订单管理</h1>
 		</header>
@@ -45,10 +45,10 @@
 											</div>
 											<div class="item-inner">
 												<div class="item-title-row">
-													<div class="item-title">出发地：{{ order.departure }}</div>
+													<div class="item-title">出发地：{{ order.routeDetail.departure }}</div>
 													<div class="item-after">价格：{{order.price}}￥</div>
 												</div>
-												<div class="item-subtitle">目的地：{{order.destination}}</div>
+												<div class="item-subtitle">目的地：{{order.routeDetail.destination}}</div>
 												<div class="item-subtitle">乘客数：{{order.number}}人</div>
 												<div class="item-subtitle">订单状态：{{order.status}}</div>
 											</div>
@@ -66,8 +66,7 @@
 										<li v-for="order in sameWayOrders"><a href="#"
 											class="item-link item-content">
 												<div class="item-media">
-													<img src="${rc.contextPath}/statics/images/1.gif"
-														width="80">
+													<img src="${rc.contextPath}/statics/images/1.gif" width="80">
 												</div>
 												<div class="item-inner">
 													<div class="item-title-row">
@@ -78,7 +77,8 @@
 													<div class="item-subtitle">乘客数：{{order.number}}人</div>
 													<div class="item-subtitle">出发时间：{{order.time}}</div>
 												</div>
-										</a></li>
+											</a>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -123,18 +123,18 @@
 
 <!-- Vue -->
 <script type="text/javascript">
-/* 	var vm = new Vue({
+ 	var vm = new Vue({
 	 	el:'#hs_car_app',
 		data:{
-			waitingOrders: '',
-			sameWayOrders:'',
-			appointmentOrders:''
+			waitingOrders: {},
+			sameWayOrders: {},
+			appointmentOrders: {}
 		},
- 	
-		  methods: {
+ 		methods: {
 			getWaitingOrders: function(userId) {
 				$.get(baseURL + "/api/customer/orders/waiting", function(r){
 					vm.waitingOrders = r.waitingOrders;
+					console.log(vm.waitingOrders);
 				});
 			},
 			getSameWayOrders: function(userId) {
@@ -142,7 +142,6 @@
 					vm.waitingOrders = r.waitingOrders;
 				});
 			},
-			
 			getAppointmentOrders: function(userId) {
 				$.get(baseURL + "/api/customer/orders/appointmentOrders", function(r){
 					vm.waitingOrders = r.waitingOrders;
@@ -151,8 +150,10 @@
 		},
 		created: function() {
 			this.getWaitingOrders();
+// 			this.getSameWayOrders();
+// 			this.getAppointmentOrders();
 		}  
-	}); */
+	});
 </script>
 
 <!-- 设置菜单栏 -->
