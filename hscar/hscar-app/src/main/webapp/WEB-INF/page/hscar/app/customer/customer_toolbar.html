@@ -1,14 +1,17 @@
 <!-- 工具栏 -->
 <nav class="bar bar-tab">
-  	<a class="tab-item external active" href="customer_index.html">
+  	<a class="tab-item external #if($current_page == 'customer_home')active#end" 
+	  	href="customer_index.html">
 	  	<span class="icon icon-home"></span>
 	  	<span class="tab-label">首页</span>
   	</a>
-  	<a class="tab-item external" href="customer_info.html">
+  	<a class="tab-item external #if($current_page == 'customer_me')active#end"
+  		href="customer_info.html">
 	  	<span class="icon icon-me"></span>
 	  	<span class="tab-label">我</span>
   	</a>
-  	<a class="tab-item external" href="customer_order.html">
+  	<a class="tab-item external #if($current_page == 'customer_order')active#end"
+  		href="customer_order.html">
 	  	<span class="icon icon-star"></span>
 	  	<span class="tab-label">订单</span>
   	</a>

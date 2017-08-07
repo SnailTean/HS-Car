@@ -172,7 +172,7 @@ public class ApiCustomerSystemController {
 		if(!user.getPassword().equals(DigestUtils.sha256Hex(oldPassword))) {
 			throw new RRException("旧密码校验不通过!");
 		}
-		user.setPassword(DigestUtils.sha256Hex(newPassword));
+		user.setPassword(newPassword);
 		userService.update(user);
 		return ResultVo.ok();
 	}
