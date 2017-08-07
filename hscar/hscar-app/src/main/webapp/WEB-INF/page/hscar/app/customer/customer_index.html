@@ -1,55 +1,61 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>乘客</title>
-#parse("hscar/app/header.html")
+	<title>乘客</title>
+	#parse("hscar/app/header.html")
 
-<!-- 百度地图 -->
-<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OihY4z4wvuoxt8LjUNKTqf05"></script>
-<style type="text/css">
-	body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
-</style>
+	<!-- 百度地图 -->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OihY4z4wvuoxt8LjUNKTqf05"></script>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		#allmap {width: 100%;height: 88.8%;}
+	</style>
 </head>
 <body>
 <!-- vue作用域 -->
 <div id="hs_car_app">
-	
+
 	<!-- 工具栏 -->
-	#set($current_page = 'customer_home')
-  	#parse("hscar/app/customer/customer_toolbar.html")
-  	
+	#parse("hscar/app/customer/customer_toolbar.html")
+
 	<!-- 乘客首页：主体内容 -->
-  	<div id="page-customer-home" class="page page-home page-current page-inited">
+	<div id="page-customer-home" class="page page-home page-current page-inited">
 
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
-			<a class="icon icon-settings pull-left open-panel"></a> 
+			<a class="icon icon-settings pull-left open-panel"></a>
 			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
 				<span class="icon icon-menu"></span>
 			</a>
 			<h1 class="title">乘客{{user.username}}</h1>
 		</header>
-	  	
-	  	<!-- 百度地图 -->
-	  	<div id="allmap"></div>
-	  	
-	  	<!-- 这里是页面内容区 -->
-	  	<div class="content native-scroll">
+
+		<!-- 百度地图 -->
+		<div id="allmap"></div>
+
+		<!-- 这里是页面内容区 -->
+		<div class="content native-scroll" style="
+    height: 20vh;
+    margin-top: 1.75rem;
+">
 			<div class="page-index">
-				<div class="content">
-					<div class="content-block">
-						<div class="list-block">
+				<div class="content" style="height: 100%;">
+					<div class="content-block" style="margin-top: 0;">
+						<div class="list-block" style="margin: 0;">
 							<ul>
 								<li><div class="item-content"><div class="item-inner">
 									<div class="item-title label">出发地</div>
 									<div class="item-input">
-										<input type="text" placeholder="选择出发地" id='origin_picker' readonly />
+										<input type="text" id="start" placeholder="输入出发地" onfocus='if(this.value!=""){this.value="";}'
+											   onblur='if(this.value==""){this.value="杭州市滨江区江南大道3588号恒生大厦"}'>
+										<div id="startSearchResultPanel" style="border:1px solid #C0C0C0;width:auto;height:auto; display:none;"></div>
 									</div>
 								</div></div></li>
 								<li><div class="item-content"><div class="item-inner">
 									<div class="item-title label">目的地</div>
-									<div class="item-input">
-										<input type="text" placeholder="选择目的地" id='destination_picker' readonly />
+									<div class="item-input" id="r-result">
+										<input type="text" id="end" placeholder="输入目的地">
+										<div id="endSearchResultPanel" style="border:1px solid #C0C0C0;width:auto;height:auto; display:none;"></div>
 									</div>
 								</div></div></li>
 							</ul>
@@ -62,74 +68,182 @@
 
 	<!-- 关于 -->
 	#parse("hscar/app/about.html")
-	
+
 	<!-- 设置菜单栏 -->
 	#parse("hscar/app/settings.html")
 </div>
 
 <!-- Vue -->
 <script type="text/javascript">
-	var vm = new Vue({
-		el:'#hs_car_app',
-		data:{
-			user: {}
-		},
-		methods: {
-			getUser: function(userId) {
-				$.get(baseURL + "api/customer/system/userInfo", function(r){
-					vm.user = r.user;
-				});
-			},
-		},
-		created: function() {
-			this.getUser();
-		}
-	});
+    var vm = new Vue({
+        el:'#hs_car_app',
+        data:{
+            user: {}
+        },
+        methods: {
+            getUser: function(userId) {
+                $.get(baseURL + "api/customer/system/userInfo", function(r){
+                    vm.user = r.user;
+                });
+            },
+        },
+        created: function() {
+            this.getUser();
+        }
+    });
 </script>
 
 <!-- 设置菜单栏 -->
 <script src="${rc.contextPath}/js/hscar/app/settings.js" type="text/javascript"></script>
 
-<!-- Light7 -->
-<script type="text/javascript">
-	$("#origin_picker").picker({
-		toolbarTemplate: '<header class="bar bar-nav">\
-					  		  <button class="button button-link pull-left">按钮</button>\
-					  		  <button class="button button-link pull-right close-picker">确定</button>\
-					  		  <h1 class="title">出发地</h1>\
-					  	  </header>',
-	  	cols: [{
-	      	textAlign: 'center',
-	      	values: ['地址1', '地址2', '地址3', '地址4', '地址5', '地址6']
-	    }]
-	});
-	
-	$("#destination_picker").picker({
-		toolbarTemplate: '<header class="bar bar-nav">\
-					  		  <button class="button button-link pull-left">按钮</button>\
-					  		  <button class="button button-link pull-right close-picker">确定</button>\
-					  		  <h1 class="title">目的地</h1>\
-					  	  </header>',
-	  	cols: [{
-	      	textAlign: 'center',
-	      	values: ['地址11', '地址22', '地址33', '地址44', '地址55', '地址66']
-	    }]
-	});
-</script>
-
 <!-- 百度地图 -->
 <script type="text/javascript">
-	var map = new BMap.Map("allmap");
-	var point = new BMap.Point(116.331398,39.897445);
-	map.centerAndZoom(point,12);
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(120.21937542,30.25924446);
+    map.centerAndZoom(point,15);
 
-	function myFun(result){
-		var cityName = result.name;
-		map.setCenter(cityName);
-		console.log("当前定位城市:"+cityName);
-	}
-	var myCity = new BMap.LocalCity();
-	myCity.get(myFun);
+	/*function myFun(result){
+	 var cityName = result.name;
+	 map.setCenter(cityName);
+	 console.log("当前定位城市:"+cityName);
+	 G("start").value = cityName;
+	 }
+	 var myCity = new BMap.LocalCity();
+	 myCity.get(myFun);*/
+    map.enableScrollWheelZoom();                 //启用滚轮放大缩小
+    // 添加带有定位的导航控件
+    var navigationControl = new BMap.NavigationControl({
+        // 靠左上角位置
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+        // LARGE类型
+        type: BMAP_NAVIGATION_CONTROL_LARGE,
+        // 启用显示定位
+        enableGeolocation: true
+    });
+    map.addControl(navigationControl);
+    // 添加定位控件
+    var geolocationControl = new BMap.GeolocationControl();
+    geolocationControl.addEventListener("locationSuccess", function(e){
+        // 定位成功事件
+        var address = '';
+        address += e.addressComponent.province;
+        address += e.addressComponent.city;
+        address += e.addressComponent.district;
+        address += e.addressComponent.street;
+        address += e.addressComponent.streetNumber;
+        G("start").value = address;
+    });
+    geolocationControl.addEventListener("locationError",function(e){
+        // 定位失败事件
+        alert(e.message);
+    });
+    geolocationControl
+    map.addControl(geolocationControl);
+
+    // 百度地图API功能
+    function G(id) {
+        return document.getElementById(id);
+    }
+    var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {"input" : "start"
+            ,"location" : map
+        });
+
+    ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("startSearchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("startSearchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace(){
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun(){
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+    }
+
+    var end_ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {"input" : "end"
+            ,"location" : map
+        });
+
+    end_ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("endSearchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    end_ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("endSearchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace(){
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun(){
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+    }
+
+
+    function linePage() {
+        var start = G("start").value;
+        var end = G("end").value;
+        if(start == "" || end == ""){
+            return;
+        }
+        window.location.href = "customer_index_detail.html";
+
+    }
 </script>
 
 </body>
