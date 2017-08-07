@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>司机</title>
+#parse("hscar/app/header.html")
+</head>
+<body>
+<!-- vue作用域 -->
+<div id="hs_car_app">
+	
+	<!-- 工具栏 -->
+  	#parse("hscar/app/customer/customer_toolbar.html")
+  	
+	<!-- 乘客订单：主体内容 -->
+  	<div id="page-driver-home" class="page page-home page-current page-inited">
+			
+		<!-- 标题栏 -->
+		<header class="bar bar-nav">
+			<a class="icon icon-settings pull-left open-panel"></a> 
+			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
+				<span class="icon icon-menu"></span>
+			</a>
+			<h1 class="title">订单管理</h1>
+		</header>
+	  	
+	  	<!-- 这里是页面内容区 -->
+		<div class="content">
+		<div class="buttons-tab">
+    		<a href="#tab1" class="tab-link active button">待处理</a>
+    		<a href="#tab2" class="tab-link button">顺路订单</a>
+    		<a href="#tab3" class="tab-link button">预约订单</a>
+  		</div>
+  		 <div class="content-block">
+    <div class="tabs">
+      <div id="tab1" class="tab active">
+        <div class="content-block">
+         <div class="list-block media-list">
+				<ul>
+					<li v-for="order in waitingOrders">
+				 	<a href="#" class="item-link item-content">
+						<div class="item-media">
+							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">出发地：{{ order.departure }}</div>
+								<div class="item-after">价格：{{order.price}}￥</div>
+							</div>
+							<div class="item-subtitle">目的地：{{order.destination}}</div>
+							<div class="item-subtitle">乘客数：{{order.number}}人</div>
+						   <div class="item-subtitle">订单状态：{{order.status}}</div>
+							
+						</div>
+					</a> 
+					</li>
+				</ul>
+			</div>
+        </div>
+      </div>
+      <div id="tab2" class="tab">
+        <div class="content-block">
+           <div class="content-block">
+         <div class="list-block media-list">
+				<ul>
+					<li v-for="order in sameWayOrders">
+				 	<a href="#" class="item-link item-content">
+						<div class="item-media">
+							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">出发地：{{ order.departure }}</div>
+								<div class="item-after">价格：{{order.price}}￥</div>
+							</div>
+							<div class="item-subtitle">目的地：{{order.destination}}</div>
+							<div class="item-subtitle">乘客数：{{order.number}}人</div>
+							<div class="item-subtitle">出发时间：{{order.time}}</div>
+						</div>
+					</a> 
+					</li>
+				</ul>
+			</div>
+        </div>
+        </div>
+      </div>
+      <div id="tab3" class="tab">
+        <div class="content-block">
+           <div class="content-block">
+         <div class="list-block media-list">
+				<ul>
+					<li v-for="order in appointmentOrders">
+				 	<a href="#" class="item-link item-content">
+						<div class="item-media">
+							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
+						</div>
+						<div class="item-inner">
+							<div class="item-title-row">
+								<div class="item-title">出发地：{{ order.departure }}</div>
+								<div class="item-after">价格：{{order.price}}￥</div>
+							</div>
+							<div class="item-subtitle">目的地：{{order.destination}}</div>
+							<div class="item-text">乘客数：{{order.number}}人</div>
+						</div>
+					</a> 
+					</li>
+				
+				
+				
+				</ul>
+			</div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+			
+		</div>
+	</div>
+
+  	<!-- 关于 -->
+	#parse("hscar/app/about.html")
+	
+	<!-- 设置菜单栏 -->
+	#parse("hscar/app/settings.html")
+</div>
+
+<!-- Vue -->
+<script type="text/javascript">
+	var vm = new Vue({
+	 	el:'#hs_car_app',
+		data:{
+			waitingOrders: '',
+			sameWayOrders:'',
+			appointmentOrders:''
+		},
+ 	
+		  methods: {
+			getWaitingOrders: function(userId) {
+				$.get(baseURL + "/api/customer/orders/waiting", function(r){
+					vm.waitingOrders = r.waitingOrders;
+				});
+			},
+			getSameWayOrders: function(userId) {
+				$.get(baseURL + "/api/customer/orders/sameWay", function(r){
+					vm.waitingOrders = r.waitingOrders;
+				});
+			},
+			
+			getAppointmentOrders: function(userId) {
+				$.get(baseURL + "/api/customer/orders/appointmentOrders", function(r){
+					vm.waitingOrders = r.waitingOrders;
+				});
+			}
+		},
+		created: function() {
+			this.getWaitingOrders();
+		}  
+	});
+</script>
+
+<!-- 设置菜单栏 -->
+<script src="${rc.contextPath}/js/hscar/app/settings.js" type="text/javascript"></script>
+
+<!-- Light7 -->
+<script type="text/javascript">
+
+</script>
+
+</body>
+</html>
