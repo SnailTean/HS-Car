@@ -65,6 +65,7 @@ public class UserService implements IUserService {
 	
 	@Override
 	public void update(UserEntity user){
+		user.setPassword(DigestUtils.sha256Hex(user.getPassword()));
 		user.setUpdateTime(new Date());
 		userDao.update(user);
 	}

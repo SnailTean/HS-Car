@@ -9,6 +9,7 @@
 <div id="hs_car_app">
 	
 	<!-- 工具栏 -->
+	#set($current_page = 'driver_home')
   	#parse("hscar/app/driver/driver_toolbar.html")
   	
 	<!-- 司机首页：主体内容 -->
@@ -97,17 +98,19 @@
 	var vm = new Vue({
 		el:'#hs_car_app',
 		data:{
-			user: {}
+			user: {},
+			driver: {}
 		},
 		methods: {
-			getUser: function(userId) {
-				$.get(baseURL + "api/driver/system/userInfo", function(r){
+			getDriverUser: function(userId) {
+				$.get(baseURL + "api/driver/system/driverUserInfo", function(r){
 					vm.user = r.user;
+					vm.driver = r.driver;
 				});
 			}
 		},
 		created: function() {
-			this.getUser();
+			this.getDriverUser(); // 初始加载司机用户信息
 		}
 	});
 </script>

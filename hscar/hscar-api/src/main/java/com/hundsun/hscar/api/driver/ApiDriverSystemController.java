@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,7 @@ import com.hundsun.hscar.entity.DriverEntity;
 import com.hundsun.hscar.entity.UserEntity;
 import com.hundsun.hscar.service.api.IDriverService;
 import com.hundsun.hscar.service.api.ITokenService;
+import com.hundsun.hscar.vo.DriverUserVo;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
@@ -112,30 +114,33 @@ public class ApiDriverSystemController {
     }
 
     /**
-     * 获取用户信息
+     * 获取司机用户信息
      */
     @ResponseBody
-    @RequestMapping(value = "userInfo")
-	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
+    @RequestMapping(value = "driverUserInfo")
+	@ApiOperation(value = "获取司机用户信息", notes = "根据Token获取司机用户信息")
     @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
-    public ResultVo userInfo(@LoginUser UserEntity user) {
-        return ResultVo.ok().put("user", user);
+    public ResultVo driverUserInfo(@LoginUser UserEntity user) {
+    	if(user==null || user.getUserId()==null) {
+    		return ResultVo.ok().put("user", user).put("driver", null);
+    	}
+    	DriverEntity driverEntity = driverService.queryObjectByUserId(user.getUserId());
+        return ResultVo.ok().put("user", user).put("driver", driverEntity);
     }
     
     /**
-     * 获取司机信息
-     */
-    @ResponseBody
-    @RequestMapping(value = "driverInfo")
-	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
-    @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
-    public ResultVo driverInfo(@LoginUser UserEntity user) {
-    	if(user==null || user.getUserId()==null) {
-    		return ResultVo.ok().put("driver", null);
-    	}
-    	DriverEntity driverEntity = driverService.queryObjectByUserId(user.getUserId());
-        return ResultVo.ok().put("driver", driverEntity);
-    }
+	 * 更新司机用户信息
+	 */
+	@ResponseBody
+	@RequestMapping(value = "updateDriverUser")
+	@ApiOperation(value = "更新司机用户信息", notes = "更新司机用户信息")
+	@ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
+	public ResultVo updateDriverUser(@RequestBody DriverUserVo driverUserVo) {
+		Assert.isNull(driverUserVo.getUser(), "用户信息不能为空!");
+		Assert.isNull(driverUserVo.getDriver(), "司机信息不能为空!");
+		driverService.updateDriverUser(driverUserVo.getUser(), driverUserVo.getDriver());
+		return ResultVo.ok();
+	}
     
     /**
      * 忽略Token验证测试

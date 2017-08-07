@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>乘客</title>
+<title>司机</title>
 #parse("hscar/app/header.html")
 </head>
 <body>
@@ -9,11 +9,11 @@
 <div id="hs_car_app">
 	
 	<!-- 工具栏 -->
-	#set($current_page = 'customer_me')
-  	#parse("hscar/app/customer/customer_toolbar.html")
+	#set($current_page = 'driver_me')
+  	#parse("hscar/app/driver/driver_toolbar.html")
   	
-	<!-- 乘客个人信息：主体内容 -->
-  	<div id="page-customer-me" class="page page-me page-current page-inited">
+	<!-- 司机个人信息：主体内容 -->
+  	<div id="page-driver-me" class="page page-me page-current page-inited">
 
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
@@ -21,11 +21,36 @@
 			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
 				<span class="icon icon-menu"></span>
 			</a>
-			<h1 class="title">乘客个人信息</h1>
+			<h1 class="title">司机个人信息</h1>
 		</header>
 	  	
 	  	<!-- 这里是页面内容区 -->
-	  	<div class="content" style="top:0.5rem;">
+	  	<div class="content">
+			<div class="list-block media-list person-card">
+				<ul>
+					<li>
+						<div href="#" class="item-content">
+							<div class="item-media"><img src="${rc.contextPath}/statics/images/1.gif" width="80"></div>
+							<div class="item-inner">
+								<div class="item-text" style="top: 0.5rem;">
+									<strong>我的积分：</strong> 
+									<a>100</a>
+								</div>
+								<div class="item-text" style="top: 0.5rem;">
+									<strong>平均评分：</strong>
+									<el-rate
+								  		v-model="rate"
+								  		disabled
+								  		show-text
+								  		text-color="#ff9900"
+								  		text-template="{value}">
+									</el-rate>
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
 			<div class="list-block">
 			  	<ul>
 				  	<li>
@@ -127,6 +152,28 @@
 				        	</div>
 				      	</div>
 				    </li>
+				    <li>
+				      	<div class="item-content">
+				        	<div class="item-media"><i class="icon icon-form-settings"></i></div>
+				        	<div class="item-inner">
+				          		<div class="item-title label">驾照号码</div>
+				          		<div class="item-input">
+				            		{{driver.driverLicenseNumber}}
+				          		</div>
+				        	</div>
+				      	</div>
+				    </li>
+				    <li>
+				      	<div class="item-content">
+				        	<div class="item-media"><i class="icon icon-form-settings"></i></div>
+				        	<div class="item-inner">
+				          		<div class="item-title label">车牌号</div>
+				          		<div class="item-input">
+				            		{{driver.plateNumber}}
+				          		</div>
+				        	</div>
+				      	</div>
+				    </li>
 			  	</ul>
 			</div>
 			<div class="content-block">
@@ -152,23 +199,32 @@
 	var vm = new Vue({
 		el:'#hs_car_app',
 		data:{
-			user: {}
+			rate: 0,
+			user: {},
+			driver: {}
 		},
 		methods: {
-			getUser: function(userId) {
-				$.get(baseURL + "api/customer/system/userInfo", function(r){
+			getDriverUser: function(userId) {
+				$.get(baseURL + "api/driver/system/driverUserInfo", function(r){
 					vm.user = r.user;
+					vm.driver = r.driver;
+				});
+			},
+			getDriverRate: function(userId) {
+				$.get(baseURL + "api/driver/evaluate/driverRate", function(r){
+					vm.rate = r.rate;
 				});
 			},
 			info_edit: function (event) {
-				parent.location.href = 'customer_info_edit.html';
+				parent.location.href = 'driver_info_edit.html';
 			},
 			password_modify: function (event) {
-				parent.location.href = 'customer_password_modify.html';
+				parent.location.href = baseURL + 'hscar/app/customer/customer_password_modify.html';
 			}
 		},
 		created: function() {
-			this.getUser();
+			this.getDriverUser(); // 初始加载司机用户信息
+			this.getDriverRate(); // 初始加载司机评分
 		}
 	});
 </script>

@@ -1,9 +1,10 @@
 package com.hundsun.hscar.service.api;
 
-import com.hundsun.hscar.entity.DriverEvaluateEntity;
-
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+
+import com.hundsun.hscar.entity.DriverEvaluateEntity;
 
 /**
  * 司机评价表
@@ -29,4 +30,10 @@ public interface IDriverEvaluateService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+	
+	/**
+	 * 获取司机评分
+	 * @param driverId 司机Id
+	 */
+	BigDecimal getDriverRate(Long driverId);
 }

@@ -1,14 +1,13 @@
-$("#settings_close").click(function(){
-	alert("close");
+$("#settings_close").click(function() {
+//	alert("关闭");
 });
 
-$("#settings_test").click(function(){
-	alert('测试成功', function() {
-		
-	});
+$("#settings_update_password").click(function() {
+	//跳转到密码修改页面
+	location.href = baseURL + 'hscar/app/customer/customer_password_modify.html';
 });
 
-$("#settings_logout").click(function(){
+$("#settings_logout").click(function() {
 	//删除本地token
     localStorage.removeItem("token");
 	
