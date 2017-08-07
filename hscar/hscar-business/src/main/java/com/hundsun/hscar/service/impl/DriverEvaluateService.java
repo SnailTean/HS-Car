@@ -1,10 +1,11 @@
 package com.hundsun.hscar.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.hundsun.hscar.dao.DriverEvaluateDao;
 import com.hundsun.hscar.entity.DriverEvaluateEntity;
@@ -63,6 +64,14 @@ public class DriverEvaluateService implements IDriverEvaluateService {
 	@Override
 	public void deleteBatch(Integer[] ids){
 		driverEvaluateDao.deleteBatch(ids);
+	}
+	
+	/**
+	 * 获取司机评分
+	 * @param driverId 司机Id
+	 */
+	public BigDecimal getDriverRate(Long driverId){
+		return driverEvaluateDao.getDriverRate(driverId);
 	}
 	
 }

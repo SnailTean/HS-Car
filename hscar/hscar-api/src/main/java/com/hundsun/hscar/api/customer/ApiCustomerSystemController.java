@@ -132,11 +132,11 @@ public class ApiCustomerSystemController {
     }
 
     /**
-     * 获取用户信息
+     * 获取乘客用户信息
      */
     @ResponseBody
     @RequestMapping(value = "userInfo")
-	@ApiOperation(value = "获取用户信息", notes = "根据Token获取用户信息")
+	@ApiOperation(value = "获取乘客用户信息", notes = "根据Token获取乘客用户信息")
     @ApiImplicitParam(paramType = "header", dataType="string", name = "token", value = "令牌", required = true)
     public ResultVo userInfo(@LoginUser UserEntity user) {
         return ResultVo.ok().put("user", user);

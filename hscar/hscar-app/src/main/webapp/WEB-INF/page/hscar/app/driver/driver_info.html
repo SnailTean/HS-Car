@@ -199,7 +199,7 @@
 	var vm = new Vue({
 		el:'#hs_car_app',
 		data:{
-			rate: 3.5,
+			rate: 0,
 			user: {},
 			driver: {}
 		},
@@ -208,6 +208,11 @@
 				$.get(baseURL + "api/driver/system/driverUserInfo", function(r){
 					vm.user = r.user;
 					vm.driver = r.driver;
+				});
+			},
+			getDriverRate: function(userId) {
+				$.get(baseURL + "api/driver/evaluate/driverRate", function(r){
+					vm.rate = r.rate;
 				});
 			},
 			info_edit: function (event) {
@@ -219,6 +224,7 @@
 		},
 		created: function() {
 			this.getDriverUser(); // 初始加载司机用户信息
+			this.getDriverRate(); // 初始加载司机评分
 		}
 	});
 </script>
