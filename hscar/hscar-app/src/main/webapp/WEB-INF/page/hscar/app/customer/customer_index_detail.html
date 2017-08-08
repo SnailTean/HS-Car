@@ -63,6 +63,8 @@
 			</div>
 		</div>
 	</div>
+	<input type="hidden" id="start" value="${start}"/>
+	<input type="hidden" id="endPlace" value="${end}"/>
 
 	<!-- 关于 -->
 	#parse("hscar/app/about.html")
@@ -97,8 +99,8 @@
 <!-- 百度地图 -->
 <script type="text/javascript">
     // 百度地图API功能
-	var start = "杭州恒生大厦";
-	var end = "浙大紫荆港";
+	var start = document.getElementById("start").value;
+	var end = document.getElementById("endPlace").value;
     var map = new BMap.Map("allmap");
     map.centerAndZoom(new BMap.Point(120.21937542,30.25924446), 15);
     map.enableScrollWheelZoom();                 //启用滚轮放大缩小
