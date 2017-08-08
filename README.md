@@ -25,7 +25,7 @@ hscar
 │  ├─entity层
 │  ├─dao层
 │  ├─service层
-│  └─*.xml Mybatis配置文件
+│  └─*.xml Mybatis配置文件（代码生成的*Base_Dao.xml为基础SQL，自己想加SQL写在*Exp_Dao.xml里）
 │
 ├─hscar-api Http接口模块,web工程可以在线测试接口(jar包)
 │  ├─token app接口权限控制
