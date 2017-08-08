@@ -1,8 +1,10 @@
 package com.hundsun.hscar.app.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * 系统页面视图
@@ -37,5 +39,13 @@ public class AppPageController {
 	public String driver_page(@PathVariable("url") String url) {
 		return "hscar/app/driver/" + url + ".html";
 	}
+
+	@RequestMapping("hscar/app/customer/customer_index_detail")
+	public String customer_index(@RequestParam("start") String start, @RequestParam("end") String end, Model model) {
+		model.addAttribute("start",start);
+		model.addAttribute("end",end);
+		return "hscar/app/customer/customer_index_detail.html";
+	}
+
 
 }

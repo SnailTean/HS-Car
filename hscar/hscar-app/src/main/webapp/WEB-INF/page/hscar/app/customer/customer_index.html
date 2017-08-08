@@ -9,6 +9,9 @@
 	<style type="text/css">
 		body, html {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 		#allmap {width: 100%;height: 88.8%;}
+		.tangram-suggestion-main{
+			z-index:999999;
+		}
 	</style>
 </head>
 <body>
@@ -37,22 +40,21 @@
 		<!-- 这里是页面内容区 -->
 		<div class="content native-scroll" style="height: 20vh;margin-top: 1.75rem;">
 			<div class="page-index">
-				<div class="content" style="height: 100%;">
+				<div class="content" style="height: 100%;overflow-y: hidden;">
 					<div class="content-block" style="margin-top: 0;">
 						<div class="list-block" style="margin: 0;">
 							<ul>
 								<li><div class="item-content"><div class="item-inner">
 									<div class="item-title label">出发地</div>
 									<div class="item-input">
-										<input type="text" id="start" placeholder="输入出发地" onfocus='if(this.value!=""){this.value="";}'
-											   onblur='if(this.value==""){this.value="杭州市滨江区江南大道3588号恒生大厦"}'>
+										<input type="text" id="start" placeholder="输入出发地">
 										<div id="startSearchResultPanel" style="border:1px solid #C0C0C0;width:auto;height:auto; display:none;"></div>
 									</div>
 								</div></div></li>
 								<li><div class="item-content"><div class="item-inner">
 									<div class="item-title label">目的地</div>
 									<div class="item-input" id="r-result">
-										<input type="text" id="end" placeholder="输入目的地">
+										<input type="text" id="endPlace" placeholder="输入目的地">
 										<div id="endSearchResultPanel" style="border:1px solid #C0C0C0;width:auto;height:auto; display:none;"></div>
 									</div>
 								</div></div></li>
@@ -99,7 +101,6 @@
     var map = new BMap.Map("allmap");
     var point = new BMap.Point(120.21937542,30.25924446);
     map.centerAndZoom(point,15);
-
 	/*function myFun(result){
 	 var cityName = result.name;
 	 map.setCenter(cityName);
@@ -170,7 +171,10 @@
         var _value = e.item.value;
         myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
         G("startSearchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
-
+        var value = $("#endPlace").val();
+        if(value){
+            linePage();
+        }
         setPlace();
     });
 
@@ -188,7 +192,7 @@
     }
 
     var end_ac = new BMap.Autocomplete(    //建立一个自动完成的对象
-        {"input" : "end"
+        {"input" : "endPlace"
             ,"location" : map
         });
 
@@ -215,7 +219,12 @@
         var _value = e.item.value;
         myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
         G("endSearchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
-
+        var value = $("#start").val();
+        if(!value){
+            alert("出发地不能为空");
+        }else{
+            linePage();
+        }
         setPlace();
     });
 
@@ -235,12 +244,11 @@
 
     function linePage() {
         var start = G("start").value;
-        var end = G("end").value;
+        var end = G("endPlace").value;
         if(start == "" || end == ""){
             return;
         }
-        window.location.href = "customer_index_detail.html";
-
+        window.location.href = "customer_index_detail?start="+start+"&end="+end;
     }
 </script>
 
