@@ -106,12 +106,12 @@
 				var login_url;
 				var index_url;
 				if(vm.user_type_radio == "乘客") {
-// 					login_url = baseURL + "/api/customer/system/login";
-					login_url = baseURL + "/api/customer/system/login_with_captcha";
+// 					login_url = baseURL + "api/customer/system/login";
+					login_url = baseURL + "api/customer/system/login_with_captcha";
 					index_url ='hscar/app/customer/customer_index.html';
 				} else if(vm.user_type_radio == "司机") {
-// 					login_url = baseURL + "/api/driver/system/login";
-					login_url = baseURL + "/api/driver/system/login_with_captcha";
+// 					login_url = baseURL + "api/driver/system/login";
+					login_url = baseURL + "api/driver/system/login_with_captcha";
 					index_url ='hscar/app/driver/driver_index.html';
 				}
 				var data = "mobile="+vm.mobile+"&password="+vm.password+"&captcha="+vm.captcha;

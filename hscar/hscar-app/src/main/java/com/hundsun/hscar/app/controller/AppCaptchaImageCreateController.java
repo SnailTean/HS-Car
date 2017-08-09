@@ -33,7 +33,7 @@ public class AppCaptchaImageCreateController {
 		this.captchaProducer = captchaProducer;  
 	}
 	
-	@RequestMapping("/captcha.jpg")  
+	@RequestMapping("captcha.jpg")  
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setDateHeader("Expires", 0);
  

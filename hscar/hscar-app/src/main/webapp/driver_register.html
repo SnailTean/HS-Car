@@ -101,7 +101,7 @@
 					var data = "mobile="+vm.mobile+"&password="+vm.password+"&driverLicenseNumber="+vm.driverLicenseNumber+"&plateNumber="+vm.plateNumber;
 					$.ajax({
 						type: "POST",
-						url: baseURL + "/api/driver/system/register",
+						url: baseURL + "api/driver/system/register",
 					    data: data,
 					    dataType: "json",
 					    success: function(result) {

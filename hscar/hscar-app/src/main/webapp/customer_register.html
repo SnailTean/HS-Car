@@ -91,7 +91,7 @@
 					var data = "mobile="+vm.mobile+"&password="+vm.password;
 					$.ajax({
 						type: "POST",
-						url: baseURL + "/api/customer/system/register",
+						url: baseURL + "api/customer/system/register",
 					    data: data,
 					    dataType: "json",
 					    success: function(result) {

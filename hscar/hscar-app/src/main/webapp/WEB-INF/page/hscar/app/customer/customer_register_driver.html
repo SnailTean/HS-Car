@@ -83,7 +83,7 @@
 				var data = "driverLicenseNumber="+vm.driverLicenseNumber+"&plateNumber="+vm.plateNumber;
 				$.ajax({
 					type: "POST",
-					url: baseURL + "/api/customer/system/register_driver_by_customer",
+					url: baseURL + "api/customer/system/register_driver_by_customer",
 				    data: data,
 				    dataType: "json",
 				    success: function(result) {

@@ -132,18 +132,18 @@
 		},
  		methods: {
 			getWaitingOrders: function(userId) {
-				$.get(baseURL + "/api/customer/orders/waiting", function(r){
+				$.get(baseURL + "api/customer/orders/waiting", function(r){
 					vm.waitingOrders = r.waitingOrders;
 					console.log(vm.waitingOrders);
 				});
 			},
 			getSameWayOrders: function(userId) {
-				$.get(baseURL + "/api/customer/orders/sameWay", function(r){
+				$.get(baseURL + "api/customer/orders/sameWay", function(r){
 					vm.waitingOrders = r.waitingOrders;
 				});
 			},
 			getAppointmentOrders: function(userId) {
-				$.get(baseURL + "/api/customer/orders/appointmentOrders", function(r){
+				$.get(baseURL + "api/customer/orders/appointmentOrders", function(r){
 					vm.waitingOrders = r.waitingOrders;
 				});
 			}
