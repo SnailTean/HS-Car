@@ -19,7 +19,7 @@
 	
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<param-value>webPath</param-value>
+		<param-value>webapp.hscar.app</param-value>
 	</context-param>
 	
 	<listener>
