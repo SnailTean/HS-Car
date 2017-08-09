@@ -17,9 +17,13 @@ var url = function(name) {
 };
 T.p = url;
 
+//当前路径
+var pathName = window.document.location.pathname;
+//当前工程名
+var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
 //请求前缀
 //var baseURL = "http://demo.open.renren.io/hscar-admin/";
-var baseURL = "/hscar-admin/";
+var baseURL = projectName + "/";
 
 //登录token
 var token = localStorage.getItem("token");
