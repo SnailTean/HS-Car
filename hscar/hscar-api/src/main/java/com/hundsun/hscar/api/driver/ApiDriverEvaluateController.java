@@ -49,6 +49,9 @@ public class ApiDriverEvaluateController {
     	DriverEntity driverEntity = driverService.queryObjectByUserId(user.getUserId());
     	Assert.isNull(driverEntity, "司机信息不能为空!");
     	BigDecimal rate = driverEvaluateService.getDriverRate(driverEntity.getDriverId());
+    	if(rate == null) {
+    		rate = new BigDecimal("0");
+    	}
         return ResultVo.ok().put("rate", rate);
     }
 }
