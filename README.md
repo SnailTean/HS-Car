@@ -85,9 +85,10 @@ hscar
 - 创建数据库hscar，数据库编码为UTF-8
 - 执行sql/db.sql文件，初始化数据【按需导入表结构及数据】
 - 修改db.properties文件，更新MySQL账号和密码
-- 执行【mvn clean install -Dmaven.test.skip=true】指令，进行maven install操作
-- 后台管理系统（账号密码：admin/admin）：
-  执行【clean package jetty:run】指令，访问：http://localhost:8080/；
-  或者用jetty或tomcat热部署插件启动，访问http://localhost:8080/hscar-admin/
-- 恒生拼车接口系统（用于接口调试和文档查看）：  执行【clean package jetty:run】指令，项目访问路径：http://localhost:8080/；  或者用jetty或tomcat热部署插件启动，访问http://localhost:8080/hscar-api/
-- 恒生拼车APP（手机端）：  执行【clean package jetty:run】指令，项目访问路径：http://localhost:8080/；  或者用jetty或tomcat热部署插件启动，访问http://localhost:8080/hscar-app/
+- 执行【clean install -Dmaven.test.skip=true】指令，进行maven install操作
+- 后台管理系统（账号密码：admin/admin）：  
+执行【jetty:run】或【tomcat7:run】指令，或者用jetty或tomcat热部署插件启动，访问http://localhost:8082/hscar-admin/
+- 恒生拼车接口系统（用于接口调试和文档查看）：  
+执行【jetty:run】或【tomcat7:run】指令，或者用jetty或tomcat热部署插件启动，访问http://localhost:8081/hscar-api/
+- 恒生拼车APP（手机端）：  
+执行【jetty:run】或【tomcat7:run】指令，或者用jetty或tomcat热部署插件启动，访问http://localhost:8080/hscar-app/
