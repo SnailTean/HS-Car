@@ -46,7 +46,7 @@ public class ApiDriverOrderController {
 	}
 	
 	
-	@ResponseBody
+/*	@ResponseBody
     @RequestMapping(value = "waiting")
 	@ApiOperation(value = "获取待处理订单信息", notes = "根据Token查询待处理订单信息")
     @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
@@ -54,7 +54,7 @@ public class ApiDriverOrderController {
  		
  		List<OrderDto> waitingOrders=orderService.getWaitingOrders(user.getUserId());
         return ResultVo.ok().put("waitingOrders", waitingOrders);
-    }
+    }*/
 
  	@ResponseBody
     @RequestMapping(value = "sameWay")

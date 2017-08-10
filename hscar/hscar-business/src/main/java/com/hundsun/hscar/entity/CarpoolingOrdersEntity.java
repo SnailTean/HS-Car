@@ -9,9 +9,9 @@ import java.util.Date;
 /**
  * 订单表
  * 
- * @author zhangmm
- * @email phoenix122411@126.com
- * @date 2017-07-29
+ * @author Ryan
+ * @email ryansunboy@gmail.com
+ * @date 2017-08-09
  */
 public class CarpoolingOrdersEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -26,9 +26,15 @@ public class CarpoolingOrdersEntity implements Serializable {
 	
 	private Double reward; // 奖励
 	
+	private Integer orderStatus; // 0.发布中1.处理中2.完成
+	
 	private Date createTime; // 创建时间
 	
 	private Date updateTime; // 更新时间
+	
+	private Date goTime; // 出发时间
+	
+	private Integer number; // 人数
 
 
 
@@ -98,6 +104,23 @@ public class CarpoolingOrdersEntity implements Serializable {
 	}
 
 	/**
+	 * 设置：0.发布中
+1.处理中
+2.完成
+	 */
+	public void setOrderStatus(Integer orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+	/**
+	 * 获取：0.发布中
+1.处理中
+2.完成
+	 */
+	public Integer getOrderStatus() {
+		return orderStatus;
+	}
+
+	/**
 	 * 设置：创建时间
 	 */
 	public void setCreateTime(Date createTime) {
@@ -121,5 +144,31 @@ public class CarpoolingOrdersEntity implements Serializable {
 	 */
 	public Date getUpdateTime() {
 		return updateTime;
+	}
+
+	/**
+	 * 设置：出发时间
+	 */
+	public void setGoTime(Date goTime) {
+		this.goTime = goTime;
+	}
+	/**
+	 * 获取：出发时间
+	 */
+	public Date getGoTime() {
+		return goTime;
+	}
+
+	/**
+	 * 设置：人数
+	 */
+	public void setNumber(Integer number) {
+		this.number = number;
+	}
+	/**
+	 * 获取：人数
+	 */
+	public Integer getNumber() {
+		return number;
 	}
 }

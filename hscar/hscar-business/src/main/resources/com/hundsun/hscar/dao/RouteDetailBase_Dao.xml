@@ -14,6 +14,7 @@
 			<if test="userId != null">and `user_id` = #{userId}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+			<if test="routeStatus != null">and `route_status` = #{routeStatus}</if>
 		</where>
 	</select>
 
@@ -28,6 +29,7 @@
 			<if test="userId != null">and `user_id` = #{userId}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+			<if test="routeStatus != null">and `route_status` = #{routeStatus}</if>
 		</where>
 		order by route_id desc
 		<if test="offset != null and limit != null">
@@ -46,6 +48,7 @@
 			<if test="userId != null">and `user_id` = #{userId}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+			<if test="routeStatus != null">and `route_status` = #{routeStatus}</if>
 		</where>
 	</select>
 	 
@@ -61,7 +64,8 @@
 			`des_coordinate`, 
 			`user_id`, 
 			`create_time`, 
-			`update_time`
+			`update_time`, 
+			`route_status`
 		)
 		values
 		(
@@ -71,7 +75,8 @@
 			#{desCoordinate}, 
 			#{userId}, 
 			#{createTime}, 
-			#{updateTime}
+			#{updateTime}, 
+			#{routeStatus}
 		)
 	</insert>
 	
@@ -87,7 +92,8 @@
 			`des_coordinate`, 
 			`user_id`, 
 			`create_time`, 
-			`update_time`
+			`update_time`, 
+			`route_status`
 		)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
@@ -98,7 +104,8 @@
 			#{item.desCoordinate}, 
 			#{item.userId}, 
 			#{item.createTime}, 
-			#{item.updateTime}
+			#{item.updateTime}, 
+			#{item.routeStatus}
 		)
 		</foreach>
 	</insert>
@@ -112,7 +119,8 @@
 			<if test="desCoordinate != null and desCoordinate != ''">`des_coordinate` = #{desCoordinate}, </if>
 			<if test="userId != null">`user_id` = #{userId}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="routeStatus != null">`route_status` = #{routeStatus}</if>
 		</set>
 		where route_id = #{routeId}
 	</update>

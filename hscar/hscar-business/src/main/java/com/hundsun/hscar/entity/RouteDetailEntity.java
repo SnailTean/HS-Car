@@ -9,9 +9,9 @@ import java.util.Date;
 /**
  * 路线详情表
  * 
- * @author zhangmm
- * @email phoenix122411@126.com
- * @date 2017-07-29
+ * @author Ryan
+ * @email ryansunboy@gmail.com
+ * @date 2017-08-09
  */
 public class RouteDetailEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -31,6 +31,8 @@ public class RouteDetailEntity implements Serializable {
 	private Date createTime; // 创建时间
 	
 	private Date updateTime; // 更新时间
+	
+	private Integer routeStatus; // 0:保存 1:生效 2:失效
 
 
 
@@ -136,5 +138,18 @@ public class RouteDetailEntity implements Serializable {
 	 */
 	public Date getUpdateTime() {
 		return updateTime;
+	}
+
+	/**
+	 * 设置：0:保存 1:生效 2:失效
+	 */
+	public void setRouteStatus(Integer routeStatus) {
+		this.routeStatus = routeStatus;
+	}
+	/**
+	 * 获取：0:保存 1:生效 2:失效
+	 */
+	public Integer getRouteStatus() {
+		return routeStatus;
 	}
 }

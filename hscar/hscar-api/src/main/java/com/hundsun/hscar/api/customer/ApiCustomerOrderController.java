@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hundsun.hscar.dto.BaseOrderDto;
 import com.hundsun.hscar.dto.OrderDto;
+import com.hundsun.hscar.dto.WaitingOrderDto;
 import com.hundsun.hscar.entity.RouteDetailEntity;
 import com.hundsun.hscar.entity.UserEntity;
 import com.hundsun.hscar.service.api.IOrderService;
@@ -78,8 +80,8 @@ public class ApiCustomerOrderController {
 	    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
 	    public ResultVo waitingOrders(@LoginUser UserEntity user) {
 	 		
-	 		List<OrderDto> waitingOrders=orderService.getWaitingOrders(user.getUserId());
-	        return ResultVo.ok().put("waitingOrders", waitingOrders);
+	 		WaitingOrderDto waitingOrder=orderService.getWaitingOrder(user.getUserId());
+	        return ResultVo.ok().put("waitingOrder", waitingOrder);
 	    }
 	
 	 	@ResponseBody
@@ -90,6 +92,15 @@ public class ApiCustomerOrderController {
 	 		
 	 		List<OrderDto> sameWayOrders=orderService.getSameWayOrders(user.getUserId());
 	        return ResultVo.ok().put("sameWayOrders", sameWayOrders);
+	    }
+	 	@ResponseBody
+	    @RequestMapping(value = "complete")
+		@ApiOperation(value = "获取已完成订单信息", notes = "根据Token查询已完成订单信息")
+	    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
+	    public ResultVo completeOrders(@LoginUser UserEntity user) {
+	 		
+	 		List<BaseOrderDto> completeOrders = orderService.getCompleteOrders(user.getUserId());
+	 		return ResultVo.ok().put("completeOrders", completeOrders);
 	    }
 	
 	
