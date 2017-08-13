@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hundsun.hscar.constant.UserTypeEnum;
 import com.hundsun.hscar.dto.BaseOrderDto;
 import com.hundsun.hscar.dto.OrderDto;
 import com.hundsun.hscar.dto.WaitingOrderDto;
@@ -49,8 +50,8 @@ public class ApiCustomerOrderController {
 		RouteDetailVo routeDetailVo  = order.getRouteDetail();
 		RouteDetailEntity routeEntity = new RouteDetailEntity();
 		routeEntity.setDeparture(routeDetailVo.getDeparture());
-		routeEntity.setDepCoordinate(routeDetailVo.getDep_coordinate());
-		routeEntity.setDesCoordinate(routeDetailVo.getDes_coordinate());
+		/*routeEntity.setDepCoordinate(routeDetailVo.getDep_coordinate());
+		routeEntity.setDesCoordinate(routeDetailVo.getDes_coordinate());*/
 		routeEntity.setDestination(routeDetailVo.getDestination());
 		//routeEntity.setUserId(userId);
 		OrderDto orderDto=new OrderDto();
@@ -90,7 +91,7 @@ public class ApiCustomerOrderController {
 	    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
 	    public ResultVo sameWayOrders(@LoginUser UserEntity user) {
 	 		
-	 		List<OrderDto> sameWayOrders=orderService.getSameWayOrders(user.getUserId());
+	 		List<WaitingOrderDto> sameWayOrders=orderService.getSameWayOrders(user.getUserId(),UserTypeEnum.PASSENGER.getValue());
 	        return ResultVo.ok().put("sameWayOrders", sameWayOrders);
 	    }
 	 	@ResponseBody

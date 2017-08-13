@@ -8,9 +8,9 @@ import java.util.Map;
 /**
  * 路线详情表
  * 
- * @author zhangmm
- * @email phoenix122411@126.com
- * @date 2017-07-16
+ * @author Ryan
+ * @email ryansunboy@gmail.com
+ * @date 2017-08-13
  */
 public interface IRouteDetailService {
 	

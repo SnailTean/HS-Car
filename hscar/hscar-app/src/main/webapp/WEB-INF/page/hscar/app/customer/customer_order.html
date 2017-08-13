@@ -13,7 +13,7 @@
   	#parse("hscar/app/customer/customer_toolbar.html")
   	
 	<!-- 乘客订单：主体内容 -->
-  	<div id="page-driver-home" class="page page-home page-current page-inited">
+  	<div id="page-customer-home" class="page page-home page-current page-inited">
 			
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
@@ -28,7 +28,7 @@
 		<div class="content">
 		<div class="buttons-tab">
     		<a href="#tab1" class="tab-link active button">待处理</a>
-    		<a href="#tab2" class="tab-link button">顺路订单</a>
+    		<a @click="getSameWayOrders" href="#tab2" class="tab-link button">顺路订单</a>
     		<a @click="getCompleteOrders" href="#tab3" class="tab-link button">已完成订单</a>
   		</div>
   		 <div class="content-block">
@@ -153,7 +153,7 @@
 			},
 			getSameWayOrders: function(userId) {
 				$.get(baseURL + "/api/customer/orders/sameWay", function(r){
-					vm.waitingOrders = r.waitingOrders;
+					vm.sameWayOrders = r.sameWayOrders;
 				});
 			},
 			

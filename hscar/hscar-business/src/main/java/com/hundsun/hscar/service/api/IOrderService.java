@@ -11,7 +11,7 @@ public interface IOrderService {
 
 	public List<OrderDto> getOrderBytype(Long userId, String orderType);
 
-	public List<OrderDto> getSameWayOrders(Long userId);
+	public List<WaitingOrderDto> getSameWayOrders(Long userId, Integer userType);
 
 	/**
 	 * 获取待处理订单信息
@@ -26,4 +26,6 @@ public interface IOrderService {
 	 * @return
 	 */
 	public List<BaseOrderDto> getCompleteOrders(Long userId);
+
+	
 }

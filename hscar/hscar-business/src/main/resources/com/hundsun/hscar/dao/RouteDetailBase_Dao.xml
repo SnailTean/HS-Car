@@ -9,12 +9,15 @@
 			<if test="routeId != null">and `route_id` = #{routeId}</if>
 			<if test="departure != null and departure != ''">and `departure` = #{departure}</if>
 			<if test="destination != null and destination != ''">and `destination` = #{destination}</if>
-			<if test="depCoordinate != null and depCoordinate != ''">and `dep_coordinate` = #{depCoordinate}</if>
-			<if test="desCoordinate != null and desCoordinate != ''">and `des_coordinate` = #{desCoordinate}</if>
+			<if test="depLongitude != null">and `dep_longitude` = #{depLongitude}</if>
+			<if test="depLatitude != null">and `dep_latitude` = #{depLatitude}</if>
+			<if test="desLongitude != null">and `des_longitude` = #{desLongitude}</if>
+			<if test="desLatitude != null">and `des_latitude` = #{desLatitude}</if>
 			<if test="userId != null">and `user_id` = #{userId}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 			<if test="routeStatus != null">and `route_status` = #{routeStatus}</if>
+			<if test="userType != null">and `user_type` = #{userType}</if>
 		</where>
 	</select>
 
@@ -24,12 +27,15 @@
 			<if test="routeId != null">and `route_id` = #{routeId}</if>
 			<if test="departure != null and departure != ''">and `departure` = #{departure}</if>
 			<if test="destination != null and destination != ''">and `destination` = #{destination}</if>
-			<if test="depCoordinate != null and depCoordinate != ''">and `dep_coordinate` = #{depCoordinate}</if>
-			<if test="desCoordinate != null and desCoordinate != ''">and `des_coordinate` = #{desCoordinate}</if>
+			<if test="depLongitude != null">and `dep_longitude` = #{depLongitude}</if>
+			<if test="depLatitude != null">and `dep_latitude` = #{depLatitude}</if>
+			<if test="desLongitude != null">and `des_longitude` = #{desLongitude}</if>
+			<if test="desLatitude != null">and `des_latitude` = #{desLatitude}</if>
 			<if test="userId != null">and `user_id` = #{userId}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 			<if test="routeStatus != null">and `route_status` = #{routeStatus}</if>
+			<if test="userType != null">and `user_type` = #{userType}</if>
 		</where>
 		order by route_id desc
 		<if test="offset != null and limit != null">
@@ -43,12 +49,15 @@
 			<if test="routeId != null">and `route_id` = #{routeId}</if>
 			<if test="departure != null and departure != ''">and `departure` = #{departure}</if>
 			<if test="destination != null and destination != ''">and `destination` = #{destination}</if>
-			<if test="depCoordinate != null and depCoordinate != ''">and `dep_coordinate` = #{depCoordinate}</if>
-			<if test="desCoordinate != null and desCoordinate != ''">and `des_coordinate` = #{desCoordinate}</if>
+			<if test="depLongitude != null">and `dep_longitude` = #{depLongitude}</if>
+			<if test="depLatitude != null">and `dep_latitude` = #{depLatitude}</if>
+			<if test="desLongitude != null">and `des_longitude` = #{desLongitude}</if>
+			<if test="desLatitude != null">and `des_latitude` = #{desLatitude}</if>
 			<if test="userId != null">and `user_id` = #{userId}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
 			<if test="routeStatus != null">and `route_status` = #{routeStatus}</if>
+			<if test="userType != null">and `user_type` = #{userType}</if>
 		</where>
 	</select>
 	 
@@ -60,23 +69,29 @@
 		(
 			`departure`, 
 			`destination`, 
-			`dep_coordinate`, 
-			`des_coordinate`, 
+			`dep_longitude`, 
+			`dep_latitude`, 
+			`des_longitude`, 
+			`des_latitude`, 
 			`user_id`, 
 			`create_time`, 
 			`update_time`, 
-			`route_status`
+			`route_status`, 
+			`user_type`
 		)
 		values
 		(
 			#{departure}, 
 			#{destination}, 
-			#{depCoordinate}, 
-			#{desCoordinate}, 
+			#{depLongitude}, 
+			#{depLatitude}, 
+			#{desLongitude}, 
+			#{desLatitude}, 
 			#{userId}, 
 			#{createTime}, 
 			#{updateTime}, 
-			#{routeStatus}
+			#{routeStatus}, 
+			#{userType}
 		)
 	</insert>
 	
@@ -88,24 +103,30 @@
 		(
 			`departure`, 
 			`destination`, 
-			`dep_coordinate`, 
-			`des_coordinate`, 
+			`dep_longitude`, 
+			`dep_latitude`, 
+			`des_longitude`, 
+			`des_latitude`, 
 			`user_id`, 
 			`create_time`, 
 			`update_time`, 
-			`route_status`
+			`route_status`, 
+			`user_type`
 		)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
 		(
 			#{item.departure}, 
 			#{item.destination}, 
-			#{item.depCoordinate}, 
-			#{item.desCoordinate}, 
+			#{item.depLongitude}, 
+			#{item.depLatitude}, 
+			#{item.desLongitude}, 
+			#{item.desLatitude}, 
 			#{item.userId}, 
 			#{item.createTime}, 
 			#{item.updateTime}, 
-			#{item.routeStatus}
+			#{item.routeStatus}, 
+			#{item.userType}
 		)
 		</foreach>
 	</insert>
@@ -115,12 +136,15 @@
 		<set>
 			<if test="departure != null and departure != ''">`departure` = #{departure}, </if>
 			<if test="destination != null and destination != ''">`destination` = #{destination}, </if>
-			<if test="depCoordinate != null and depCoordinate != ''">`dep_coordinate` = #{depCoordinate}, </if>
-			<if test="desCoordinate != null and desCoordinate != ''">`des_coordinate` = #{desCoordinate}, </if>
+			<if test="depLongitude != null">`dep_longitude` = #{depLongitude}, </if>
+			<if test="depLatitude != null">`dep_latitude` = #{depLatitude}, </if>
+			<if test="desLongitude != null">`des_longitude` = #{desLongitude}, </if>
+			<if test="desLatitude != null">`des_latitude` = #{desLatitude}, </if>
 			<if test="userId != null">`user_id` = #{userId}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
 			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
-			<if test="routeStatus != null">`route_status` = #{routeStatus}</if>
+			<if test="routeStatus != null">`route_status` = #{routeStatus}, </if>
+			<if test="userType != null">`user_type` = #{userType}</if>
 		</set>
 		where route_id = #{routeId}
 	</update>

@@ -1,280 +1,247 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>司机</title>
-#parse("hscar/app/header.html")
+	<title>司机</title>
+	#parse("hscar/app/header.html")
 
-<!-- 自定义样式 -->
-<style>
-*{
-    margin: 0;
-    padding:0;
-    -webkit-tap-highlight-color:rgba(0,0,0,0);
-    -webkit-text-size-adjust:none;
-}
-html{
-    font-size:10px;
-}
-.header{
-    height: 44px;
-    line-height: 44px;
-    border-bottom: 1px solid #ccc;
-    background-color: #eee;
-}
-.header h1{
-    text-align: center;
-    font-size: 2rem;
-    font-weight: normal;
-}
-.content{
-    padding-bottom: 40px;
-    background-color: #fff;
-}
-.content .item{
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align:center;
-    -webkit-box-align:center;
-    box-align:center;
-    -webkit-align-items:center;
-    align-items:center;
-    padding:3.125%;
-    border-bottom: 1px solid #ddd;
-    color: #333;
-    text-decoration: none;
-}
-.content .item img{
-    display: block;
-    width: 40px;
-    height: 40px;
-    border:1px solid #ddd;
-}
-.content .item h3{
-    display: block;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    width: 100%;
-    max-height: 40px;
-    overflow: hidden;
-    line-height: 20px;
-    margin: 0 10px;
-    font-size: 1.2rem;
-}
-.content .item .date{
-    display: block;
-    height: 20px;
-    line-height: 20px;
-    color: #999;
-}
-.opacity{
-    -webkit-animation: opacity 0.3s linear;
-    animation: opacity 0.3s linear;
-}
-@-webkit-keyframes opacity {
-    0% {
-        opacity:0;
-    }
-    100% {
-        opacity:1;
-    }
-}
-@keyframes opacity {
-    0% {
-        opacity:0;
-    }
-    100% {
-        opacity:1;
-    }
-}
-</style>
+	<!-- 百度地图 -->
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=OihY4z4wvuoxt8LjUNKTqf05"></script>
+	<style type="text/css">
+		body, html {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		#allmap {width: 100%;height: 88.8%;}
+	</style>
 </head>
 <body>
 <!-- vue作用域 -->
 <div id="hs_car_app">
-	
+
 	<!-- 工具栏 -->
 	#set($current_page = 'driver_home')
-  	#parse("hscar/app/driver/driver_toolbar.html")
-  	
-	<!-- 司机首页：主体内容 -->
-  	<div id="page-driver-home" class="page page-home page-current page-inited">
-			
+	#parse("hscar/app/driver/driver_toolbar.html")
+
+	<!-- 乘客首页：主体内容 -->
+	<div id="page-driver-home" class="page page-home page-current page-inited">
+
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
-			<a class="icon icon-settings pull-left open-panel"></a> 
+			<a class="icon icon-settings pull-left open-panel"></a>
 			<a class="button button-link button-nav pull-right open-popup" data-popup=".popup-about">
 				<span class="icon icon-menu"></span>
 			</a>
 			<h1 class="title">司机{{user.username}}</h1>
 		</header>
-	  	
-	  	<!-- 这里是页面内容区 -->
-		<div class="content">
-			<div class="content-block-title">待接订单</div>
-			<div class="list-block media-list">
-				<ul class="lists">
-					<li><a href="#" class="item-link item-content">
-						<div class="item-media">
-							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
+
+		<!-- 百度地图 -->
+		<div id="allmap"></div>
+
+		<!-- 这里是页面内容区 -->
+		<div class="content native-scroll" style="height: 20vh;margin-top: 1.75rem;">
+			<div class="page-index">
+				<div class="content" style="height: 100%;">
+					<div class="content-block" style="margin-top: 0;">
+						<div class="list-block" style="margin: 0;">
+							<ul>
+								<li><div class="item-content"><div class="item-inner">
+									<div class="item-title label">出发地</div>
+									<div class="item-input">
+										<input type="text" id="start" placeholder="输入出发地" onfocus='if(this.value!=""){this.value="";}'
+											   onblur='if(this.value==""){this.value="杭州市滨江区江南大道3588号恒生大厦"}'>
+										<div id="startSearchResultPanel" style="border:1px solid #C0C0C0;width:auto;height:auto; display:none;"></div>
+									</div>
+								</div></div></li>
+								<li><div class="item-content"><div class="item-inner">
+									<div class="item-title label">目的地</div>
+									<div class="item-input" id="r-result">
+										<input type="text" id="end" placeholder="输入目的地">
+										<div id="endSearchResultPanel" style="border:1px solid #C0C0C0;width:auto;height:auto; display:none;"></div>
+									</div>
+								</div></div></li>
+							</ul>
 						</div>
-						<div class="item-inner">
-							<div class="item-title-row">
-								<div class="item-title">出发地：凤起东路118号</div>
-								<div class="item-after">￥50</div>
-							</div>
-							<div class="item-subtitle">目的地：星光大道二期</div>
-							<div class="item-text">2个人，学生打扮</div>
-						</div>
-					</a></li>
-					<li><a href="#" class="item-link item-content">
-						<div class="item-media">
-							<img src="${rc.contextPath}/statics/images/2.gif" width="80">
-						</div>
-						<div class="item-inner">
-							<div class="item-title-row">
-								<div class="item-title">出发地：天城路18号</div>
-								<div class="item-after">￥20</div>
-							</div>
-							<div class="item-subtitle">目的地：火车东站</div>
-							<div class="item-text">1个人，有2个行李箱</div>
-						</div>
-					</a></li>
-					<li><a href="#" class="item-link item-content">
-						<div class="item-media">
-							<img src="${rc.contextPath}/statics/images/3.gif" width="80">
-						</div>
-						<div class="item-inner">
-							<div class="item-title-row">
-								<div class="item-title">出发地：西湖文化广场</div>
-								<div class="item-after">￥120</div>
-							</div>
-							<div class="item-subtitle">目的地：萧山机场</div>
-							<div class="item-text">3个人，行李有点多</div>
-						</div>
-					</a></li>
-					<li><a href="#" class="item-link item-content">
-						<div class="item-media">
-							<img src="${rc.contextPath}/statics/images/4.gif" width="80">
-						</div>
-						<div class="item-inner">
-							<div class="item-title-row">
-								<div class="item-title">出发地：文一西路</div>
-								<div class="item-after">￥30</div>
-							</div>
-							<div class="item-subtitle">目的地：浙大紫金港校区</div>
-							<div class="item-text">1个人，学生打扮，背黑色书包</div>
-						</div>
-					</a></li>
-				</ul>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 
-  	<!-- 关于 -->
+	<!-- 关于 -->
 	#parse("hscar/app/about.html")
-	
+
 	<!-- 设置菜单栏 -->
 	#parse("hscar/app/settings.html")
 </div>
 
 <!-- Vue -->
 <script type="text/javascript">
-	var vm = new Vue({
-		el:'#hs_car_app',
-		data:{
-			user: {},
-			driver: {}
-		},
-		methods: {
-			getDriverUser: function(userId) {
-				$.get(baseURL + "api/driver/system/driverUserInfo", function(r){
-					vm.user = r.user;
-					vm.driver = r.driver;
-				});
-			}
-		},
-		created: function() {
-			this.getDriverUser(); // 初始加载司机用户信息
-		}
-	});
+    var vm = new Vue({
+        el:'#hs_car_app',
+        data:{
+            user: {}
+        },
+        methods: {
+            getUser: function(userId) {
+                $.get(baseURL + "api/customer/system/userInfo", function(r){
+                    vm.user = r.user;
+                });
+            },
+        },
+        created: function() {
+            this.getUser();
+        }
+    });
 </script>
 
 <!-- 设置菜单栏 -->
 <script src="${rc.contextPath}/js/hscar/app/settings.js" type="text/javascript"></script>
 
-<!-- dropload -->
+<!-- 百度地图 -->
 <script type="text/javascript">
-$(function(){
-    // 页数
-    var page = 0;
-    // 每页展示10个
-    var size = 10;
+    var map = new BMap.Map("allmap");
+    var point = new BMap.Point(120.21937542,30.25924446);
+    map.centerAndZoom(point,15);
 
-    // dropload
-    $('.content').dropload({
-        scrollArea : window,
-        domUp : {
-            domClass   : 'dropload-up',
-            domRefresh : '<div class="dropload-refresh">↓下拉刷新-自定义内容</div>',
-            domUpdate  : '<div class="dropload-update">↑释放更新-自定义内容</div>',
-            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>'
-        },
-        domDown : {
-            domClass   : 'dropload-down',
-            domRefresh : '<div class="dropload-refresh">↑上拉加载更多-自定义内容</div>',
-            domLoad    : '<div class="dropload-load"><span class="loading"></span>加载中-自定义内容...</div>',
-            domNoData  : '<div class="dropload-noData">暂无数据-自定义内容</div>'
-        },
-        loadDownFn : function(me) {
-            page++;
-            // 拼接HTML
-            var result = '';
-            $.ajax({
-                type: 'GET',
-                url: baseURL + 'api/driver/system/notToken?page='+page+'&size='+size,
-                dataType: 'json',
-                success: function(data) {
-                	console.log(data);
-                    var arrLen = data.list.length;
-                    if(arrLen > 0) { // 有数据
-                        for(var i=0; i<arrLen; i++) {
-							result += '<li><a href="#" class="item-link item-content">'
-											+'<div class="item-media">'
-												+'<img src="${rc.contextPath}/statics/images/3.gif" width="80">'
-											+'</div>'
-											+'<div class="item-inner">'
-												+'<div class="item-title-row">'
-													+'<div class="item-title">出发地：西湖文化广场</div>'
-													+'<div class="item-after">￥120</div>'
-												+'</div>'
-												+'<div class="item-subtitle">目的地：萧山机场</div>'
-												+'<div class="item-text">3个人，行李有点多</div>'
-											+'</div>'
-										+'</a></li>';
-                        }
-                    } else { // 没有数据
-                        me.lock(); // 锁定
-                        me.noData(); // 无数据
-                    }
-                    // 为了测试，延迟1秒加载
-                    setTimeout(function() {
-                        $('.lists').append(result); // 插入数据到页面，放到最后面
-                        me.resetload(); // 每次数据插入，必须重置
-                    },1000);
-                },
-                error: function(xhr, type) {
-                    alert('Ajax error!');
-                    me.resetload(); // 即使加载出错，也得重置
-                }
-            });
-        },
-        threshold : 50
+	/*function myFun(result){
+	 var cityName = result.name;
+	 map.setCenter(cityName);
+	 console.log("当前定位城市:"+cityName);
+	 G("start").value = cityName;
+	 }
+	 var myCity = new BMap.LocalCity();
+	 myCity.get(myFun);*/
+    map.enableScrollWheelZoom();                 //启用滚轮放大缩小
+    // 添加带有定位的导航控件
+    var navigationControl = new BMap.NavigationControl({
+        // 靠左上角位置
+        anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+        // LARGE类型
+        type: BMAP_NAVIGATION_CONTROL_LARGE,
+        // 启用显示定位
+        enableGeolocation: true
     });
-});
+    map.addControl(navigationControl);
+    // 添加定位控件
+    var geolocationControl = new BMap.GeolocationControl();
+    geolocationControl.addEventListener("locationSuccess", function(e){
+        // 定位成功事件
+        var address = '';
+        address += e.addressComponent.province;
+        address += e.addressComponent.city;
+        address += e.addressComponent.district;
+        address += e.addressComponent.street;
+        address += e.addressComponent.streetNumber;
+        G("start").value = address;
+    });
+    geolocationControl.addEventListener("locationError",function(e){
+        // 定位失败事件
+        alert(e.message);
+    });
+    geolocationControl
+    map.addControl(geolocationControl);
+
+    // 百度地图API功能
+    function G(id) {
+        return document.getElementById(id);
+    }
+    var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {"input" : "start"
+            ,"location" : map
+        });
+
+    ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("startSearchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("startSearchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace(){
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun(){
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+    }
+
+    var end_ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+        {"input" : "end"
+            ,"location" : map
+        });
+
+    end_ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+        var str = "";
+        var _value = e.fromitem.value;
+        var value = "";
+        if (e.fromitem.index > -1) {
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+
+        value = "";
+        if (e.toitem.index > -1) {
+            _value = e.toitem.value;
+            value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        }
+        str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+        G("endSearchResultPanel").innerHTML = str;
+    });
+
+    var myValue;
+    end_ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+        var _value = e.item.value;
+        myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+        G("endSearchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+
+        setPlace();
+    });
+
+    function setPlace(){
+        map.clearOverlays();    //清除地图上所有覆盖物
+        function myFun(){
+            var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+            map.centerAndZoom(pp, 18);
+            map.addOverlay(new BMap.Marker(pp));    //添加标注
+        }
+        var local = new BMap.LocalSearch(map, { //智能搜索
+            onSearchComplete: myFun
+        });
+        local.search(myValue);
+    }
+
+
+    function linePage() {
+        var start = G("start").value;
+        var end = G("end").value;
+        if(start == "" || end == ""){
+            return;
+        }
+        window.location.href = "customer_index_detail.html";
+
+    }
 </script>
 
 </body>

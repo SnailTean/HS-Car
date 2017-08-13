@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.agile.common.utils.BdMapUtils;
 import org.agile.common.utils.CommonUtils;
+import org.agile.dto.LocationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import com.hundsun.hscar.dto.BaseOrderDto;
 import com.hundsun.hscar.dto.OrderDto;
 import com.hundsun.hscar.dto.WaitingOrderDto;
 import com.hundsun.hscar.entity.CarpoolingOrdersEntity;
+import com.hundsun.hscar.entity.ConfigurationEntity;
 import com.hundsun.hscar.entity.RouteDetailEntity;
 import com.hundsun.hscar.service.api.IOrderService;
 
@@ -24,8 +27,9 @@ public class OrderService implements IOrderService {
 	@Autowired
 	private RouteDetailService routeDetailService;
 	@Autowired
-
 	private CarpoolingOrdersService carpoolingOrdersService;
+	@Autowired
+	private ConfigurationService configurationService;
 	@Override
 	public void sendOrder(OrderDto orderDto) {
 		
@@ -51,23 +55,53 @@ public class OrderService implements IOrderService {
 	
 
 	@Override
-	public List<OrderDto> getSameWayOrders(Long userId) {
+	public List<WaitingOrderDto> getSameWayOrders(Long userId,Integer userType) {
 		
-		return null;
+		List<WaitingOrderDto> dtos = new ArrayList<>();
+		
+		RouteDetailEntity routeDetail = routeDetailService.queryActiveRouteDetail(userId);
+		if(CommonUtils.isEmpty(routeDetail)){
+			return dtos;
+		}
+		ConfigurationEntity configuration = new ConfigurationEntity();
+		configuration.setUserId(userId);
+		configuration = configurationService.queryObject(configuration);
+		LocationDto lRight =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 0);
+		LocationDto lLeft =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 180);
+
+		List<RouteDetailEntity> routeDetailList= routeDetailService.querySameWayOrders(userId,userType,lRight.getLatitude(),lLeft.getLatitude());
+		for (RouteDetailEntity routeDetailEntity : routeDetailList) {
+			CarpoolingOrdersEntity carpoolingOrder = new CarpoolingOrdersEntity();
+			carpoolingOrder.setRouteId(routeDetailEntity.getRouteId());
+			carpoolingOrder.setOrderStatus(OrderStatusEnum.PUBLISHING.getValue());
+			 carpoolingOrder = carpoolingOrdersService.queryObject(carpoolingOrder);
+			 if(CommonUtils.isNotEmpty(carpoolingOrder)){
+				 double distance = BdMapUtils.getDistanceFromTwoPoints(routeDetail.getDepLatitude(), routeDetail.getDesLatitude(), routeDetailEntity.getDepLatitude(), routeDetailEntity.getDepLongitude());
+					WaitingOrderDto dto = trasnferOrderEntityToWaitingOrderDto(carpoolingOrder,routeDetailEntity,distance);
+					dtos.add(dto);
+			 }
+		}
+		return dtos;
+		
+		
+	}
+
+	private WaitingOrderDto trasnferOrderEntityToWaitingOrderDto(CarpoolingOrdersEntity carpoolingOrder,
+			RouteDetailEntity routeDetailEntity, double distance) {
+		WaitingOrderDto dto = (WaitingOrderDto) transferEntityToBaseOrderDto(routeDetailEntity, carpoolingOrder);
+		dto.setDistance(distance);
+
+		return dto;
 	}
 
 	@Override
 	public WaitingOrderDto getWaitingOrder(Long userId) {
 		WaitingOrderDto dto = new WaitingOrderDto();
-	
-		RouteDetailEntity routeDetailReq = new RouteDetailEntity();
-		routeDetailReq.setUserId(userId);
-		routeDetailReq.setRouteStatus(RouteStatusEnum.ACTIVED.getValue());
-		RouteDetailEntity routeDetailRes= routeDetailService.queryObject(routeDetailReq);
+		
+		RouteDetailEntity routeDetailRes= routeDetailService.queryActiveRouteDetail(userId);
 		if(CommonUtils.isEmpty(routeDetailRes)){
 			return dto;
 		}
-		dto.setDestination(routeDetailRes.getDestination());
 		CarpoolingOrdersEntity orderQuery = new CarpoolingOrdersEntity();
 		orderQuery.setRouteId(routeDetailRes.getRouteId());
 		orderQuery.setOrderStatus(OrderStatusEnum.PROCESSING.getValue());
@@ -79,15 +113,8 @@ public class OrderService implements IOrderService {
 				return dto;
 			}
 		}
-	
-		dto.setDeparture(routeDetailRes.getDeparture());
-		dto.setOrderId(corpoolingOrderRes.getOrderId());
-		dto.setGoTime(corpoolingOrderRes.getGoTime());
-		dto.setOrderStatus(corpoolingOrderRes.getOrderStatus());
-		dto.setOrderType(corpoolingOrderRes.getOrderType());
-		dto.setPrice(corpoolingOrderRes.getPrice());
-		dto.setReward(corpoolingOrderRes.getReward());
-		dto.setNum(corpoolingOrderRes.getNumber());
+		dto = trasnferOrderEntityToWaitingOrderDto(corpoolingOrderRes,routeDetailRes,0);
+		
 		return dto;
 	}
 
@@ -112,19 +139,27 @@ public class OrderService implements IOrderService {
 			if(CommonUtils.isEmpty(corpoolingOrderRes)){
 				return dtos;
 			}
-			BaseOrderDto dto = new BaseOrderDto();
-			dto.setDeparture(routeDetailRes.getDeparture());
-			dto.setOrderId(corpoolingOrderRes.getOrderId());
-			dto.setGoTime(corpoolingOrderRes.getGoTime());
-			dto.setOrderStatus(corpoolingOrderRes.getOrderStatus());
-			dto.setOrderType(corpoolingOrderRes.getOrderType());
-			dto.setPrice(corpoolingOrderRes.getPrice());
-			dto.setReward(corpoolingOrderRes.getReward());
-			dto.setNum(corpoolingOrderRes.getNumber());
-			dto.setDestination(routeDetailRes.getDestination());
+			BaseOrderDto dto =transferEntityToBaseOrderDto(routeDetailRes,corpoolingOrderRes);
+			
 			dtos.add(dto);
 		}
 		return dtos;
 	}
+
+	private BaseOrderDto transferEntityToBaseOrderDto(RouteDetailEntity routeDetailRes,
+			CarpoolingOrdersEntity corpoolingOrderRes) {
+		BaseOrderDto dto = new BaseOrderDto();
+		dto.setDeparture(routeDetailRes.getDeparture());
+		dto.setOrderId(corpoolingOrderRes.getOrderId());
+		dto.setGoTime(corpoolingOrderRes.getGoTime());
+		dto.setOrderStatus(corpoolingOrderRes.getOrderStatus());
+		dto.setOrderType(corpoolingOrderRes.getOrderType());
+		dto.setPrice(corpoolingOrderRes.getPrice());
+		dto.setReward(corpoolingOrderRes.getReward());
+		dto.setNum(corpoolingOrderRes.getNumber());
+		dto.setDestination(routeDetailRes.getDestination());
+		return dto;
+	}
+
 
 }
