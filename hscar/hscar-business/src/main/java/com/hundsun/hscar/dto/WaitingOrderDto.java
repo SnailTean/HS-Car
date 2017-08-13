@@ -5,15 +5,17 @@ package com.hundsun.hscar.dto;
 public class WaitingOrderDto extends BaseOrderDto {
 	
 	
-	private double distance;
+	private Double distance;
 
-	public double getDistance() {
+	public Double getDistance() {
 		return distance;
 	}
 
-	public void setDistance(double distance) {
+	public void setDistance(Double distance) {
 		this.distance = distance;
 	}
+
+	
 
 	
 	

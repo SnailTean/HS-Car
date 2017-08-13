@@ -78,7 +78,9 @@ public class OrderService implements IOrderService {
 			 if(CommonUtils.isNotEmpty(carpoolingOrder)){
 				 double distance = BdMapUtils.getDistanceFromTwoPoints(routeDetail.getDepLatitude(), routeDetail.getDesLatitude(), routeDetailEntity.getDepLatitude(), routeDetailEntity.getDepLongitude());
 					WaitingOrderDto dto = trasnferOrderEntityToWaitingOrderDto(carpoolingOrder,routeDetailEntity,distance);
-					dtos.add(dto);
+					if(CommonUtils.isNotEmpty(dto)){
+						dtos.add(dto);
+					}
 			 }
 		}
 		return dtos;
@@ -88,7 +90,19 @@ public class OrderService implements IOrderService {
 
 	private WaitingOrderDto trasnferOrderEntityToWaitingOrderDto(CarpoolingOrdersEntity carpoolingOrder,
 			RouteDetailEntity routeDetailEntity, double distance) {
-		WaitingOrderDto dto = (WaitingOrderDto) transferEntityToBaseOrderDto(routeDetailEntity, carpoolingOrder);
+		WaitingOrderDto dto = new WaitingOrderDto();
+		if(CommonUtils.isEmpty(routeDetailEntity)||CommonUtils.isEmpty(carpoolingOrder)){
+			return dto;
+		}
+		dto.setDeparture(routeDetailEntity.getDeparture());
+		dto.setDestination(routeDetailEntity.getDestination());
+		dto.setOrderId(carpoolingOrder.getOrderId());
+		dto.setGoTime(carpoolingOrder.getGoTime());
+		dto.setOrderStatus(carpoolingOrder.getOrderStatus());
+		dto.setOrderType(carpoolingOrder.getOrderType());
+		dto.setPrice(carpoolingOrder.getPrice());
+		dto.setReward(carpoolingOrder.getReward());
+		dto.setNum(carpoolingOrder.getNumber());
 		dto.setDistance(distance);
 
 		return dto;
@@ -140,15 +154,20 @@ public class OrderService implements IOrderService {
 				return dtos;
 			}
 			BaseOrderDto dto =transferEntityToBaseOrderDto(routeDetailRes,corpoolingOrderRes);
-			
-			dtos.add(dto);
+			if(CommonUtils.isNotEmpty(dto)){
+				dtos.add(dto);
+			}
 		}
 		return dtos;
 	}
 
 	private BaseOrderDto transferEntityToBaseOrderDto(RouteDetailEntity routeDetailRes,
 			CarpoolingOrdersEntity corpoolingOrderRes) {
+		
 		BaseOrderDto dto = new BaseOrderDto();
+		if(CommonUtils.isEmpty(routeDetailRes)||CommonUtils.isEmpty(corpoolingOrderRes)){
+			return dto;
+		}
 		dto.setDeparture(routeDetailRes.getDeparture());
 		dto.setOrderId(corpoolingOrderRes.getOrderId());
 		dto.setGoTime(corpoolingOrderRes.getGoTime());
