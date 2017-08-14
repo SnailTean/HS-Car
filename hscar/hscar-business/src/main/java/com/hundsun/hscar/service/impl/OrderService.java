@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hundsun.hscar.dto.CarOrderDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,11 @@ public class OrderService implements IOrderService {
 	@Override
 	public void sendOrder(OrderDto orderDto) {
 		
+	}
+
+	@Override
+	public void saveCarOrder(CarOrderDto carOrderDto) {
+
 	}
 
 	@Override

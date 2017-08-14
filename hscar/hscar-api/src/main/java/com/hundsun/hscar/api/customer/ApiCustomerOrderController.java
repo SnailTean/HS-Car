@@ -2,8 +2,12 @@ package com.hundsun.hscar.api.customer;
 
 import java.util.List;
 
+import com.alibaba.fastjson.JSON;
+import com.hundsun.hscar.dto.CarOrderDto;
+import com.hundsun.hscar.vo.CarOrderVo;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -91,6 +95,23 @@ public class ApiCustomerOrderController {
 	 		List<OrderDto> sameWayOrders=orderService.getSameWayOrders(user.getUserId());
 	        return ResultVo.ok().put("sameWayOrders", sameWayOrders);
 	    }
-	
-	
+
+
+	@PostMapping("pushOrder")
+	@ApiOperation(value = "发送订单", notes = "根据Order对象创建订单")
+	@ApiImplicitParam(name = "order", value = "订单详细实体order", required = true, dataType = "CarOrderVo")
+	public CarOrderVo pushOrder(@RequestBody CarOrderVo order) {
+		CarOrderDto carOrderDto = new CarOrderDto();
+		carOrderDto.setDeparture(order.getDeparture());
+		carOrderDto.setDestination(order.getDestination());
+		carOrderDto.setGoTime(order.getGoTime());
+		carOrderDto.setNum(order.getNum());
+		carOrderDto.setOrderStatus(order.getOrderStatus());
+		orderService.saveCarOrder(carOrderDto);
+		return order;
+
+	}
+
+
+
 }

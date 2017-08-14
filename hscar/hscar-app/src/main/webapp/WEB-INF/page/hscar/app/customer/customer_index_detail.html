@@ -9,6 +9,7 @@
 <style type="text/css">
 	body, html {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
 	#allmap {width: 100%;height: 88.8%;}
+	.list-block .item-title.label {width:25%;}
 </style>
 </head>
 <body>
@@ -37,29 +38,46 @@
 	  	<!-- 这里是页面内容区 -->
 	  	<div class="content native-scroll" style="height: 20vh;margin-top: 1.75rem;">
 			<div class="page-index">
-				<div class="content" style="height: 100%;">
+				<div class="content" style="height: 100%;overflow-y: hidden;">
 					<div class="content-block" style="margin-top: 0;">
 						<div class="list-block" style="margin: 0;">
 							<ul>
-								<li><div class="item-content"><div class="item-inner">
+								<!--<li><div class="item-content"><div class="item-inner">
 									<div class="item-title label">拼车信息</div>
 									<div class="item-input">
 										<div class="item-input" id="info">
 										</div>
 									</div>
-								</div></div></li>
+								</div></div></li>-->
 								<li><div class="item-content"><div class="item-inner">
+									<div class="item-title label">里程</div>
+									<div class="item-input">
+										<div class="item-input" id="distance">
+											{{distance}}
+										</div>
+									</div>
 									<div class="item-title label">价格</div>
 									<div class="item-input">
-										<div class="item-input">
-											￥100.00
+										<div class="item-input" id="fare">
+											{{price}}
 										</div>
+									</div>
+								</div></div></li>
+								<li><div class="item-content"><div class="item-inner">
+									<div class="item-title label">乘车人数</div>
+									<div class="item-input">
+										<input type="text" id='perNum' v-model="num"/>
+									</div>
+									<div class="item-title label">乘车时间</div>
+									<div class="item-input">
+										<input type="text" id='datetime-picker' v-model="goTime"/>
 									</div>
 								</div></div></li>
 							</ul>
 						</div>
 					</div>
 				</div>
+				<div><a class="btn btn-primary" @click="pushOrder"><i class="fa"></i>确认拼车</a></div>
 			</div>
 		</div>
 	</div>
@@ -76,21 +94,71 @@
 <!-- Vue -->
 <script type="text/javascript">
 	var vm = new Vue({
-		el:'#hs_car_app',
-		data:{
-			user: {}
-		},
-		methods: {
-			getUser: function(userId) {
-				$.get(baseURL + "api/customer/system/userInfo", function(r){
-					vm.user = r.user;
-				});
-			},
-		},
-		created: function() {
-			this.getUser();
-		}
-	});
+        el: '#hs_car_app',
+        data: {
+            user: {},
+			order: {
+                departure: "",
+                destination: "",
+                price: "",
+                goTime: "",
+                num: "",
+                distance: "",
+                error: false,
+                errorMsg: ''
+            }
+        },
+        methods: {
+            getUser: function (userId) {
+                $.get(baseURL + "api/customer/system/userInfo", function (r) {
+                    vm.user = r.user;
+                });
+            },
+            created: function () {
+                this.getUser();
+            },
+            pushOrder: function (event) {
+                //TODO
+                    $.ajax({
+                        type: "POST",
+                        url: baseURL + "api/customer/orders/pushOrder",
+                        data: JSON.stringify(vm.order),
+                        dataType: "json",
+                        contentType: "application/json",
+                        success: function (result) {
+                            if (result.code == 0) { // 下单成功，跳转到订单页面
+                                parent.location.href = 'hscar/app/customer/customer_order.html';
+                            } else {
+                                vm.error = true;
+                                vm.errorMsg = result.msg;
+                                alert(result.msg);
+                            }
+                        }
+                    });
+                }
+        }
+    });
+
+    $("#perNum").picker({
+        toolbarTemplate: '<header class="bar bar-nav">\
+  <button class="button button-link pull-left">取消</button>\
+  <button class="button button-link pull-right close-picker">确定</button>\
+  <h1 class="title">乘车人数</h1>\
+  </header>',
+        cols: [
+            {
+                textAlign: 'center',
+                values: ['1', '2', '3', '4']
+            }
+        ]
+    });
+
+    $("#datetime-picker").datetimePicker({
+        toolbarTemplate: '<header class="bar bar-nav">\
+    <button class="button button-link pull-right close-picker">确定</button>\
+    <h1 class="title">选择乘车日期和时间</h1>\
+    </header>'
+    });
 </script>
 
 <!-- 设置菜单栏 -->
@@ -106,20 +174,52 @@
     map.enableScrollWheelZoom();                 //启用滚轮放大缩小
     var output = "出发地："+start+"  目的地："+end+"  <br/>大约时长：";
     var searchComplete = function (results){
-        if (transit.getStatus() != BMAP_STATUS_SUCCESS){
+        if (driving.getStatus() != BMAP_STATUS_SUCCESS){
             return ;
         }
         var plan = results.getPlan(0);
         output += plan.getDuration(true) + "\n";                //获取时间
         output += "总路程为：" ;
         output += plan.getDistance(true) + "\n";             //获取距离
+        //document.getElementById("info").innerHTML = output;
+        vm.distance = plan.getDistance(true);
+        vm.price = "￥"+caculateFare(plan.getDistance(true).replace("公里",""));
+        vm.goTime = getNowFormatDate();
+        vm.num = 1;
+        vm.departure = start;
+        vm.destination = end;
     }
-    var transit = new BMap.DrivingRoute(map, {renderOptions: {map: map},
-        onSearchComplete: searchComplete,
-        onPolylinesSet: function(){
-            setTimeout(function(){document.getElementById("info").innerHTML = output},"1000");
-        }});
-    transit.search(start, end);
+    var driving = new BMap.DrivingRoute(map, {renderOptions: {map: map, autoViewport: true},
+        onSearchComplete: searchComplete});
+    driving.search(start, end);
+    function caculateFare(distance){
+        var res;
+		if(distance < 3){
+		    res = 11;
+		} else if(distance < 10){
+		    res = 11+(distance - 3)*2.5;
+		} else {
+		    res = 28.5+(distance - 10)*3.75;
+		}
+		return parseInt(res*0.8);
+    }
+
+    function getNowFormatDate() {
+        var date = new Date();
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + date.getHours() + seperator2 + date.getMinutes();
+        return currentdate;
+    }
 </script>
 
 </body>
