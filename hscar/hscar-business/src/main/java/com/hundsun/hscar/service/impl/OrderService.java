@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.hundsun.hscar.dto.CarOrderDto;
 import org.agile.common.utils.BdMapUtils;
 import org.agile.common.utils.CommonUtils;
 import org.agile.dto.LocationDto;
@@ -31,8 +32,17 @@ public class OrderService implements IOrderService {
 	@Autowired
 	private ConfigurationService configurationService;
 	@Override
-	public void sendOrder(OrderDto orderDto) {
-		
+	public void sendOrder(CarOrderDto carOrderDto) {
+		RouteDetailEntity routeDetailEntity = new RouteDetailEntity();
+		routeDetailEntity.setDeparture(carOrderDto.getDeparture());
+		routeDetailEntity.setDestination(carOrderDto.getDestination());
+		routeDetailService.save(routeDetailEntity);
+		CarpoolingOrdersEntity carpoolingOrdersEntity = new CarpoolingOrdersEntity();
+		carpoolingOrdersEntity.setGoTime(carOrderDto.getGoTime());
+		carpoolingOrdersEntity.setNumber(carOrderDto.getNum());
+		carpoolingOrdersEntity.setPrice(carOrderDto.getPrice());
+		carpoolingOrdersEntity.setRouteId(routeDetailEntity.getRouteId());
+		carpoolingOrdersService.save(carpoolingOrdersEntity);
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.hundsun.hscar.api.customer;
 
 import java.util.List;
 
+import com.hundsun.hscar.dto.CarOrderDto;
+import com.hundsun.hscar.vo.CarOrderVo;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,20 +48,16 @@ public class ApiCustomerOrderController {
 	@ApiOperation(value = "发送订单", notes = "根据Order对象创建订单")
 	@ApiImplicitParam(name = "order", value = "订单详细实体order", required = true, dataType = "OrderVo")
 	@RequestMapping(value = "", method = RequestMethod.POST)
-	public OrderVo postOrder(@RequestBody OrderVo order) {
-		RouteDetailVo routeDetailVo  = order.getRouteDetail();
-		RouteDetailEntity routeEntity = new RouteDetailEntity();
-		routeEntity.setDeparture(routeDetailVo.getDeparture());
-		/*routeEntity.setDepCoordinate(routeDetailVo.getDep_coordinate());
-		routeEntity.setDesCoordinate(routeDetailVo.getDes_coordinate());*/
-		routeEntity.setDestination(routeDetailVo.getDestination());
-		//routeEntity.setUserId(userId);
-		OrderDto orderDto=new OrderDto();
-		orderDto.setRouteDetail(routeEntity);
-		orderDto.setOrderType(order.getOrderType());
-		orderDto.setTime(order.getTime());
-		orderService.sendOrder(orderDto);
-		return order;
+	public CarOrderVo postOrder(@RequestBody CarOrderVo carOrderVo) {
+		CarOrderDto carOrderDto = new CarOrderDto();
+		carOrderDto.setNum(carOrderVo.getNum());
+		carOrderDto.setGoTime(carOrderVo.getGoTime());
+		carOrderDto.setDestination(carOrderVo.getDestination());
+		carOrderDto.setDeparture(carOrderVo.getDeparture());
+		carOrderDto.setPrice(carOrderVo.getPrice());
+		carOrderDto.setDeparture(carOrderVo.getDeparture());
+		orderService.sendOrder(carOrderDto);
+		return carOrderVo;
 	}
 	
 	 	@ResponseBody

@@ -1,13 +1,14 @@
 package com.hundsun.hscar.service.api;
 
-import java.util.List;
-
 import com.hundsun.hscar.dto.BaseOrderDto;
+import com.hundsun.hscar.dto.CarOrderDto;
 import com.hundsun.hscar.dto.OrderDto;
 import com.hundsun.hscar.dto.WaitingOrderDto;
 
+import java.util.List;
+
 public interface IOrderService {
-	public void sendOrder(OrderDto orderDto);
+	public void sendOrder(CarOrderDto carOrderDto);
 
 	public List<OrderDto> getOrderBytype(Long userId, String orderType);
 
