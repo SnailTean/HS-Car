@@ -10,7 +10,7 @@ public class BaseOrderVo {
 	private Integer orderStatus;
 	private Double price;
 	private Double reward;
-	private Date goTime;
+	private String goTime;
 	private Integer orderType;
 	private Integer num;
 	public Long getOrderId() {
@@ -61,11 +61,11 @@ public class BaseOrderVo {
 		this.reward = reward;
 	}
 
-	public Date getGoTime() {
+	public String getGoTime() {
 		return goTime;
 	}
 
-	public void setGoTime(Date goTime) {
+	public void setGoTime(String goTime) {
 		this.goTime = goTime;
 	}
 

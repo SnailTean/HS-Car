@@ -1,11 +1,11 @@
 package com.hundsun.hscar.service.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.hundsun.hscar.constant.UserTypeEnum;
 import com.hundsun.hscar.dto.CarOrderDto;
+import com.hundsun.hscar.entity.UserEntity;
+import org.agile.common.ResultVo;
 import org.agile.common.utils.BdMapUtils;
 import org.agile.common.utils.CommonUtils;
 import org.agile.dto.LocationDto;
@@ -32,16 +32,10 @@ public class OrderService implements IOrderService {
 	@Autowired
 	private ConfigurationService configurationService;
 	@Override
-	public void sendOrder(CarOrderDto carOrderDto) {
-		RouteDetailEntity routeDetailEntity = new RouteDetailEntity();
-		routeDetailEntity.setDeparture(carOrderDto.getDeparture());
-		routeDetailEntity.setDestination(carOrderDto.getDestination());
+	public void sendOrder(CarOrderDto carOrderDto,UserEntity user) {
+		RouteDetailEntity routeDetailEntity = tansferDtoToRouteDetailEntity(carOrderDto, user);
 		routeDetailService.save(routeDetailEntity);
-		CarpoolingOrdersEntity carpoolingOrdersEntity = new CarpoolingOrdersEntity();
-		carpoolingOrdersEntity.setGoTime(carOrderDto.getGoTime());
-		carpoolingOrdersEntity.setNumber(carOrderDto.getNum());
-		carpoolingOrdersEntity.setPrice(carOrderDto.getPrice());
-		carpoolingOrdersEntity.setRouteId(routeDetailEntity.getRouteId());
+		CarpoolingOrdersEntity carpoolingOrdersEntity = tansferDtoToCarpoolingOrdersEntity(carOrderDto, routeDetailEntity);
 		carpoolingOrdersService.save(carpoolingOrdersEntity);
 	}
 
@@ -190,5 +184,32 @@ public class OrderService implements IOrderService {
 		return dto;
 	}
 
+	private CarpoolingOrdersEntity tansferDtoToCarpoolingOrdersEntity(CarOrderDto carOrderDto, RouteDetailEntity routeDetailEntity) {
+		CarpoolingOrdersEntity carpoolingOrdersEntity = new CarpoolingOrdersEntity();
+		carpoolingOrdersEntity.setGoTime(carOrderDto.getGoTime());
+		carpoolingOrdersEntity.setNumber(carOrderDto.getNum());
+		carpoolingOrdersEntity.setPrice(carOrderDto.getPrice());
+		carpoolingOrdersEntity.setRouteId(routeDetailEntity.getRouteId());
+		carpoolingOrdersEntity.setCreateTime(new Date());
+		carpoolingOrdersEntity.setUpdateTime(new Date());
+		carpoolingOrdersEntity.setOrderType(carOrderDto.getOrderType());
+		carpoolingOrdersEntity.setOrderStatus(carOrderDto.getOrderStatus());
+		return carpoolingOrdersEntity;
+	}
 
+	private RouteDetailEntity tansferDtoToRouteDetailEntity(CarOrderDto carOrderDto, UserEntity user) {
+		RouteDetailEntity routeDetailEntity = new RouteDetailEntity();
+		routeDetailEntity.setDeparture(carOrderDto.getDeparture());
+		routeDetailEntity.setDestination(carOrderDto.getDestination());
+		routeDetailEntity.setUserId(user.getUserId());
+		routeDetailEntity.setRouteStatus(RouteStatusEnum.ACTIVED.getValue());
+		routeDetailEntity.setUserType(UserTypeEnum.PASSENGER.getValue());
+		routeDetailEntity.setUpdateTime(new Date());
+		routeDetailEntity.setCreateTime(new Date());
+		routeDetailEntity.setDepLatitude(carOrderDto.getDepLatitude());
+		routeDetailEntity.setDepLongitude(carOrderDto.getDepLongitude());
+		routeDetailEntity.setDesLongitude(carOrderDto.getDesLongitude());
+		routeDetailEntity.setDesLatitude(carOrderDto.getDesLatitude());
+		return routeDetailEntity;
+	}
 }

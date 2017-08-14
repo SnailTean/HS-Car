@@ -53,43 +53,49 @@
 									<div class="item-title label">里程</div>
 									<div class="item-input">
 										<div class="item-input" id="distance">
-											{{distance}}
+											{{order.distance}}
 										</div>
 									</div>
 									<div class="item-title label">价格</div>
 									<div class="item-input">
 										<div class="item-input" id="fare">
-											{{price}}
+											￥{{order.price}}
 										</div>
 									</div>
 								</div></div></li>
 								<li><div class="item-content"><div class="item-inner">
 									<div class="item-title label">乘车人数</div>
 									<div class="item-input">
-										<input type="text" id='perNum' v-model="num"/>
+										<input type="text" id='perNum' v-model="order.num"/>
 									</div>
 									<div class="item-title label">乘车时间</div>
 									<div class="item-input">
-										<input type="text" id='datetime-picker' v-model="goTime"/>
+										<input type="text" id='datetime-picker' v-model="order.goTime"/>
 									</div>
 								</div></div></li>
 							</ul>
 						</div>
+						<p style="margin-top: 3px;" align="center"><a v-on:click="pushOrder" class="button button-big button-round button-fill" style="
+								display: block;
+								height: 40px;
+								line-height: 40px;
+								width: 35%;
+								text-align: center;"
+							>确认拼车</a></p>
 					</div>
 				</div>
-				<div><a class="btn btn-primary" @click="pushOrder"><i class="fa"></i>确认拼车</a></div>
 			</div>
 		</div>
 	</div>
 	<input type="hidden" id="start" value="${start}"/>
 	<input type="hidden" id="endPlace" value="${end}"/>
-
 	<!-- 关于 -->
 	#parse("hscar/app/about.html")
 	
 	<!-- 设置菜单栏 -->
 	#parse("hscar/app/settings.html")
 </div>
+
 
 <!-- Vue -->
 <script type="text/javascript">
@@ -104,6 +110,10 @@
                 goTime: "",
                 num: "",
                 distance: "",
+                depLongitude:"",
+                depLatitude:"",
+                desLongitude:"",
+                desLatitude:"",
                 error: false,
                 errorMsg: ''
             }
@@ -118,19 +128,20 @@
                 this.getUser();
             },
             pushOrder: function (event) {
-                //TODO
+                vm.order.num = document.getElementById("perNum").value;
+                vm.order.goTime = document.getElementById("datetime-picker").value;
                     $.ajax({
                         type: "POST",
-                        url: baseURL + "api/customer/orders/pushOrder",
+                        url: baseURL + "api/customer/orders/order",
                         data: JSON.stringify(vm.order),
                         dataType: "json",
                         contentType: "application/json",
                         success: function (result) {
                             if (result.code == 0) { // 下单成功，跳转到订单页面
-                                parent.location.href = 'hscar/app/customer/customer_order.html';
+                                parent.location.href = 'customer_order.html';
                             } else {
-                                vm.error = true;
-                                vm.errorMsg = result.msg;
+                                vm.order.error = true;
+                                vm.order.errorMsg = result.msg;
                                 alert(result.msg);
                             }
                         }
@@ -182,16 +193,18 @@
         output += "总路程为：" ;
         output += plan.getDistance(true) + "\n";             //获取距离
         //document.getElementById("info").innerHTML = output;
-        vm.distance = plan.getDistance(true);
-        vm.price = "￥"+caculateFare(plan.getDistance(true).replace("公里",""));
-        vm.goTime = getNowFormatDate();
-        vm.num = 1;
-        vm.departure = start;
-        vm.destination = end;
+        vm.order.distance = plan.getDistance(true);
+        vm.order.price = caculateFare(plan.getDistance(true).replace("公里",""));
+        vm.order.goTime = getNowFormatDate();
+        vm.order.num = 1;
+        vm.order.departure = start;
+        vm.order.destination = end;
     }
     var driving = new BMap.DrivingRoute(map, {renderOptions: {map: map, autoViewport: true},
         onSearchComplete: searchComplete});
     driving.search(start, end);
+    getTitude(start,"start");
+    getTitude(end,"end");
     function caculateFare(distance){
         var res;
 		if(distance < 3){
@@ -219,6 +232,20 @@
         var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
             + " " + date.getHours() + seperator2 + date.getMinutes();
         return currentdate;
+    }
+    function getTitude(keyWord,type) {
+        var localSearch = new BMap.LocalSearch(map);
+        localSearch.setSearchCompleteCallback(function (searchResult) {
+            var poi = searchResult.getPoi(0);
+            if(type == "start") {
+                vm.order.depLongitude = poi.point.lng;
+                vm.order.depLatitude = poi.point.lat;
+            } else if(type == "end"){
+                vm.order.desLongitude = poi.point.lng;
+                vm.order.desLatitude = poi.point.lat;
+			}
+        });
+        localSearch.search(keyWord);
     }
 </script>
 

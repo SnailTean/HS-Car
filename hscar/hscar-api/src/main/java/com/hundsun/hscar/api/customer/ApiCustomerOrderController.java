@@ -1,11 +1,17 @@
 package com.hundsun.hscar.api.customer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import com.hundsun.hscar.constant.OrderStatusEnum;
+import com.hundsun.hscar.constant.OrderTypeEnum;
 import com.hundsun.hscar.dto.CarOrderDto;
 import com.hundsun.hscar.vo.CarOrderVo;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
+import org.agile.common.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -46,21 +52,17 @@ public class ApiCustomerOrderController {
 
 	@PostMapping("order")
 	@ApiOperation(value = "发送订单", notes = "根据Order对象创建订单")
-	@ApiImplicitParam(name = "order", value = "订单详细实体order", required = true, dataType = "OrderVo")
-	@RequestMapping(value = "", method = RequestMethod.POST)
-	public CarOrderVo postOrder(@RequestBody CarOrderVo carOrderVo) {
-		CarOrderDto carOrderDto = new CarOrderDto();
-		carOrderDto.setNum(carOrderVo.getNum());
-		carOrderDto.setGoTime(carOrderVo.getGoTime());
-		carOrderDto.setDestination(carOrderVo.getDestination());
-		carOrderDto.setDeparture(carOrderVo.getDeparture());
-		carOrderDto.setPrice(carOrderVo.getPrice());
-		carOrderDto.setDeparture(carOrderVo.getDeparture());
-		orderService.sendOrder(carOrderDto);
-		return carOrderVo;
+	@ApiImplicitParam(name = "carOrderVo", value = "订单详细实体order", required = true, dataType = "CarOrderVo")
+	public ResultVo postOrder(@LoginUser UserEntity user,@RequestBody CarOrderVo carOrderVo) {
+		WaitingOrderDto waitingOrderDto = orderService.getWaitingOrder(user.getUserId());
+		if(CommonUtils.isNotEmpty(waitingOrderDto)){
+			return ResultVo.error("存在未出行订单！");
+		}
+		CarOrderDto carOrderDto = tansferVoToCarOrderDto(carOrderVo);
+		orderService.sendOrder(carOrderDto,user);
+		return ResultVo.ok();
 	}
-	
-	 	@ResponseBody
+	@ResponseBody
 	    @RequestMapping(value = "orders")
 		@ApiOperation(value = "获取订单信息", notes = "根据Token和订单类型查询订单信息")
 	 	  @ApiImplicitParams({
@@ -101,6 +103,33 @@ public class ApiCustomerOrderController {
 	 		List<BaseOrderDto> completeOrders = orderService.getCompleteOrders(user.getUserId());
 	 		return ResultVo.ok().put("completeOrders", completeOrders);
 	    }
-	
-	
+
+	private CarOrderDto tansferVoToCarOrderDto(CarOrderVo carOrderVo) {
+		CarOrderDto carOrderDto = new CarOrderDto();
+		carOrderDto.setNum(carOrderVo.getNum());
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date date = new Date();
+		try {
+			date = sdf.parse(carOrderVo.getGoTime());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		if(Math.abs(System.currentTimeMillis() - date.getTime()) < 300000){
+			carOrderDto.setOrderType(OrderTypeEnum.REALTIME.getValue());
+		} else {
+			carOrderDto.setOrderType(OrderTypeEnum.APPOINTMENT.getValue());
+		}
+		carOrderDto.setGoTime(date);
+		carOrderDto.setDestination(carOrderVo.getDestination());
+		carOrderDto.setDeparture(carOrderVo.getDeparture());
+		carOrderDto.setPrice(carOrderVo.getPrice());
+		carOrderDto.setDeparture(carOrderVo.getDeparture());
+		carOrderDto.setOrderStatus(OrderStatusEnum.PUBLISHING.getValue());
+		carOrderDto.setDepLongitude(carOrderVo.getDepLongitude());
+		carOrderDto.setDepLatitude(carOrderVo.getDepLatitude());
+		carOrderDto.setDesLongitude(carOrderVo.getDesLongitude());
+		carOrderDto.setDesLatitude(carOrderVo.getDesLatitude());
+		return carOrderDto;
+	}
+
 }

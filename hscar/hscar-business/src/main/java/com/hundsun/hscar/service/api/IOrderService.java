@@ -4,11 +4,12 @@ import com.hundsun.hscar.dto.BaseOrderDto;
 import com.hundsun.hscar.dto.CarOrderDto;
 import com.hundsun.hscar.dto.OrderDto;
 import com.hundsun.hscar.dto.WaitingOrderDto;
+import com.hundsun.hscar.entity.UserEntity;
 
 import java.util.List;
 
 public interface IOrderService {
-	public void sendOrder(CarOrderDto carOrderDto);
+	public void sendOrder(CarOrderDto carOrderDto,UserEntity user);
 
 	public List<OrderDto> getOrderBytype(Long userId, String orderType);
 
