@@ -8,6 +8,7 @@ import com.hundsun.hscar.entity.UserEntity;
 import org.agile.common.ResultVo;
 import org.agile.common.utils.BdMapUtils;
 import org.agile.common.utils.CommonUtils;
+import org.agile.constant.Constant;
 import org.agile.dto.LocationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,24 +40,6 @@ public class OrderService implements IOrderService {
 		carpoolingOrdersService.save(carpoolingOrdersEntity);
 	}
 
-	@Override
-	public List<OrderDto> getOrderBytype(Long userId, String orderType) {
-		
-		List<OrderDto> orderList = new ArrayList<>();
-		Map<String, Object> mapRoute =new HashMap<>();
-		mapRoute.put("userId", userId);
-		List<RouteDetailEntity> routeDetailList = routeDetailService.queryList(mapRoute);
-		for (RouteDetailEntity routeDetailEntity : routeDetailList) {
-			Map<String, Object> mapOrder =new HashMap<>();
-			mapOrder.put("orderType", orderType);
-			mapOrder.put("routeId", routeDetailEntity.getRouteId());
-			List<CarpoolingOrdersEntity> corpoolingOrderList = carpoolingOrdersService.queryList(mapOrder);
-			
-		}
-				return null;
-	}
-
-	
 
 	@Override
 	public List<WaitingOrderDto> getSameWayOrders(Long userId,Integer userType) {
@@ -70,6 +53,10 @@ public class OrderService implements IOrderService {
 		ConfigurationEntity configuration = new ConfigurationEntity();
 		configuration.setUserId(userId);
 		configuration = configurationService.queryObject(configuration);
+		int nearDistance=Constant.DEFAULT_DISTANCE;
+		if(CommonUtils.isEmpty(configuration.getDistance())){
+			configuration.setDistance(nearDistance);
+			}
 		LocationDto lRight =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 0);
 		LocationDto lLeft =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 180);
 

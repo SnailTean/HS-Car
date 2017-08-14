@@ -126,7 +126,8 @@ public class BdMapUtils {
      * @param angle
      * @return
      */
-    public static LocationDto getLocation(double latitude, double longitude, double distance, double angle) {  
+    public static LocationDto getLocation(double latitude, double longitude, double distance, double angle) {
+    	
     	LocationDto dto = new LocationDto();
     	dto.setLatitude(0.0);
     	dto.setLongitude(0.0);

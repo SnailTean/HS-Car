@@ -656,7 +656,7 @@ CREATE TABLE `tb_route_detail` (
   `route_status` int(11) DEFAULT NULL COMMENT '0:保存 1:生效 2:失效',
   `user_type` int(11) DEFAULT NULL COMMENT '1:乘客 2司机',
   PRIMARY KEY (`route_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='路线详情表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='路线详情表';
 
 
   -- ----------------------------

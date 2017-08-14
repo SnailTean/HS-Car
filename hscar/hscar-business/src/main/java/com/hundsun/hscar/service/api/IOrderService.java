@@ -2,7 +2,6 @@ package com.hundsun.hscar.service.api;
 
 import com.hundsun.hscar.dto.BaseOrderDto;
 import com.hundsun.hscar.dto.CarOrderDto;
-import com.hundsun.hscar.dto.OrderDto;
 import com.hundsun.hscar.dto.WaitingOrderDto;
 import com.hundsun.hscar.entity.UserEntity;
 
@@ -10,8 +9,6 @@ import java.util.List;
 
 public interface IOrderService {
 	public void sendOrder(CarOrderDto carOrderDto,UserEntity user);
-
-	public List<OrderDto> getOrderBytype(Long userId, String orderType);
 
 	public List<WaitingOrderDto> getSameWayOrders(Long userId, Integer userType);
 
