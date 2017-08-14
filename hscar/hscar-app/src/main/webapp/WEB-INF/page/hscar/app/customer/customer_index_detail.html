@@ -74,14 +74,14 @@
 									</div>
 								</div></div></li>
 							</ul>
-						</div>
-						<p style="margin-top: 3px;" align="center"><a v-on:click="pushOrder" class="button button-big button-round button-fill" style="
+							<p style="margin-top: 3px;" align="center"><a v-on:click="pushOrder" class="button button-big button-round button-fill" style="
 								display: block;
 								height: 40px;
 								line-height: 40px;
 								width: 35%;
 								text-align: center;"
 							>确认拼车</a></p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -237,12 +237,16 @@
         var localSearch = new BMap.LocalSearch(map);
         localSearch.setSearchCompleteCallback(function (searchResult) {
             var poi = searchResult.getPoi(0);
-            if(type == "start") {
-                vm.order.depLongitude = poi.point.lng;
-                vm.order.depLatitude = poi.point.lat;
-            } else if(type == "end"){
-                vm.order.desLongitude = poi.point.lng;
-                vm.order.desLatitude = poi.point.lat;
+            try {
+                if (type == "start") {
+                    vm.order.depLongitude = poi.point.lng;
+                    vm.order.depLatitude = poi.point.lat;
+                } else if (type == "end") {
+                    vm.order.desLongitude = poi.point.lng;
+                    vm.order.desLatitude = poi.point.lat;
+                }
+            } catch (e){
+                console.log(e);
 			}
         });
         localSearch.search(keyWord);
