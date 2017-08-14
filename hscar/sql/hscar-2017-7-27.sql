@@ -643,31 +643,41 @@ INSERT INTO `tb_driver` VALUES ('2', '2', '88888888', '浙A88888', '2017-07-17 1
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_route_detail`;
 CREATE TABLE `tb_route_detail` (
-  `route_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
-  `departure` VARCHAR(100) NULL COMMENT '出发地',
-  `destination` VARCHAR(100) NULL COMMENT '目的地',
-  `dep_coordinate` VARCHAR(45) NULL COMMENT '目的地坐标',
-  `des_coordinate` VARCHAR(45) NULL COMMENT '出发地坐标',
-  `user_id` BIGINT(20) NULL COMMENT '用户ID',
+  `route_id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `departure` varchar(100) DEFAULT NULL COMMENT '出发地',
+  `destination` varchar(100) DEFAULT NULL COMMENT '目的地',
+  `dep_longitude` double DEFAULT NULL COMMENT '出发地经度',
+  `dep_latitude` double DEFAULT NULL COMMENT '出发地纬度',
+  `des_longitude` double DEFAULT NULL COMMENT '目的地经度',
+  `des_latitude` double DEFAULT NULL COMMENT '目的地纬度',
+  `user_id` bigint(20) DEFAULT NULL COMMENT '用户ID',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `route_status` int(11) DEFAULT NULL COMMENT '0:保存 1:生效 2:失效',
+  `user_type` int(11) DEFAULT NULL COMMENT '1:乘客 2司机',
   PRIMARY KEY (`route_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='路线详情表';
-  
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='路线详情表';
+
+
   -- ----------------------------
 -- Table structure for `tb_carpooling_orders`
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_carpooling_orders`;
-  CREATE TABLE `tb_carpooling_orders` (
-  `order_id` BIGINT(11) NOT NULL AUTO_INCREMENT,
-  `route_id` BIGINT(11) NOT NULL,
-  `order_type` INT NOT NULL COMMENT '1:即时订单、2:预约订单',
-  `price` DOUBLE NOT NULL COMMENT '价格',
-  `reward` DOUBLE NULL COMMENT '奖励',
+CREATE TABLE `tb_carpooling_orders` (
+  `order_id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `route_id` bigint(11) NOT NULL,
+  `order_type` int(11) NOT NULL COMMENT '1:即时订单、2:预约订单',
+  `price` double NOT NULL COMMENT '价格',
+  `reward` double DEFAULT NULL COMMENT '奖励',
+  `order_status` int(11) DEFAULT NULL COMMENT '0.发布中1.处理中2.完成',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `go_time` datetime DEFAULT NULL COMMENT '出发时间',
+  `number` int(11) DEFAULT NULL COMMENT '人数',
   PRIMARY KEY (`order_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='订单表';
+
+
 
 DROP TABLE IF EXISTS `tb_friendship`;
 CREATE TABLE `tb_friendship` (
@@ -690,3 +700,20 @@ CREATE TABLE `tb_driver_evaluate` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='司机评价表';
+
+DROP TABLE IF EXISTS `tb_order_user_rel`;
+CREATE TABLE `tb_order_user_rel` (
+  `rel_id` int(11) NOT NULL,
+  `order_id` int(11) DEFAULT NULL,
+  `passenger_id` int(11) DEFAULT NULL,
+  `driver_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`rel_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `tb_configuration`;
+CREATE TABLE `tb_configuration` (
+  `config_id` bigint(11) NOT NULL,
+  `user_id` bigint(11) DEFAULT NULL,
+  `distance` int(11) DEFAULT NULL COMMENT '附近距离配置(单位公里)',
+  PRIMARY KEY (`config_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

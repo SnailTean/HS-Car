@@ -13,7 +13,7 @@
   	#parse("hscar/app/customer/customer_toolbar.html")
   	
 	<!-- 乘客订单：主体内容 -->
-  	<div id="page-driver-home" class="page page-home page-current page-inited">
+  	<div id="page-customer-home" class="page page-home page-current page-inited">
 			
 		<!-- 标题栏 -->
 		<header class="bar bar-nav">
@@ -28,32 +28,34 @@
 		<div class="content">
 		<div class="buttons-tab">
     		<a href="#tab1" class="tab-link active button">待处理</a>
-    		<a href="#tab2" class="tab-link button">顺路订单</a>
-    		<a href="#tab3" class="tab-link button">预约订单</a>
+    		<a @click="getSameWayOrders" href="#tab2" class="tab-link button">顺路订单</a>
+    		<a @click="getCompleteOrders" href="#tab3" class="tab-link button">已完成订单</a>
   		</div>
   		 <div class="content-block">
     <div class="tabs">
       <div id="tab1" class="tab active">
         <div class="content-block">
-         <div class="list-block media-list">
-				<ul>
-					<li v-for="order in waitingOrders">
+         <div class="list-block media-list" >
+				<ul v-if="waitingOrder.departure!=null">
+					
 				 	<a href="#" class="item-link item-content">
 						<div class="item-media">
 							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
 						</div>
 						<div class="item-inner">
 							<div class="item-title-row">
-								<div class="item-title">出发地：{{ order.departure }}</div>
-								<div class="item-after">价格：{{order.price}}￥</div>
+								<div class="item-title">出发地：{{waitingOrder.departure}}</div>
+								<div class="item-after">价格：{{waitingOrder.price}}￥</div>
 							</div>
-							<div class="item-subtitle">目的地：{{order.destination}}</div>
-							<div class="item-subtitle">乘客数：{{order.number}}人</div>
-						   <div class="item-subtitle">订单状态：{{order.status}}</div>
+							<div class="item-subtitle">目的地：{{waitingOrder.destination}}</div>
+							<div class="item-subtitle">乘客数：{{waitingOrder.num}}人</div>
+						   	<div class="item-subtitle">订单状态：{{OrderStatusEnum[waitingOrder.orderStatus]}}</div>
+						   	<div class="item-subtitle">订单类型：{{OrderTypeEnum[waitingOrder.orderType]}}</div>
+						   
 							
 						</div>
 					</a> 
-					</li>
+					
 				</ul>
 			</div>
         </div>
@@ -64,7 +66,7 @@
          <div class="list-block media-list">
 				<ul>
 					<li v-for="order in sameWayOrders">
-				 	<a href="#" class="item-link item-content">
+				 	<a href="#" class="item-link item-content"  v-if="order.departure!=null">
 						<div class="item-media">
 							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
 						</div>
@@ -89,7 +91,7 @@
            <div class="content-block">
          <div class="list-block media-list">
 				<ul>
-					<li v-for="order in appointmentOrders">
+					<li v-for="order in completeOrders">
 				 	<a href="#" class="item-link item-content">
 						<div class="item-media">
 							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
@@ -100,13 +102,12 @@
 								<div class="item-after">价格：{{order.price}}￥</div>
 							</div>
 							<div class="item-subtitle">目的地：{{order.destination}}</div>
-							<div class="item-text">乘客数：{{order.number}}人</div>
+							<div class="item-subtitle">乘客数：{{order.number}}人</div>
+						   <div class="item-subtitle">订单状态：{{OrderStatusEnum[order.orderStatus]}}</div>
+						   <div class="item-subtitle">订单类型：{{OrderTypeEnum[order.orderType]}}</div>
 						</div>
 					</a> 
 					</li>
-				
-				
-				
 				</ul>
 			</div>
         </div>
@@ -130,33 +131,49 @@
 	var vm = new Vue({
 	 	el:'#hs_car_app',
 		data:{
-			waitingOrders: '',
+			waitingOrder: '',
 			sameWayOrders:'',
-			appointmentOrders:''
+			completeOrders:'',
+			OrderTypeEnum:{
+			    '1': '即',
+			    '2': '预'
+			} ,
+			OrderStatusEnum:{
+				'0': '等待车辆接驾。。。。',
+			    '1': '行程中。。。',
+			    '2': '已完成'
+			} 
 		},
  	
 		  methods: {
 			getWaitingOrders: function(userId) {
-				$.get(baseURL + "api/customer/orders/waiting", function(r){
-					vm.waitingOrders = r.waitingOrders;
+				$.get(baseURL + "/api/customer/orders/waiting", function(r){
+					vm.waitingOrder = r.waitingOrder;
 				});
 			},
 			getSameWayOrders: function(userId) {
-				$.get(baseURL + "api/customer/orders/sameWay", function(r){
-					vm.waitingOrders = r.waitingOrders;
+				$.get(baseURL + "/api/customer/orders/sameWay", function(r){
+					vm.sameWayOrders = r.sameWayOrders;
 				});
 			},
 			
-			getAppointmentOrders: function(userId) {
-				$.get(baseURL + "api/customer/orders/appointmentOrders", function(r){
-					vm.waitingOrders = r.waitingOrders;
+			getCompleteOrders: function(userId) {
+				$.get(baseURL + "/api/customer/orders/complete", function(r){
+					vm.completeOrders = r.completeOrders;
 				});
 			}
 		},
 		created: function() {
 			this.getWaitingOrders();
-		}  
+		}
 	});
+	
+	
+	
+	
+	
+	
+	
 </script>
 
 <!-- 设置菜单栏 -->

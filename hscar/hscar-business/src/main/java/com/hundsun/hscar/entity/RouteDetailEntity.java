@@ -9,9 +9,9 @@ import java.util.Date;
 /**
  * 路线详情表
  * 
- * @author zhangmm
- * @email phoenix122411@126.com
- * @date 2017-07-29
+ * @author Ryan
+ * @email ryansunboy@gmail.com
+ * @date 2017-08-13
  */
 public class RouteDetailEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -22,15 +22,23 @@ public class RouteDetailEntity implements Serializable {
 	
 	private String destination; // 目的地
 	
-	private String depCoordinate; // 目的地坐标
+	private Double depLongitude; // 出发地经度
 	
-	private String desCoordinate; // 出发地坐标
+	private Double depLatitude; // 出发地纬度
+	
+	private Double desLongitude; // 目的地经度
+	
+	private Double desLatitude; // 目的地纬度
 	
 	private Long userId; // 用户ID
 	
 	private Date createTime; // 创建时间
 	
 	private Date updateTime; // 更新时间
+	
+	private Integer routeStatus; // 0:保存 1:生效 2:失效
+	
+	private Integer userType; // 1:乘客 2司机
 
 
 
@@ -74,29 +82,55 @@ public class RouteDetailEntity implements Serializable {
 	}
 
 	/**
-	 * 设置：目的地坐标
+	 * 设置：出发地经度
 	 */
-	public void setDepCoordinate(String depCoordinate) {
-		this.depCoordinate = depCoordinate;
+	public void setDepLongitude(Double depLongitude) {
+		this.depLongitude = depLongitude;
 	}
 	/**
-	 * 获取：目的地坐标
+	 * 获取：出发地经度
 	 */
-	public String getDepCoordinate() {
-		return depCoordinate;
+	public Double getDepLongitude() {
+		return depLongitude;
 	}
 
 	/**
-	 * 设置：出发地坐标
+	 * 设置：出发地纬度
 	 */
-	public void setDesCoordinate(String desCoordinate) {
-		this.desCoordinate = desCoordinate;
+	public void setDepLatitude(Double depLatitude) {
+		this.depLatitude = depLatitude;
 	}
 	/**
-	 * 获取：出发地坐标
+	 * 获取：出发地纬度
 	 */
-	public String getDesCoordinate() {
-		return desCoordinate;
+	public Double getDepLatitude() {
+		return depLatitude;
+	}
+
+	/**
+	 * 设置：目的地经度
+	 */
+	public void setDesLongitude(Double desLongitude) {
+		this.desLongitude = desLongitude;
+	}
+	/**
+	 * 获取：目的地经度
+	 */
+	public Double getDesLongitude() {
+		return desLongitude;
+	}
+
+	/**
+	 * 设置：目的地纬度
+	 */
+	public void setDesLatitude(Double desLatitude) {
+		this.desLatitude = desLatitude;
+	}
+	/**
+	 * 获取：目的地纬度
+	 */
+	public Double getDesLatitude() {
+		return desLatitude;
 	}
 
 	/**
@@ -136,5 +170,31 @@ public class RouteDetailEntity implements Serializable {
 	 */
 	public Date getUpdateTime() {
 		return updateTime;
+	}
+
+	/**
+	 * 设置：0:保存 1:生效 2:失效
+	 */
+	public void setRouteStatus(Integer routeStatus) {
+		this.routeStatus = routeStatus;
+	}
+	/**
+	 * 获取：0:保存 1:生效 2:失效
+	 */
+	public Integer getRouteStatus() {
+		return routeStatus;
+	}
+
+	/**
+	 * 设置：1:乘客 2司机
+	 */
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
+	/**
+	 * 获取：1:乘客 2司机
+	 */
+	public Integer getUserType() {
+		return userType;
 	}
 }

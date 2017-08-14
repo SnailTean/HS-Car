@@ -11,8 +11,11 @@
 			<if test="orderType != null">and `order_type` = #{orderType}</if>
 			<if test="price != null">and `price` = #{price}</if>
 			<if test="reward != null">and `reward` = #{reward}</if>
+			<if test="orderStatus != null">and `order_status` = #{orderStatus}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+			<if test="goTime != null">and `go_time` = #{goTime}</if>
+			<if test="number != null">and `number` = #{number}</if>
 		</where>
 	</select>
 
@@ -24,8 +27,11 @@
 			<if test="orderType != null">and `order_type` = #{orderType}</if>
 			<if test="price != null">and `price` = #{price}</if>
 			<if test="reward != null">and `reward` = #{reward}</if>
+			<if test="orderStatus != null">and `order_status` = #{orderStatus}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+			<if test="goTime != null">and `go_time` = #{goTime}</if>
+			<if test="number != null">and `number` = #{number}</if>
 		</where>
 		order by order_id desc
 		<if test="offset != null and limit != null">
@@ -41,8 +47,11 @@
 			<if test="orderType != null">and `order_type` = #{orderType}</if>
 			<if test="price != null">and `price` = #{price}</if>
 			<if test="reward != null">and `reward` = #{reward}</if>
+			<if test="orderStatus != null">and `order_status` = #{orderStatus}</if>
 			<if test="createTime != null">and `create_time` = #{createTime}</if>
 			<if test="updateTime != null">and `update_time` = #{updateTime}</if>
+			<if test="goTime != null">and `go_time` = #{goTime}</if>
+			<if test="number != null">and `number` = #{number}</if>
 		</where>
 	</select>
 	 
@@ -56,8 +65,11 @@
 			`order_type`, 
 			`price`, 
 			`reward`, 
+			`order_status`, 
 			`create_time`, 
-			`update_time`
+			`update_time`, 
+			`go_time`, 
+			`number`
 		)
 		values
 		(
@@ -65,8 +77,11 @@
 			#{orderType}, 
 			#{price}, 
 			#{reward}, 
+			#{orderStatus}, 
 			#{createTime}, 
-			#{updateTime}
+			#{updateTime}, 
+			#{goTime}, 
+			#{number}
 		)
 	</insert>
 	
@@ -80,8 +95,11 @@
 			`order_type`, 
 			`price`, 
 			`reward`, 
+			`order_status`, 
 			`create_time`, 
-			`update_time`
+			`update_time`, 
+			`go_time`, 
+			`number`
 		)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
@@ -90,8 +108,11 @@
 			#{item.orderType}, 
 			#{item.price}, 
 			#{item.reward}, 
+			#{item.orderStatus}, 
 			#{item.createTime}, 
-			#{item.updateTime}
+			#{item.updateTime}, 
+			#{item.goTime}, 
+			#{item.number}
 		)
 		</foreach>
 	</insert>
@@ -103,8 +124,11 @@
 			<if test="orderType != null">`order_type` = #{orderType}, </if>
 			<if test="price != null">`price` = #{price}, </if>
 			<if test="reward != null">`reward` = #{reward}, </if>
+			<if test="orderStatus != null">`order_status` = #{orderStatus}, </if>
 			<if test="createTime != null">`create_time` = #{createTime}, </if>
-			<if test="updateTime != null">`update_time` = #{updateTime}</if>
+			<if test="updateTime != null">`update_time` = #{updateTime}, </if>
+			<if test="goTime != null">`go_time` = #{goTime}, </if>
+			<if test="number != null">`number` = #{number}</if>
 		</set>
 		where order_id = #{orderId}
 	</update>

@@ -2,12 +2,8 @@ package com.hundsun.hscar.api.customer;
 
 import java.util.List;
 
-import com.alibaba.fastjson.JSON;
-import com.hundsun.hscar.dto.CarOrderDto;
-import com.hundsun.hscar.vo.CarOrderVo;
 import org.agile.annotation.LoginUser;
 import org.agile.common.ResultVo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hundsun.hscar.constant.UserTypeEnum;
+import com.hundsun.hscar.dto.BaseOrderDto;
 import com.hundsun.hscar.dto.OrderDto;
+import com.hundsun.hscar.dto.WaitingOrderDto;
 import com.hundsun.hscar.entity.RouteDetailEntity;
 import com.hundsun.hscar.entity.UserEntity;
 import com.hundsun.hscar.service.api.IOrderService;
@@ -51,8 +50,8 @@ public class ApiCustomerOrderController {
 		RouteDetailVo routeDetailVo  = order.getRouteDetail();
 		RouteDetailEntity routeEntity = new RouteDetailEntity();
 		routeEntity.setDeparture(routeDetailVo.getDeparture());
-		routeEntity.setDepCoordinate(routeDetailVo.getDep_coordinate());
-		routeEntity.setDesCoordinate(routeDetailVo.getDes_coordinate());
+		/*routeEntity.setDepCoordinate(routeDetailVo.getDep_coordinate());
+		routeEntity.setDesCoordinate(routeDetailVo.getDes_coordinate());*/
 		routeEntity.setDestination(routeDetailVo.getDestination());
 		//routeEntity.setUserId(userId);
 		OrderDto orderDto=new OrderDto();
@@ -82,8 +81,8 @@ public class ApiCustomerOrderController {
 	    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
 	    public ResultVo waitingOrders(@LoginUser UserEntity user) {
 	 		
-	 		List<OrderDto> waitingOrders=orderService.getWaitingOrders(user.getUserId());
-	        return ResultVo.ok().put("waitingOrders", waitingOrders);
+	 		WaitingOrderDto waitingOrder=orderService.getWaitingOrder(user.getUserId());
+	        return ResultVo.ok().put("waitingOrder", waitingOrder);
 	    }
 	
 	 	@ResponseBody
@@ -92,26 +91,18 @@ public class ApiCustomerOrderController {
 	    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
 	    public ResultVo sameWayOrders(@LoginUser UserEntity user) {
 	 		
-	 		List<OrderDto> sameWayOrders=orderService.getSameWayOrders(user.getUserId());
+	 		List<WaitingOrderDto> sameWayOrders=orderService.getSameWayOrders(user.getUserId(),UserTypeEnum.PASSENGER.getValue());
 	        return ResultVo.ok().put("sameWayOrders", sameWayOrders);
 	    }
-
-
-	@PostMapping("pushOrder")
-	@ApiOperation(value = "发送订单", notes = "根据Order对象创建订单")
-	@ApiImplicitParam(name = "order", value = "订单详细实体order", required = true, dataType = "CarOrderVo")
-	public CarOrderVo pushOrder(@RequestBody CarOrderVo order) {
-		CarOrderDto carOrderDto = new CarOrderDto();
-		carOrderDto.setDeparture(order.getDeparture());
-		carOrderDto.setDestination(order.getDestination());
-		carOrderDto.setGoTime(order.getGoTime());
-		carOrderDto.setNum(order.getNum());
-		carOrderDto.setOrderStatus(order.getOrderStatus());
-		orderService.saveCarOrder(carOrderDto);
-		return order;
-
-	}
-
-
-
+	 	@ResponseBody
+	    @RequestMapping(value = "complete")
+		@ApiOperation(value = "获取已完成订单信息", notes = "根据Token查询已完成订单信息")
+	    @ApiImplicitParam(paramType = "header", name = "token", value = "token", required = true)
+	    public ResultVo completeOrders(@LoginUser UserEntity user) {
+	 		
+	 		List<BaseOrderDto> completeOrders = orderService.getCompleteOrders(user.getUserId());
+	 		return ResultVo.ok().put("completeOrders", completeOrders);
+	    }
+	
+	
 }

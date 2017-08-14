@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.hundsun.hscar.dao.CarpoolingOrdersDao">
+
+	<select id="queryWaitingOrders" resultType="java.util.Map">
+	 select t1.order_id,t2.departure,t2.destination,t1.order_status,t1.order_type,t1.price,t1.go_time 
+	 from tb_carpooling_orders t1,tb_route_detail t2 
+	<where> 
+	        t1.route_id=t2.route_id 
+			<if test="userId != null">
+				and t2.user_id=#{userId}
+			</if>
+		
+		</where>
+	</select>
+
+	
+
+</mapper>
