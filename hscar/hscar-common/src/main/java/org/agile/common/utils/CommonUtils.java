@@ -4,29 +4,30 @@ import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Map;
 
-public  class CommonUtils {
+public class CommonUtils {
 	
 	/**
-	 * 对实体，字符串，集合，map进行空判断
-	 * @param object
-	 * @return
+	 * 对实体、字符串、集合、Map进行判空
 	 */
-	public static  boolean  isEmpty(Object object){
-		if(object == null){
+	public static boolean isEmpty(Object object) {
+		if(object == null) {
 			return true;
-		}else if(object instanceof String){
+		} else if(object instanceof String) {
 			return ((String) object).isEmpty();
-			 
-		}else if(object instanceof Collection){
+		} else if(object instanceof Collection) {
 			return ((Collection<?>) object).isEmpty();
-		}else if(object instanceof Map){
+		} else if(object instanceof Map) {
 			return ((Map<?, ?>) object).isEmpty();
-		}else {
+		} else {
 			return isEmptyBean(object);
 		}
 	}
+	
+	public static boolean isNotEmpty(Object object) {
+		return !isEmpty(object);
+	}
+	
 	private static boolean isEmptyBean(Object object) {
-		
 		Class<?> clazz = object.getClass();
 		Field[] fields = clazz.getDeclaredFields();
 		for (Field field : fields) {
@@ -43,12 +44,7 @@ public  class CommonUtils {
 				return false;
 			}
 		}
-		
-		
 		return true;
 	}
-	public static boolean isNotEmpty(Object object){
-		return !isEmpty(object);
-	}
-
+	
 }
