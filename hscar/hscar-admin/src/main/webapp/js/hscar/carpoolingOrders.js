@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + '/hscar/carpoolingOrders/list',
+        url: baseURL + 'hscar/carpoolingOrders/list',
         datatype: "json",
         colModel: [			
 			{ label: 'orderId', name: 'orderId', width: 50, key: true },
@@ -65,7 +65,7 @@ var vm = new Vue({
             vm.getInfo(orderId);
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.carpoolingOrders.orderId == null ? "/hscar/carpoolingOrders/save" : "/hscar/carpoolingOrders/update";
+			var url = vm.carpoolingOrders.orderId == null ? "hscar/carpoolingOrders/save" : "hscar/carpoolingOrders/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
@@ -91,7 +91,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "/hscar/carpoolingOrders/delete",
+				    url: baseURL + "hscar/carpoolingOrders/delete",
 				    contentType: "application/json",
 				    data: JSON.stringify(orderIds),
 				    success: function(r){

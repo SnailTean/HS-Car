@@ -1,6 +1,6 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: baseURL + '/hscar/token/list',
+        url: baseURL + 'hscar/token/list',
         datatype: "json",
         colModel: [			
 			{ label: 'userId', name: 'userId', width: 50, key: true },
@@ -62,7 +62,7 @@ var vm = new Vue({
             vm.getInfo(userId);
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.token.userId == null ? "/hscar/token/save" : "/hscar/token/update";
+			var url = vm.token.userId == null ? "hscar/token/save" : "hscar/token/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
@@ -88,7 +88,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: baseURL + "/hscar/token/delete",
+				    url: baseURL + "hscar/token/delete",
 				    contentType: "application/json",
 				    data: JSON.stringify(userIds),
 				    success: function(r){
