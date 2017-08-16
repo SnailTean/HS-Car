@@ -27,7 +27,7 @@ import org.agile.common.ResultVo;
  * @date ${datetime}
  */
 @Controller
-@RequestMapping("${controllerName}")
+@RequestMapping("${controllerRequestMapping}")
 public class ${className}Controller {
 	@Autowired
 	private I${className}Service ${classname}Service;
