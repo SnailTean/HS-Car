@@ -12,7 +12,7 @@ public class Constant {
 	/** 超级管理员ID */
 	public static final int SUPER_ADMIN = 1;
 	
-	public static final int DEFAULT_DISTANCE=1000;
+	public static final int DEFAULT_DISTANCE = 1000;
 	
 	/**
 	 * 是或否

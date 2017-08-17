@@ -3,8 +3,6 @@ package org.agile.common.utils;
 import org.agile.dto.LocationDto;
 
 public class BdMapUtils {
-	
-	
 
     private final static double Rc = 6378137;  // 赤道半径  
     private final static double Rj = 6356725;  // 极半径  
@@ -152,5 +150,5 @@ public class BdMapUtils {
         
         return dto;  
     }  
-
+	
 }

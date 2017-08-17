@@ -104,11 +104,16 @@ public class AgileGenUtils {
 		//封装模板数据
 		String packagePath = config.getString("package");
 		String[] packageArr = packagePath.split("\\.");
-		String controllerName = "";
+		String controllerUrl = "";
 		for (int i = 2; i < packageArr.length; i++) {
-			controllerName += "/" + packageArr[i];
+			if(i == 2) {
+				controllerUrl += packageArr[i];
+			} else {
+				controllerUrl += "/" + packageArr[i];
+			}
 		}
-		controllerName += "/" + tableEntity.getClassname();
+		controllerUrl += "/" + tableEntity.getClassname();
+		String controllerRequestMapping = "/" + controllerUrl;
 		String shiroPermissionsPrefix = "";
 		for (int i = 2; i < packageArr.length; i++) {
 			shiroPermissionsPrefix += packageArr[i] + ":";
@@ -127,7 +132,8 @@ public class AgileGenUtils {
 		map.put("pathName", tableEntity.getClassname());
 		map.put("columns", tableEntity.getColumns());
 		map.put("package", config.getString("package"));
-		map.put("controllerName", controllerName);
+		map.put("controllerUrl", controllerUrl);
+		map.put("controllerRequestMapping", controllerRequestMapping);
 		map.put("shiroPermissionsPrefix", shiroPermissionsPrefix);
 		map.put("pagePath", pagePath);
 		map.put("author", config.getString("author"));
