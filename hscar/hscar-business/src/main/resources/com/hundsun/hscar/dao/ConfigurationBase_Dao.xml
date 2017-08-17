@@ -40,13 +40,13 @@
 		</selectKey>
 		insert into tb_configuration
 		(
-			`config_id`, 
+			
 			`user_id`, 
 			`distance`
 		)
 		values
 		(
-			#{configId}, 
+			
 			#{userId}, 
 			#{distance}
 		)
@@ -58,14 +58,14 @@
 		</selectKey>
 		insert into tb_configuration
 		(
-			`config_id`, 
+			
 			`user_id`, 
 			`distance`
 		)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
 		(
-			#{item.configId}, 
+			
 			#{item.userId}, 
 			#{item.distance}
 		)

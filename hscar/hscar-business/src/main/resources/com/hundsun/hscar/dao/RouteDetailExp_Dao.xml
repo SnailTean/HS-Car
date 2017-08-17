@@ -6,12 +6,6 @@
 	<select id="querySameWayOrders" resultType="com.hundsun.hscar.entity.RouteDetailEntity" parameterType="Map">
 	 	select * from tb_route_detail t
 		<where> 
-	        <if test="lRight!=null">
-	        	 t.dep_latitude <![CDATA[ <= ]]>#{lRight}
-	        </if>
-	         <if test="lLeft!=null">
-	         	and t.dep_latitude>=#{lLeft}
-	        </if>
 			<if test="userId != null">
 				and t.user_id!=#{userId}
 			</if>

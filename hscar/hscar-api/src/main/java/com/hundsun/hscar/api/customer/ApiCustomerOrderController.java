@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,11 +24,8 @@ import com.hundsun.hscar.constant.UserTypeEnum;
 import com.hundsun.hscar.dto.BaseOrderDto;
 import com.hundsun.hscar.dto.OrderDto;
 import com.hundsun.hscar.dto.WaitingOrderDto;
-import com.hundsun.hscar.entity.RouteDetailEntity;
 import com.hundsun.hscar.entity.UserEntity;
 import com.hundsun.hscar.service.api.IOrderService;
-import com.hundsun.hscar.vo.OrderVo;
-import com.hundsun.hscar.vo.RouteDetailVo;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiImplicitParam;
 import com.wordnik.swagger.annotations.ApiImplicitParams;
@@ -119,6 +115,7 @@ public class ApiCustomerOrderController {
 		} else {
 			carOrderDto.setOrderType(OrderTypeEnum.APPOINTMENT.getValue());
 		}
+		carOrderDto.setUserType(UserTypeEnum.PASSENGER.getValue());
 		carOrderDto.setGoTime(date);
 		carOrderDto.setDestination(carOrderVo.getDestination());
 		carOrderDto.setDeparture(carOrderVo.getDeparture());

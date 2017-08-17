@@ -703,7 +703,7 @@ CREATE TABLE `tb_driver_evaluate` (
 
 DROP TABLE IF EXISTS `tb_order_user_rel`;
 CREATE TABLE `tb_order_user_rel` (
-  `rel_id` int(11) NOT NULL,
+  `rel_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) DEFAULT NULL,
   `passenger_id` int(11) DEFAULT NULL,
   `driver_id` int(11) DEFAULT NULL,
@@ -712,7 +712,7 @@ CREATE TABLE `tb_order_user_rel` (
 
 DROP TABLE IF EXISTS `tb_configuration`;
 CREATE TABLE `tb_configuration` (
-  `config_id` bigint(11) NOT NULL,
+  `config_id` bigint(11) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(11) DEFAULT NULL,
   `distance` int(11) DEFAULT NULL COMMENT '附近距离配置(单位公里)',
   PRIMARY KEY (`config_id`)

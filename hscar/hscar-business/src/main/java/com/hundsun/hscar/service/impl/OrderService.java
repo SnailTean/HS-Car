@@ -2,13 +2,10 @@ package com.hundsun.hscar.service.impl;
 
 import java.util.*;
 
-import com.hundsun.hscar.constant.UserTypeEnum;
 import com.hundsun.hscar.dto.CarOrderDto;
 import com.hundsun.hscar.entity.UserEntity;
-import org.agile.common.ResultVo;
 import org.agile.common.utils.BdMapUtils;
 import org.agile.common.utils.CommonUtils;
-import org.agile.constant.Constant;
 import org.agile.dto.LocationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.hundsun.hscar.constant.OrderStatusEnum;
 import com.hundsun.hscar.constant.RouteStatusEnum;
 import com.hundsun.hscar.dto.BaseOrderDto;
-import com.hundsun.hscar.dto.OrderDto;
 import com.hundsun.hscar.dto.WaitingOrderDto;
 import com.hundsun.hscar.entity.CarpoolingOrdersEntity;
 import com.hundsun.hscar.entity.ConfigurationEntity;
@@ -53,12 +49,8 @@ public class OrderService implements IOrderService {
 		ConfigurationEntity configuration = new ConfigurationEntity();
 		configuration.setUserId(userId);
 		configuration = configurationService.queryObject(configuration);
-		int nearDistance=Constant.DEFAULT_DISTANCE;
-		if(CommonUtils.isEmpty(configuration.getDistance())){
-			configuration.setDistance(nearDistance);
-			}
-		LocationDto lRight =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 0);
-		LocationDto lLeft =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 180);
+		LocationDto lRight =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 45);
+		LocationDto lLeft =BdMapUtils.getLocation(routeDetail.getDepLatitude(), routeDetail.getDepLongitude(), configuration.getDistance(), 45);
 
 		List<RouteDetailEntity> routeDetailList= routeDetailService.querySameWayOrders(userId,userType,lRight.getLatitude(),lLeft.getLatitude());
 		for (RouteDetailEntity routeDetailEntity : routeDetailList) {
@@ -190,7 +182,7 @@ public class OrderService implements IOrderService {
 		routeDetailEntity.setDestination(carOrderDto.getDestination());
 		routeDetailEntity.setUserId(user.getUserId());
 		routeDetailEntity.setRouteStatus(RouteStatusEnum.ACTIVED.getValue());
-		routeDetailEntity.setUserType(UserTypeEnum.PASSENGER.getValue());
+		routeDetailEntity.setUserType(carOrderDto.getUserType());
 		routeDetailEntity.setUpdateTime(new Date());
 		routeDetailEntity.setCreateTime(new Date());
 		routeDetailEntity.setDepLatitude(carOrderDto.getDepLatitude());

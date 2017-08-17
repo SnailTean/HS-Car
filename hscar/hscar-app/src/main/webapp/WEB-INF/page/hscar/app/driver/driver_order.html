@@ -24,11 +24,11 @@
 			<h1 class="title">订单管理</h1>
 		</header>
 	  	
-	  	<!-- 这里是页面内容区 -->
+	  	 	<!-- 这里是页面内容区 -->
 		<div class="content">
 		<div class="buttons-tab">
     		<a href="#tab1" class="tab-link active button">待处理</a>
-    		<a href="#tab2" class="tab-link button">顺路订单</a>
+    		<a @click="getSameWayOrders" href="#tab2" class="tab-link button">顺路订单</a>
     		<a @click="getCompleteOrders" href="#tab3" class="tab-link button">已完成订单</a>
   		</div>
   		 <div class="content-block">
@@ -66,7 +66,7 @@
          <div class="list-block media-list">
 				<ul>
 					<li v-for="order in sameWayOrders">
-				 	<a href="#" class="item-link item-content">
+				 	<a href="#" class="item-link item-content"  v-if="order.departure!=null">
 						<div class="item-media">
 							<img src="${rc.contextPath}/statics/images/1.gif" width="80">
 						</div>
@@ -105,7 +105,6 @@
 							<div class="item-subtitle">乘客数：{{order.number}}人</div>
 						   <div class="item-subtitle">订单状态：{{OrderStatusEnum[order.orderStatus]}}</div>
 						   <div class="item-subtitle">订单类型：{{OrderTypeEnum[order.orderType]}}</div>
-						   <div class="item-subtitle">距离：{{OrderTypeEnum[order.orderType]}}</div>
 						</div>
 					</a> 
 					</li>
@@ -126,7 +125,6 @@
 	<!-- 设置菜单栏 -->
 	#parse("hscar/app/settings.html")
 </div>
-
 <!-- Vue -->
 <script type="text/javascript">
 	var vm = new Vue({
@@ -140,7 +138,7 @@
 			    '2': '预'
 			} ,
 			OrderStatusEnum:{
-				'0': '等待车辆接驾。。。。',
+				'0': '正在为你寻找乘客。。。。',
 			    '1': '行程中。。。',
 			    '2': '已完成'
 			} 
@@ -148,18 +146,18 @@
  	
 		  methods: {
 			getWaitingOrders: function(userId) {
-				$.get(baseURL + "/api/customer/orders/waiting", function(r){
+				$.get(baseURL + "/api/driver/orders/waiting", function(r){
 					vm.waitingOrder = r.waitingOrder;
 				});
 			},
 			getSameWayOrders: function(userId) {
-				$.get(baseURL + "/api/customer/orders/sameWay", function(r){
-					vm.waitingOrders = r.waitingOrders;
+				$.get(baseURL + "/api/driver/orders/sameWay", function(r){
+					vm.sameWayOrders = r.sameWayOrders;
 				});
 			},
 			
 			getCompleteOrders: function(userId) {
-				$.get(baseURL + "/api/customer/orders/complete", function(r){
+				$.get(baseURL + "/api/driver/orders/complete", function(r){
 					vm.completeOrders = r.completeOrders;
 				});
 			}
@@ -175,49 +173,6 @@
 	
 	
 	
-</script>
-
-
-	<!-- 关于 -->
-	#parse("hscar/app/about.html")
-	
-	<!-- 设置菜单栏 -->
-	#parse("hscar/app/settings.html")
-</div>
-
-<!-- Vue -->
-<script type="text/javascript">
- 	var vm = new Vue({
-	 	el:'#hs_car_app',
-		data:{
-			waitingOrders: {},
-			sameWayOrders: {},
-			appointmentOrders: {}
-		},
- 		methods: {
-			getWaitingOrders: function(userId) {
-				$.get(baseURL + "api/customer/orders/waiting", function(r){
-					vm.waitingOrders = r.waitingOrders;
-					console.log(vm.waitingOrders);
-				});
-			},
-			getSameWayOrders: function(userId) {
-				$.get(baseURL + "api/customer/orders/sameWay", function(r){
-					vm.waitingOrders = r.waitingOrders;
-				});
-			},
-			getAppointmentOrders: function(userId) {
-				$.get(baseURL + "api/customer/orders/appointmentOrders", function(r){
-					vm.waitingOrders = r.waitingOrders;
-				});
-			}
-		},
-		created: function() {
-			this.getWaitingOrders();
-// 			this.getSameWayOrders();
-// 			this.getAppointmentOrders();
-		}  
-	});
 </script>
 
 <!-- 设置菜单栏 -->

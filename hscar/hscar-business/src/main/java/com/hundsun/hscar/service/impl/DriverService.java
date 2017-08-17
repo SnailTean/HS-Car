@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.agile.common.exception.RRException;
 import org.agile.common.validator.Assert;
+import org.agile.constant.Constant;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,8 +14,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hundsun.hscar.dao.DriverDao;
+import com.hundsun.hscar.entity.ConfigurationEntity;
 import com.hundsun.hscar.entity.DriverEntity;
 import com.hundsun.hscar.entity.UserEntity;
+import com.hundsun.hscar.service.api.IConfigurationService;
 import com.hundsun.hscar.service.api.IDriverService;
 import com.hundsun.hscar.service.api.IUserService;
 
@@ -33,6 +36,9 @@ public class DriverService implements IDriverService {
 	
 	@Autowired
     private IUserService userService;
+	
+	@Autowired
+	private IConfigurationService configurationService;
 	
 	@Override
 	public DriverEntity queryObjectById(Long driverId){
@@ -97,17 +103,23 @@ public class DriverService implements IDriverService {
 		driver.setDriverLicenseNumber(driverLicenseNumber);
 		driver.setPlateNumber(plateNumber);
 		driver.setCreateTime(new Date());
-		
+		ConfigurationEntity configuration = new ConfigurationEntity();
 		UserEntity user = userService.queryObjectByMobile(mobile);
 		if(user == null) { // 未注册过顾客用户
 			user = userService.register(mobile, password);
 			driver.setUserId(user.getUserId());
+			configuration.setUserId(user.getUserId());
+
 		} else { // 已注册过顾客用户(注册司机时要验证手机号和密码与顾客用户一致)
 			Long userId = userService.login(mobile, password);
 			driver.setUserId(userId);
+			configuration.setUserId(userId);
+
 		}
 		
 		driverDao.save(driver);
+		configuration.setDistance(Constant.DEFAULT_DISTANCE);
+		configurationService.save(configuration);
 	}
 	
 	/**

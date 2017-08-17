@@ -22,7 +22,7 @@ public class BdMapUtils {
         return d * Math.PI / 180.0;  
     }   
     /** 
-     * @Description: 第一种方法 
+     * @Description:获取两点间距离
      * @param lat_a 
      * @param lng_a 
      * @param lat_b 
@@ -47,7 +47,7 @@ public class BdMapUtils {
     /********************************************************************************************************/  
   
     /** 
-     * @Description: 第二种方法 
+     * @Description: 第二种方法 获取两点间距离
      * @param lat1 
      * @param lng1 
      * @param lat2 

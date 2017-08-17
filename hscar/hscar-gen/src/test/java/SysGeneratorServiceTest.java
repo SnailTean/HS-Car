@@ -33,7 +33,10 @@ public class SysGeneratorServiceTest {
 		"tb_route_detail",
 		"tb_carpooling_orders",
 		"tb_friendship",
-		"tb_driver_evaluate"
+		"tb_driver_evaluate",
+		"tb_order_user_rel",
+		"tb_configuration"
+		
 	};
 
 	@Test

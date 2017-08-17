@@ -44,12 +44,16 @@ public class AppPageController {
 
 	@RequestMapping("hscar/app/customer/customer_index_detail")
 	public String customer_index(@RequestParam("start") String start, @RequestParam("end") String end, Model model) throws UnsupportedEncodingException {
-		start = new String(start.getBytes("ISO8859-1"),"UTF-8");
-		end = new String(end.getBytes("ISO8859-1"),"UTF-8");
-
 		model.addAttribute("start",start);
 		model.addAttribute("end",end);
 		return "hscar/app/customer/customer_index_detail.html";
+	}
+	
+	@RequestMapping("hscar/app/driver/driver_index_detail")
+	public String driver_index(@RequestParam("start") String start, @RequestParam("end") String end, Model model) throws UnsupportedEncodingException {
+		model.addAttribute("start",start);
+		model.addAttribute("end",end);
+		return "hscar/app/driver/driver_index_detail.html";
 	}
 
 

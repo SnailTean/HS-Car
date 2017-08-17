@@ -6,12 +6,15 @@ import java.util.Map;
 
 import org.agile.common.exception.RRException;
 import org.agile.common.validator.Assert;
+import org.agile.constant.Constant;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.hundsun.hscar.dao.UserDao;
+import com.hundsun.hscar.entity.ConfigurationEntity;
 import com.hundsun.hscar.entity.UserEntity;
+import com.hundsun.hscar.service.api.IConfigurationService;
 import com.hundsun.hscar.service.api.IUserService;
 
 /**
@@ -26,7 +29,8 @@ public class UserService implements IUserService {
 	
 	@Autowired
 	private UserDao userDao;
-	
+	@Autowired
+	private IConfigurationService configurationService;
 	@Override
 	public UserEntity queryObjectById(Long userId){
 		UserEntity user = new UserEntity();
@@ -93,6 +97,10 @@ public class UserService implements IUserService {
 		user.setPassword(DigestUtils.sha256Hex(password));
 		user.setCreateTime(new Date());
 		userDao.save(user);
+		ConfigurationEntity configuration = new ConfigurationEntity();
+		configuration.setUserId(user.getUserId());
+		configuration.setDistance(Constant.DEFAULT_DISTANCE);
+		configurationService.save(configuration);
 		return user;
 	}
 

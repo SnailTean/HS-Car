@@ -12,6 +12,7 @@ public class CarOrderDto extends BaseOrderDto {
     private Double depLatitude;
     private Double desLongitude;
     private Double desLatitude;
+    private Integer userType;
 
     public Double getDepLongitude() {
         return depLongitude;
@@ -44,4 +45,13 @@ public class CarOrderDto extends BaseOrderDto {
     public void setDesLatitude(Double desLatitude) {
         this.desLatitude = desLatitude;
     }
+
+	public Integer getUserType() {
+		return userType;
+	}
+
+	public void setUserType(Integer userType) {
+		this.userType = userType;
+	}
+    
 }
